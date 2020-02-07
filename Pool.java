@@ -7,7 +7,7 @@ public class Pool {
 		setPool();			//creates the pool
 	}
 	
-	//this function initializes 100 tiles and stores them in an arraylist
+	//this function initializes 100 tiles and stores them in an array list
 	public void setPool() {
 		
 		pool.add(new Tile('J', 8));
