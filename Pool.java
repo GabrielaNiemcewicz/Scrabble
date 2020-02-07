@@ -4,7 +4,7 @@ public class Pool {
 	ArrayList<Tile> pool = new ArrayList<Tile>();		//stores tile objects for the pool
 	
 	public Pool() {
-		//setPool();			//creates the pool
+		////setPool();			//creates the pool
 	}
 	
 	//this function initializes 100 tiles and stores them in an array list
