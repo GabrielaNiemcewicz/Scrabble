@@ -4,10 +4,11 @@ public class Player {
 	
 	private String Name;
 	private int Score;
+	private Frame Frame;
 	
-	public Player(String name) {
-		
+	public Player(String name, Frame frame) {	
 		setName(name);
+		setFrame(frame);
 	}
 	
 	public String getName() { return Name; }
@@ -31,6 +32,12 @@ public class Player {
 		Score = score;
 	}
 	
+	public Frame getFrame() { return Frame; }
+
+	public void setFrame(Frame frame) {
+		Frame = frame;
+	}
+	
 	public void increaseScore(int score) { 
 		if(score >= 0)          /*This if statement checks first for a positive score
 		                         * if its true then the Score is increased. */ 						                        
@@ -47,5 +54,7 @@ public class Player {
 	name = in.nextLine();
 	setName(name);
 	setScore(0);
+	Frame.removeAllTiles();    /*removeAllTiles Method is a method in class Frame()
+                                * which remove all the tiles in the frame and reset them again. */
 	}
 }

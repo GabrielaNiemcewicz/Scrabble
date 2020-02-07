@@ -1,6 +1,7 @@
-public class Frame ()
-{
-private ArrayList<Tile> frame;
+import java.util.ArrayList;
+
+public class Frame (){
+ private ArrayList<Tile> frame;
 
 //A class called Frame that:
 //oStores the letters that each player has in their frame+++
