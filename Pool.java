@@ -4,11 +4,11 @@ public class Pool {
 	ArrayList<Tile> pool = new ArrayList<Tile>();		//stores tile objects for the pool
 	
 	public Pool() {
-		////setPool();			//creates the pool
+		setPool();			//creates the pool
 	}
 	
 	//this function initializes 100 tiles and stores them in an array list
-	/*public void setPool() {
+	public void setPool() {
 		
 		pool.add(new Tile('J', 8));
 		pool.add(new Tile('K', 5));
@@ -56,5 +56,5 @@ public class Pool {
 			if(i<12)
 				pool.add(new Tile('E', 1));
 		}
-	}*/
+	}
 }
