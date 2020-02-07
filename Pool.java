@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Random;
 
 public class Pool {
 	ArrayList<Tile> pool = new ArrayList<Tile>();		//stores tile objects for the pool
@@ -77,5 +78,24 @@ public class Pool {
 		else
 			return false;
 	}
+	
+	//method to draw N random tiles from the pool
+	public Tile[] Draw(int NumOfTiles) {
+		if(NumOfTiles>7 || NumOfTiles<0)			//checks if the number of tiles 
+			throw new IllegalArgumentException();
 		
+		Random r = new Random();
+		int random;
+		Tile temp[] = new Tile[NumOfTiles];		//array to store randomly generated tiles
+	
+		for(int i=0; i<NumOfTiles; i++) {
+			if(IsEmpty())						//if pool is empty it breaks from the loop
+				break;
+			random = r.nextInt(pool.size());		//chooses a random number between 0 and 26
+			temp[i] = pool.get(random);
+			pool.remove(random);
+		}
+		
+		return temp;
+	}	
 }
