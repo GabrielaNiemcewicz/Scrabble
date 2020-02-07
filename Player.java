@@ -1,3 +1,4 @@
+import java.util.Scanner;
 
 public class Player {
 	
@@ -36,5 +37,15 @@ public class Player {
 			Score += score;
 		else 
 			throw new IllegalArgumentException();
+	}
+	
+	public void reset(String name) { 
+		/*reset method is responsible for reseting the 
+		 * players names and the scores and the frame from the frame class.*/
+	Scanner in = new Scanner(System.in);
+	System.out.println("Please Enter The Name of the Player");
+	name = in.nextLine();
+	setName(name);
+	setScore(0);
 	}
 }
