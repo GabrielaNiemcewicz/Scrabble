@@ -3,6 +3,7 @@ class Tile (char letter)
 private char letter 
 private int value 
 
+<<<<<<< HEAD
 public Tile (char letter) {
 this.letter = letter
 this.value =  setValue(letter);
@@ -105,3 +106,8 @@ default:
 throw new Exception("Such tile cannot be created");
 }
 }
+=======
+public class Tile {
+}
+
+>>>>>>> c7e718b1fb25d21c9e0d9fabecbd0ef5bb578a3a
