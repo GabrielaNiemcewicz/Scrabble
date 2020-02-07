@@ -63,4 +63,19 @@ public class Pool {
 		setPool();
 		System.out.println("Pool has been reset");
 	}
+	
+	//returns the number of tiles in the pool
+		public int NumOfTiles() {
+			return pool.size();
+		}
+		
+	//function to check if the pool is empty
+	//returns true if empty
+	public boolean IsEmpty() {
+		if(NumOfTiles() == 0)
+			return true;
+		else
+			return false;
+	}
+		
 }
