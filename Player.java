@@ -29,4 +29,12 @@ public class Player {
 			throw new IllegalArgumentException(); 
 		Score = score;
 	}
+	
+	public void increaseScore(int score) { 
+		if(score >= 0)          /*This if statement checks first for a positive score
+		                         * if its true then the Score is increased. */ 						                        
+			Score += score;
+		else 
+			throw new IllegalArgumentException();
+	}
 }
