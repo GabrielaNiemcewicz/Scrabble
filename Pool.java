@@ -94,8 +94,7 @@ public class Pool {
 			random = r.nextInt(pool.size());		//chooses a random number between 0 and 26
 			temp[i] = pool.get(random);
 			pool.remove(random);
-		}
-		
+		}		
 		return temp;
 	}	
 	
