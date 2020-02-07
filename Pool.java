@@ -57,4 +57,10 @@ public class Pool {
 				pool.add(new Tile('E', 1));
 		}
 	}
+	
+	//resets the pool by calling setpool()
+	public void resetPool() {
+		setPool();
+		System.out.println("Pool has been reset");
+	}
 }
