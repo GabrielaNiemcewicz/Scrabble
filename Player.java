@@ -12,7 +12,7 @@ public class Player {
 	public String getName() { return Name; }
 
 	public void setName(String name) {
-		/*This if statement checks for 3 different cases for the name:*/
+		//This if statement checks for 3 different cases for the name:
 		if(name.length() == 0 /*if the user did not insert a name at all OR*/
 		|| " ".equals(name)   /*if the user inserted a white space character as a name OR*/
 		|| "\n".equals(name)) /*if the user hit a newline without entering a name*/
