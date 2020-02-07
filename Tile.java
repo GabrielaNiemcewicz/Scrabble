@@ -1,12 +1,15 @@
-class Tile (char letter) 
+class Tile (char letter, int value) 
 {
 private char letter 
 private int value 
 
-<<<<<<< HEAD
-public Tile (char letter) {
+public Tile (char letter, int value) {
+ //[a-zA-Z]
+//char properValue = '[0-10]'
+//char isALetter = '[a-zA-Z]'
+	//check
 this.letter = letter
-this.value =  setValue(letter);
+this.value =  value;
 }
 
 public char readLetter ()
@@ -16,6 +19,7 @@ public int readValue ()
 { return value; }
 
 public void display ()
+<<<<<<< HEAD
 { System.out.println(letter, value) }
 
 private int setValue(char letter){
@@ -115,3 +119,6 @@ public class Tile {
 }
 
 >>>>>>> c7e718b1fb25d21c9e0d9fabecbd0ef5bb578a3a
+=======
+{ System.out.printf(letter, value + "/t"); }
+>>>>>>> branch 'master' of https://github.com/UCD-COMP20050/Jabba.git
