@@ -98,4 +98,9 @@ public class Pool {
 		
 		return temp;
 	}	
+	
+	//method that returns the value of a tile
+	public int valueOfTile(Tile tile) {
+		return tile.readValue();
+	}
 }
