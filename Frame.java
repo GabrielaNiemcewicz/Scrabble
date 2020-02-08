@@ -1,7 +1,6 @@
-import java.util.ArrayList;
-
-public class Frame (){
- private ArrayList<Tile> frame;
+public class Frame ()
+{
+private ArrayList<Tile> frame;
 
 //A class called Frame that:
 //oStores the letters that each player has in their frame+++
@@ -38,13 +37,20 @@ public Frame()
 		return null;
 	}
 
+//helps reset User- removes all tiles without returning them
+public void removeAllTiles()
+	{
+		frame.clear();
+	}
+
+
 //allows letters to be removed from the frame- uses method that had commands after return, now corrected
 	public void removeString(String passedString) throws Exception{
 		if (passedString.length()>frame.size()) throw new Exception("Too many letters entered");
 		for (int i=0; i<passedString.length();i++) removeTilesTo(passedString.charAt(passedString.length()));
 	}
 
-//oAllows a check to be made if letters are in the frame
+//oAllows a check to be made if letters are in theframe
 
 //allows a check to be made if letters are in the frame- isIn covers this case too- check if isLetter in is significantly faster or needs type casting- otherwise don't implement
 	public boolean isLetterIn (char checkedLetter) throws Exception{
@@ -67,28 +73,57 @@ public Frame()
 		return checkedLetter;
 	}
 
-//allows a check to be made if letters are in the frame- not finished because wrong algorithm
-	/*public boolean isStringInPrototype(String passedString){
-		ArrayList<int> indices = new ArrayList<int>();
-		for (int i=0; i<passedString.size(); i++) {
-			if (indices.contains(i)) continue;
-			if (frame.isIn(!passedString[i])){break;}
-			else {
-				indices.add(i) continue;}
+	//allows a check to be made if letters are in the frame- good algorithm, could do with 'enhanced for loop'
+	public boolean isStringIn(String passedString){
+		boolean wasFound[] = new boolean[passedString.length()];
+		for (int i = 0; i<passedString.length(); i++) 
+			wasFound[i] = false;
 	
-		if (indices.size()==passedString.size()) return [] indices
-		}}
-		else throw new Exception("Frame is empty- can't remove 1 tile");
-	
-		//allows a check to be made if letters are in the frame- not finisged because wrong algorithm
-		public boolean isStringInPrototype2(String passedString){
-		for (int i=0; i<frame.size(); i++) 
-		for (int j=0; j<passedString.size();j++)
-		if(passedString[i]==frame.get(i).readLetter()) break; else if j
-	}*/
+		for (int i=0; i<frame.size(); i++)
+		for (int j=0; j<passedString.length();j++) //enhance it
+		if (wasFound[j]==false){
+		 if (passedString.charAt(j)==frame.get(i).readLetter()){
+		wasFound[j]=true;
+		break;
+		} else continue;
+	} 
 
+	for (int j=0;j<passedString.length(); j++)  //enhance it
+	if(wasFound[j]==false) return false; else continue;
+	return true;
+	}
 //oAllows a check to be made to see if the frame is empty
+public boolean Empty()
+	{
+	return frame.isEmpty();
+	}
+
+
+
 //oAllows access to the letters in the frame
+public ArrayList<Tile> accessAll()
+	{ return(frame); }
+
+	//allows access to single letter in the frame
+	public Tile accessTileByLetter (char checkedCharacter) throws Exception{
+		if (isLetterIn(checkedCharacter)) 
+		return frame.get(atWhichIndex(checkedCharacter));	//frame.get(accessTileByIndex(atWhichIndex(checkedCharacter)));
+		else throw new Exception("Letter not in the Frame");
+	}
+
+	//allows access to letter in the frame
+	public Tile accessTileByIndex (int i) throws Exception
+	{ 
+	if (i<frame.size()&&i>-1)
+	return frame.get(i);
+	else 
+	throw new Exception("Outside of scope of this frame");
+	 }
+
+
+
+
+
 //oAllows a frame to be refilled from the pool
 //oAllows a frame to be displayed++
 
