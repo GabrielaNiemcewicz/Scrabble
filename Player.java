@@ -1,28 +1,42 @@
 import java.util.Scanner;
 
-public class Player {
+public class Player{
+/***** The Private Instance Variables of Class Player *****/
 	
 	private String Name;
 	private int Score;
 	private Frame Frame;
+
+/***** Player Constructor *****/
 	
-	public Player(String name, Frame frame) {	
-		setName(name);
+	public Player(String name, Frame frame){
 		setFrame(frame);
+		setName(name);	
 	}
 	
+/***** The Accessors And The Mutators *****/
+	
+	public Frame getFrame() { return Frame; }
+
+	public void setFrame(Frame frame) {
+		Frame = frame;
+	}
+
 	public String getName() { return Name; }
 
 	public void setName(String name) {
-		//This if statement checks for 3 different cases for the name
+		/*This if statement checks for 3 different cases for the name:*/
 		if(name.length() == 0 /*if the user did not insert a name at all OR*/
 		|| " ".equals(name)   /*if the user inserted a white space character as a name OR*/
 		|| "\n".equals(name)) /*if the user hit a newline without entering a name*/
+		{
+			System.out.println("Failed: The Name you entered is not valid, try again");
 			throw new IllegalArgumentException(); 
+		}
 		else
 		    Name = name;
 	}
-	
+
 	public int getScore() { return Score; }
 
 	public void setScore(int score) {
@@ -31,12 +45,9 @@ public class Player {
 			throw new IllegalArgumentException(); 
 		Score = score;
 	}
-	
-	public Frame getFrame() { return Frame; }
 
-	public void setFrame(Frame frame) {
-		Frame = frame;
-	}
+/***** Extra Methods 
+ * @return *****/
 	
 	public void increaseScore(int score) { 
 		if(score >= 0)          /*This if statement checks first for a positive score
@@ -46,16 +57,20 @@ public class Player {
 			throw new IllegalArgumentException();
 	}
 	
-	public void reset(String name) { 
-		/*reset method is responsible for reseting the 
-		 * players names and the scores and the frame from the frame class.*/
-	Scanner in = new Scanner(System.in);
-	System.out.println("Please Enter The Name of the Player");
-	name = in.nextLine();
-	setName(name);
-	setScore(0);
-	/*Frame.removeAllTiles();    removeAllTiles Method is a method in class Frame()
-                                * which remove all the tiles in the frame and reset them again. */
+	public void reset(String name) { /*reset method is responsible for reseting the 
+	 								  * players names and the scores and the frame from the frame class.*/
+		Scanner in = new Scanner(System.in);
+		System.out.println("Please Enter The Name of the Player");
+		name = in.nextLine();
+		setName(name);
+		setScore(0);
+		Frame.removeAllTiles();    /*removeAllTiles Method is a method in class Frame()
+		                            * which remove all the tiles in the frame and reset them again. */
+	}
+	
+	public String toString() { /* toString method would be used for the display
+	 							* of the different players with their scores.*/
+		return "Player: "+getName()+", Score = "+getScore();
 	}
 	
 	public static void main(String[] args) {
@@ -110,7 +125,7 @@ public class Player {
  /*********************************************************************/
 	Pool pool = new Pool();
 		
-	System.out.println("**************************************************\n");
+	System.out.println("\n**************************************************\n");
 	System.out.println("---------------- Pool Testing ---------------\n");
 		
 //******************* Testing IsEmpty() ******************************
