@@ -10,7 +10,7 @@ public class Pool {
 	
 	//this function initializes 100 tiles and stores them in an array list
 	public void setPool() {
-		
+		//Adds the tiles that appear only once in the pool
 		pool.add(new Tile('J', 8));
 		pool.add(new Tile('K', 5));
 		pool.add(new Tile('Q', 10));
@@ -18,6 +18,7 @@ public class Pool {
 		pool.add(new Tile('Z', 10));
 		
 		for(int i=0;i<12;i++) {	
+                        //Adds tiles that appear twice 
 			if(i<2) {
 				pool.add(new Tile('B', 3));
 				pool.add(new Tile('C', 3));
@@ -30,30 +31,31 @@ public class Pool {
 				pool.add(new Tile('Y', 4));
 				pool.add(new Tile(' ', 0));
 			}
-			
+			//Adds tiles that appear three times
 			if(i<3)
 				pool.add(new Tile('G', 2));
-			
+			//Adds tiles that appear 4 times
 			if(i<4) {
 				pool.add(new Tile('D', 2));
 				pool.add(new Tile('L', 1));
 				pool.add(new Tile('S', 1));
 				pool.add(new Tile('U', 1));
 			}
-			
+			//Adds tiles that appear 6 times
 			if(i<6) {
 				pool.add(new Tile('N', 1));
 				pool.add(new Tile('R', 1));
 				pool.add(new Tile('T', 1));
 			}
-			
+			//Adds tiles that appear 8 times
 			if(i<8)
 				pool.add(new Tile('O', 1));
-
+                        //Adds tiles that appear 9 times
 			if(i<9) {
 				pool.add(new Tile('I', 1));
 				pool.add(new Tile('A', 1));
 			}
+                        //Adds tiles that appears 12 times
 			if(i<12)
 				pool.add(new Tile('E', 1));
 		}
@@ -85,17 +87,17 @@ public class Pool {
 			throw new IllegalArgumentException();
 		
 		Random r = new Random();
-		int random;
-		Tile temp[] = new Tile[NumOfTiles];		//array to store randomly generated tiles
+		int random;                //initialising an int value to store the random number generated
+		Tile temp[] = new Tile[NumOfTiles];		//array to store randomly generated tiles. Size is dependent on the number of tiles requested
 	
 		for(int i=0; i<NumOfTiles; i++) {
 			if(IsEmpty())						//if pool is empty it breaks from the loop
 				break;
 			random = r.nextInt(pool.size());		//chooses a random number between 0 and 26
-			temp[i] = pool.get(random);
-			pool.remove(random);
+			temp[i] = pool.get(random);                   //stores the random tile in the array
+			pool.remove(random);                       //removes selected tile from the pool
 		}		
-		return temp;
+		return temp;        //returns the filled array
 	}	
 	
 	//method that returns the value of a tile
