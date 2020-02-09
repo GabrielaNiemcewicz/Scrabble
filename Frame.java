@@ -14,14 +14,14 @@ public class Frame {
 
 	//allows letters to be removed from the frame- return statement before clear-> main() sequence?
 	/*public void removeAllTiles()
-	{
+	{//
 	  frame.accessAll();
 	  frame.clear();
 	}*/
 	
 
 	//allows letters to be removed from the frame - one tile
-	private Tile passTiles(char passedLetter) throws Exception
+	public Tile passTiles(char passedLetter) throws Exception
 	{return frame.get(atWhichIndex(passedLetter));}
 
 	//allows letters to be removed from the frame- one tile
@@ -66,11 +66,11 @@ public class Frame {
 		if (!frame.isEmpty()){
 		   for (int i=0; i<frame.size(); i++) {
 		       if (frame.get(i).readLetter() == checkedLetter) return i;
-		       else return -1;
-		       }
+		       else continue;
+		       } return -1;
 		}
 		else throw new Exception("The frame is empty");
-		return checkedLetter;
+		//return checkedLetter;
 	}
 
 	//allows a check to be made if letters are in the frame- not finished because wrong algorithm
@@ -200,6 +200,6 @@ public class Frame {
 	public StringBuilder displayAllTilesAsLetters()
 	{
 	StringBuilder word = new StringBuilder();
-	for (int i=0; i<frame.size(); i++) word.append(frame.get(i).readLetter());
-	return word;
+	for (int i=0; i<frame.size(); i++) {word.append(frame.get(i).readLetter());}
+	return word;}
 	}
