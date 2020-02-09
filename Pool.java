@@ -63,6 +63,7 @@ public class Pool {
 	
 	//resets the pool by calling setpool()
 	public void resetPool() {
+		pool.removeAll(pool);
 		setPool();
 		System.out.println("Pool has been reset");
 	}
@@ -75,10 +76,7 @@ public class Pool {
 	//function to check if the pool is empty
 	//returns true if empty
 	public boolean IsEmpty() {
-		if(NumOfTiles() == 0)
-			return true;
-		else
-			return false;
+		return pool.isEmpty();
 	}
 	
 	//method to draw N random tiles from the pool
