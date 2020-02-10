@@ -9,7 +9,7 @@ class Tile {
 		if(letter >= 'a' && letter <= 'z') // This if statement checks for lowerCase characters, 
 			letter = (char) (letter - 32); // Converts LowerCase to UpperCase.
 		
-		if(!(letter >= 'a' && letter <= 'z') && !(letter >= 'A' && letter <= 'Z')) // if the letter isn't A-z then it throws an exception.
+		if(!(letter >= 'a' && letter <= 'z') && !(letter >= 'A' && letter <= 'Z') && letter !=' ') // if the letter isn't A-z then it throws an exception.
 			throw new IllegalArgumentException();
 		
 		this.letter = letter; // if the above if statement is passed, then it assigns the passed letter to the Instance Var letter.

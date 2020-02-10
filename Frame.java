@@ -160,9 +160,8 @@ import java.util.ArrayList;
 			int i=0;
 			if (Full()) throw new Exception("Frame is full, you can't add another tile");
 			else {
-				while (!Full()){
+				for(i=0;i<letters.length; i++){
 					frame.add(letters[i]);
-					++i;
 				}
 			}
 		}
@@ -197,12 +196,12 @@ import java.util.ArrayList;
 		}
 		
 
-		public StringBuilder displayAllTilesAsLetters()
+		public String displayAllTilesAsLetters()
 		{
-		StringBuilder word = new StringBuilder();
-		for (int i=0; i<frame.size(); i++) {word.append(frame.get(i).readLetter());}
-		return word;
-		}}
+		String word = new String();
+		for (int i=0; i<frame.size(); i++) {word = word + (frame.get(i).readLetter());}
+		return word;}
+		}
 	//	}
 	
 	//Frame f = new Frame();
