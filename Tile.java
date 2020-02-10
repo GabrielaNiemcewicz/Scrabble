@@ -3,8 +3,18 @@ class Tile {
 	private int value;
 	
 	public Tile (char letter, int value) {
+		if(letter >= 'a' && letter <= 'z')
+			letter = (char) (letter - 32);
+		
+		if(!(letter >= 'a' && letter <= 'z') && !(letter >= 'A' && letter <= 'Z'))
+			throw new IllegalArgumentException();
+		
 		this.letter = letter;
-		this.value = value;
+		
+		if(value >= 0 || value <= 10)
+			this.value = value;
+		else throw new IllegalArgumentException();
+			
 	}
 
 	public char readLetter ()
@@ -22,7 +32,7 @@ class Tile {
 	
 	
 public static void main(String[] args) {
-		Tile t = new Tile('A', 1);
+		Tile t = new Tile('a', 1);
 		
 		System.out.print(t);
 	}
