@@ -57,7 +57,7 @@ class FrameTest {
 
 	}
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-		Letter check_PassTiles() {
+Tile check_passTiles() {
 			try{
 			frame.passTiles()
 
@@ -68,20 +68,16 @@ class FrameTest {
 	
 	
 	
-		Letter check_removeTiles() {
+		Tile   check_removeTiles() {
 		try{
 			frame.removeTiles()
 
 				}catch() {}
 		}
 	
-		Letter [] removeString(String passedString) //not created []- it's void now
+		Tile   [] removeString(String passedString) //not created []- it's void now
 	
 	
-		boolean check_isLetterIn (char checkedLetter) {
-			
-			
-		}
 		
 		
 		public int check_atWhichIndex (char checkedLetter) {
@@ -90,6 +86,21 @@ class FrameTest {
 
 				}catch() {}
 		}
+		
+		public boolean check_isLetterIn(char checkedLetter) {
+			
+			try{
+				frame.isLetterIn(char checkedLetter);
+				
+
+					}catch() {}
+			}
+			
+			
+			
+			
+		}
+		
 		
 		
 		public boolean check_isStringIn(string passedString){
@@ -182,7 +193,7 @@ try{
 	
 
 }
-
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
 
@@ -219,14 +230,94 @@ createNewFrame()
 			//only addTiles([]) does it = test not exactly simulates Pool behavior, 1 Tile at the time => check requestTiles() after each add 
 		for (int i=0; i<7; i++) { 
 			check_addTiles(letters[i]); //in scope
-			check_requestTiles();}// 6 5 4 3 2 1 0
+			check_requestTiles();
+			check_Full();//false
+			check_Empty();//false
+		}// 6 5 4 3 2 1 0
 		check_addTiles(letters[8]); //correct behavior is throw error out of scope
 		check_requestTiles() // should still request 0
 
 			//full frame tests/assertions
-
+		check_Full() //true
+		check_Empty() //false
 		
-			//test each non-removing non-adding non-requesting method on arbitrary number of Tiles, remove 1-3 casually
+		//VALID-ASSERT OR DISPLAY?
+	check_atWhichIndex(a) //0
+	check_atWhichIndex(b) //1
+	check_atWhichIndex(c) //2
+	check_atWhichIndex(g) //6
+	//check_atWhichIndex(E) //4
+										//invalid -1	ASSERT OR DISPLAY?
+												check_atWhichIndex(h)
+												check_atWhichIndex(z)
+												//check_atWhichIndex(K)
+												
+														//should show exception
+												//check_atWhichIndex(aa)
+											//check_atWhichIndex(dy)
+										 //check_atWhichIndex(xw)
+														
+														
+		
+		
+		
+		
+		
+		//TRUE- ASSERT OR DISPLAY?
+	check_isLetterIn(a)
+	check_isLetterIn(b)
+	check_isLetterIn(c)
+	check_isLetterIn(d)
+	check_isLetterIn(e)
+	check_isLetterIn(f)
+	check_isLetterIn(g)
+	//check_isLetterIn(C)
+										//FALSE- ASSERT OR DISPLAY?
+												check_isLetterIn(h)
+														check_isLetterIn(z)
+														//check_isLetterIn(Z)
+												//ERROR
+												//check_isLetterIn(ab)
+											//check_isLetterIn(az) 
+										 //check_isLetterIn(yz)
+					
+														
+	check_isStringIn(abcdefg) //true
+	check_isStringIn(abcefg)//true
+	check_isStringIn(afg) //true
+	check_isStringIn(gfad)//true
+	check_isStringIn(d) //true
+	//check_isStringIN(AD) //true
+	
+	check_isStringIn(abcdtfg) //false
+	check_isStringIn(aacdefg)//false
+	check_isStringIn(bBc) //false
+	
+			check_AccessAll() // should display a 2 b 3 c 4 ... g 8 
+			
+			check_accessTileByIndex(0) // a2
+			check_accessTileByIndex(1) //b3
+			check_accessTileByIndex(2) //c4
+			check_accessTileByIndex(3) //d5
+			check_accessTileByIndex(4) //e6
+			check_accessTileByIndex(5) //f7
+			check_accessTileByIndex(6) //g8
+			
+			
+			check_accessTileByLetter(a); //a2
+		check_accessTileByLetter(b); // b3
+		check_accessTileByLetter(e); //e6
+		check_accessTileByLetter(w); //error should occur
+		check_accessTileByLetter(5); //error should occur
+
+	 check_readAll()
+
+
+	 check_displayAllTilesAsLetters()
+		
+		
+		
+			//test each non-removing non-adding non-size-dependent	method on arbitrary number of Tiles, remove 1-3 casually
 
 			//test unused methods removing Tiles, including reset
 
