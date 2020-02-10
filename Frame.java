@@ -11,15 +11,6 @@ import java.util.ArrayList;
 		 this.frame = new ArrayList<Tile>();
 		}
 
-
-		//allows letters to be removed from the frame- return statement before clear-> main() sequence?
-		/*public void removeAllTiles()
-		{
-		  frame.accessAll();
-		  frame.clear();
-		}*/
-		
-
 		//allows letters to be removed from the frame - one tile
 		public Tile passTiles(char passedLetter) throws Exception
 		{return frame.get(atWhichIndex(passedLetter));}
@@ -72,26 +63,6 @@ import java.util.ArrayList;
 			else throw new Exception("The frame is empty");
 			//return checkedLetter;
 		}
-
-		//allows a check to be made if letters are in the frame- not finished because wrong algorithm
-		/*public boolean isStringInPrototype(String passedString){
-			ArrayList<int> indices = new ArrayList<int>();
-			for (int i=0; i<passedString.size(); i++) {
-				if (indices.contains(i)) continue;
-				if (frame.isIn(!passedString[i])){break;}
-				else {
-					indices.add(i) continue;}
-		
-			if (indices.size()==passedString.size()) return [] indices
-			}}
-			else throw new Exception("Frame is empty- can't remove 1 tile");
-		
-			//allows a check to be made if letters are in the frame- not finisged because wrong algorithm
-			public boolean isStringInPrototype2(String passedString){
-			for (int i=0; i<frame.size(); i++) 
-			for (int j=0; j<passedString.size();j++)
-			if(passedString[i]==frame.get(i).readLetter()) break; else if j
-		}*/
 
 		//allows a check to be made if letters are in the frame- good algorithm, could do with 'enhanced for loop'
 		public boolean isStringIn(String passedString){
@@ -154,9 +125,7 @@ import java.util.ArrayList;
 
 		//allows a frame to be refilled from the pool
 		public void addTiles (Tile[] letters) throws Exception
-		{ //new dynamic n= frame.size()
-			//Bag bag;
-			//bag.draw(frame.requestTiles());
+		{ 
 			int i=0;
 			if (Full()) throw new Exception("Frame is full, you can't add another tile");
 			else {
@@ -201,10 +170,6 @@ import java.util.ArrayList;
 		String word = new String();
 		for (int i=0; i<frame.size(); i++) {word = word + (frame.get(i).readLetter());}
 		return word;}
-		}
-	//	}
-	
-	//Frame f = new Frame();
-		//	 f.Empty();
+	}
 	
 	
