@@ -85,7 +85,7 @@ public class Pool {
 			throw new IllegalArgumentException();
 		
 		Random r = new Random();
-		int random;                //initialising an int value to store the random number generated
+		int random;                //Initializing an int value to store the random number generated
 		Tile temp[] = new Tile[NumOfTiles];		//array to store randomly generated tiles. Size is dependent on the number of tiles requested
 	
 		for(int i=0; i<NumOfTiles; i++) {
