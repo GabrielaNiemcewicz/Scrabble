@@ -46,8 +46,7 @@ public class Player{
 		Score = score;
 	}
 
-/***** Extra Methods 
- * @return *****/
+/***** Extra Methods *****/
 	
 	public void increaseScore(int score) { 
 		if(score >= 0)          /*This if statement checks first for a positive score
@@ -77,7 +76,7 @@ public class Player{
 		// TODO Auto-generated method stub
 	System.out.println("---------------- Player Testing ---------------\n");
 
-  /*********************************************************************/
+  /*********************************************/
 	System.out.println("--- Player Testing - setName() ---");
 	Frame f = new Frame();
 	Player p1 = new Player("Nagham",f);
@@ -93,7 +92,7 @@ public class Player{
 	else
 			System.out.println("Failed");
 				
-  /*********************************************************************/
+  /*********************************************/
 				
 	System.out.println("\n--- Player Testing - setScore() ---");
 				
@@ -108,7 +107,7 @@ public class Player{
 	else 
 		System.out.println("Failed: Actual result is not equal to the expected result");
 			
-  /*********************************************************************/
+  /**********************************************/
 				
 	System.out.println("\n--- Player Testing - increaseScore() ---");
 	int newScore = 4;
@@ -121,11 +120,17 @@ public class Player{
 		System.out.println("Pass");
 	else 
 		System.out.println("Failed: Actual result is not equal to the expected result");
+	
+   /*******************************************/
+	
+	System.out.println("\n--- Player Testing - reset() ---");
+	p2.reset("Gabi");
+	System.out.println(p2);
 				
- /*********************************************************************/
+ /***********************************************/
 	Pool pool = new Pool();
 		
-	System.out.println("\n**************************************************\n");
+	System.out.println("\n*********************************************\n");
 	System.out.println("---------------- Pool Testing ---------------\n");
 		
 //******************* Testing IsEmpty() ******************************

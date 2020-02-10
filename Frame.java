@@ -201,10 +201,11 @@ import java.util.ArrayList;
 		{
 		StringBuilder word = new StringBuilder();
 		for (int i=0; i<frame.size(); i++) {word.append(frame.get(i).readLetter());}
-		return word;}
-		}
+		return word;
+		}}
+	//	}
 	
-	Frame f = new Frame();
-			f.Empty();
+	//Frame f = new Frame();
+		//	 f.Empty();
 	
 	
