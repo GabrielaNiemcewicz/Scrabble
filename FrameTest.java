@@ -15,7 +15,7 @@ class FrameTest {
 		
 		@BeforeEach
 		void createNewFrame() throws Exception {
-			frame = new Frame();
+		Frame	frame = new Frame();
 		}
 
 		@Test
@@ -107,7 +107,7 @@ class FrameTest {
 
 }
 		
-		ArrayList<Letter> accessAll() {
+		ArrayList<Letter> check_accessAll() {
 			try{
 			frame.accessAll()
 
@@ -154,7 +154,7 @@ try{
 
 }
 		 
-		 public int requestTiles() {
+		 public int check_requestTiles() {
 			 try{
 			frame.requestTiles()
 
@@ -193,9 +193,9 @@ try{
 
 
 
-Frame frame = new Frame ();
+createNewFrame()
 			// tests on  empty frame //
-			Tile [] leters = new Tile[8] ;
+			Tile [] leters = new Tile[8];
 
 			Tile letterA = new Tile(a,2);
 			Tile letterB = new Tile(b,3);
@@ -216,11 +216,16 @@ Frame frame = new Frame ();
 			letters[7] = letterH;
 
 			//try adding each of letters to Frame, correctly display error at 8th Tile
-			//only addTiles([]) does it = test not exactly simulates Pool behaviour, 1 Tile at the time => check requestTiles() after each add 
-
+			//only addTiles([]) does it = test not exactly simulates Pool behavior, 1 Tile at the time => check requestTiles() after each add 
+		for (int i=0; i<7; i++) { 
+			check_addTiles(letters[i]); //in scope
+			check_requestTiles();}// 6 5 4 3 2 1 0
+		check_addTiles(letters[8]); //correct behavior is throw error out of scope
+		check_requestTiles() // should still request 0
 
 			//full frame tests/assertions
 
+		
 			//test each non-removing non-adding non-requesting method on arbitrary number of Tiles, remove 1-3 casually
 
 			//test unused methods removing Tiles, including reset
