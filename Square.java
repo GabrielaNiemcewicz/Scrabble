@@ -26,7 +26,7 @@ public int setPosition (int position) {
 	
 
 
-public void placeTile(Tile tile) {
+public void placeTile(Tile tile) throws Exception {
 	if (this.isEmpty())	
 		this.tile = tile;
 	else throw new Exception("Error! There's already a Tile placed on the Square...");
