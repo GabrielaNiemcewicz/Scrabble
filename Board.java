@@ -1,8 +1,10 @@
+import java.util.ArrayList; 
 
 public class Board {
 
 private Square[][] board;
-private int SIZE = 15;	  
+private int SIZE = 15;
+//private boolean [][] isEmpty; 
 //anything else?
 
 	public Board() {
@@ -28,7 +30,7 @@ private int SIZE = 15;
 	
 	
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
-QUESTION- DO WE PUT REFRESH IN TILE, OR IN BOARD?
+//QUESTION- DO WE PUT REFRESH IN TILE, OR IN BOARD?//
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
 	
 	public void getWord(String word) {
@@ -43,12 +45,15 @@ QUESTION- DO WE PUT REFRESH IN TILE, OR IN BOARD?
 	
 	public ArrayList<Tile> placeWordVertically(){ //necessary to be separate!
 		//does set of checks first
-		
+		ArrayList <Tile> dummy = new ArrayList() ;
+		return dummy;
 	}
 	
 	public ArrayList<Tile> placeWordHorizontally(){ //necessary to be separate!
 		//does set of checks first
 		
+		ArrayList <Tile> dummy = new ArrayList() ;
+		return dummy;
 	}
 	
 	
@@ -60,7 +65,7 @@ QUESTION- DO WE PUT REFRESH IN TILE, OR IN BOARD?
 
 	public boolean verticallyOrHorizontally() {
 	//probably doesn't have to be merged to single function yet 
-	
+	return false;
 	} 
 	
 	
@@ -71,7 +76,7 @@ QUESTION- DO WE PUT REFRESH IN TILE, OR IN BOARD?
 			//...
 				//...
 	// return true; 
-	
+	return false;
 	}
 	
 	
@@ -80,14 +85,14 @@ QUESTION- DO WE PUT REFRESH IN TILE, OR IN BOARD?
 	//necessary - remove from word search character(s) already "on the path" on Board that word of this length contains 
 	// Frame contains ready method	boolean isLetterIn (char checkedLetter)
 		// loop until first letter found - then break
-	
+	return false;
 	}
 	
 	
 	public boolean areAllTilesInFrame(String checked_word) {
 		//necessary - remove from "word search" character(s) already "on the path" on Board that word of this length contains 
 		//Frame contains ready method boolean isStringIn (String checked_word)
-	
+	return false;
 	}
 
 	public boolean isWordWithinBoundsVertically(String checked_word, int firstPosition_x, int firstPosition_y)
@@ -107,7 +112,7 @@ QUESTION- DO WE PUT REFRESH IN TILE, OR IN BOARD?
 	
 	public boolean isInHarmonyWithTilesOnBoardVertically(String checked_word, int firstPosition_x, int firstPosition_y)
 	{
-	for (int i=; i<checked_word.length(); i++) {
+	//for (int i=; i<checked_word.length(); i++) {
 		
 	//have to loop through squares IN RIGHT DIRECTION VERTICALLY
 	//if square.isEmpty()   //This method I made for displaying if Tile is not on Square yet	
@@ -118,13 +123,14 @@ QUESTION- DO WE PUT REFRESH IN TILE, OR IN BOARD?
 		//return false
 		
 	//outside of loop: return true
+		return false;
 	}
 	
-	}
 	
-	public boolean isConflictingWithTilesOnBoardHorizontally(String checked_word, int firstPosition_x, int firstPosition_y)
+	
+	public boolean isInHarmonyWithTilesOnBoardHorizontally(String checked_word, int firstPosition_x, int firstPosition_y)
 	{
-		for (int i=; i<checked_word.length(); i++) {
+		//for (int i=; i<checked_word.length(); i++) {
 			
 			//have to loop through squares IN RIGHT DIRECTION HORIZONTALLY
 			//if square.isEmpty()   //This method I made for displaying if Tile is not on Square yet	
@@ -135,20 +141,19 @@ QUESTION- DO WE PUT REFRESH IN TILE, OR IN BOARD?
 				//return false
 				
 			//outside of loop: return true
+		return false;
 			}
 		
 	
-	}
+	
 	
 	public boolean isFirstWord() {
-		// ??????????????????????
-			//word counter in Board?? no?
-			//if all Squares.isEmpty()??
-			//separately in main??
-			//idk??
-	//switches which condition to test as the last?? Either one condition, not both.
+		// how to make program aware what is the first word??????????????????????
+			
+	
 	  //if first, this big first testing method at the end has test if inTheMiddle(checked_word)
-	  //if not first, this big first testing method at the end has test if connectsToTileOnBoard(...) 
+	  //if not first, this big first testing method at the beginning has test if connectsToTileOnBoard(...) 
+		return true;
 	}
 	
 	
@@ -157,7 +162,7 @@ QUESTION- DO WE PUT REFRESH IN TILE, OR IN BOARD?
 	//x=8
 		//AND
 	//firstPosition_y<=8 && checked_word.length()+firstPosition_y>=8
-	
+	return false;
 	}
 	
 	public boolean inTheMiddleHorizontally(String checked_word, int firstPosition_x, int firstPosition_y)
@@ -165,7 +170,7 @@ QUESTION- DO WE PUT REFRESH IN TILE, OR IN BOARD?
 		//y=8
 				//AND
 			//firstPosition_x<=8 && checked_word.length()+firstPosition_x>=8
-	
+	return false;
 	}
 	
 	public boolean connectsToTileOnBoardHorizontally(String checked_word, int firstPosition_x, int firstPosition_y) {
@@ -174,23 +179,32 @@ QUESTION- DO WE PUT REFRESH IN TILE, OR IN BOARD?
 		//if square.isEmpty()   //This method I made for displaying if Tile is not on Square yet	
 			//do nothing, carry on, i++, continue
 		//else if (!square.isEmpty())
-			//return true;
-		
+			//continue;
+	return false;	
 			
 //outside of loop: return false
 		}
 		
-	}
+	
 	
 	public void reset() {
-	//set each square's tile (in squares) to NULL. I can provide a method called square.reset() for that.
-	//unless we treat reset only as global 
-		//but if we do, challenging word could be tricky
-	//refresh (all)
+//at initialization, Tile is null. => isEmpty= true
+//at placing Tile on Square, isEmpty = false, either square.reset or board.reset
+	//have 1 extra private uninitialized Tile dummyTile somewhere- possibly in the Board. It NEVER gets initialized!
+	//use created string isEmpty
+		//a) in Square as separate variable
+		//b) in Square as check tile.isNull()
+		//c) make board a two-dimensional boolean Array[15][15] //that's what Chris said...
+		//
+	
+	//void reset()
+		//set isEmpty = false
+		//{if (this.tile.isEmpty == false) 
+			//this.tile = userInputterTile
+		//else if (!this.tile.isEmpty == true)
+			//this.tile= dommyTile
+//last 4 lines should be the same in the initializer of Square
 	}
 	
-	//there will be return function for challenged words => not implementing this Sprint. Just heads up.
-	// heads up => there will be player generated inputs 
 
-	
-	
+}
