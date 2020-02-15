@@ -4,6 +4,7 @@ public class Board {
 
 private Square[][] board;
 private int SIZE = 15;
+private String temporaryWord; //proposed implementation for checking if it's first turn. Will help in some implementations of challenging the word. GetWord() gets a word here, rest of functions access it from here.
 //private boolean [][] isEmpty; 
 //anything else?
 
@@ -33,7 +34,9 @@ private int SIZE = 15;
 //QUESTION- DO WE PUT REFRESH IN TILE, OR IN BOARD?//
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
 	
-	public void getWord(String word) {
+	public void getWord(String userWord) {
+		
+		this.temporaryWord = userWord;
 		//in 3rd assignment, gets word from **Player** keyboard input. Now no parsing input needed.  
 		//doing it this way from beginning might save work for later. 
 		//maybe separate Class for storing a word and checking its validity? Maybe? 
@@ -63,9 +66,12 @@ private int SIZE = 15;
 	//-> merging help word validity test named	isWordWithinBounds 
 }
 
-	public boolean verticallyOrHorizontally() {
-	//probably doesn't have to be merged to single function yet 
-	return false;
+	public boolean verticallyOrHorizontally(char vh) throws Exception {
+	if (vh=='h')
+		return true;
+	else if (vh =='v')
+		return false;
+	else throw new Exception("Wrong character inputted into vertically or horizontally in board");
 	} 
 	
 	
@@ -80,21 +86,71 @@ private int SIZE = 15;
 	}
 	
 	
-	//sets of tests
-	public boolean isAnyTileFromFrame(String checked_word) {
-	//necessary - remove from word search character(s) already "on the path" on Board that word of this length contains 
-	// Frame contains ready method	boolean isLetterIn (char checkedLetter)
-		// loop until first letter found - then break
-	return false;
-	}
+	////sets of tests
+	//public boolean isAnyTileFromFrame(String checked_word) {
+	////necessary - remove from word search character(s) already "on the path" on Board that word of this length contains 
+	//// Frame contains ready method	boolean isLetterIn (char checkedLetter)
+	//	// loop until first letter found - then break
+//	return false;
+//	}
 	
+//commented out, because there is a neat way to check it on the way to areAllTilesInTheFrame, but nice code idea if we resign from this implementation
 	
-	public boolean areAllTilesInFrame(String checked_word) {
-		//necessary - remove from "word search" character(s) already "on the path" on Board that word of this length contains 
-		//Frame contains ready method boolean isStringIn (String checked_word)
-	return false;
+	public boolean areAllTilesInFrameHorizontally(String checked_word, firstPosition_x, firstPosition_y, Frame frame) {
+		StringBuffer copyOf_checked_word = checked_word;
+		char tempRemovedCharacter ;
+		Frame tempFrame = frame;
+		for (int i = 0; i<checked_word.length(); i++)
+			if (board[firstPosition_x][firstPosition_y+i].isEmpty())
+				continue;
+			else {
+				char tempRemovedCharacter = board[firstPosition_x][firstPosition_y+i].getCharacter();
+///////////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////copyOf_checked_word.delete(tempRemovedChar);////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////
+			}
+		if 	(copyOf_checked_word.length()==0)
+			{System.out.println("Word invalid- no letter from Frame used");
+			return false;}
+		else 
+		{
+		return frame.isStringIn(copyOf_checked_word.toString());
+		
+		}
+		}		
+		
+		//done//necessary - remove from "word search" character(s) already "on the path" on Board that word of this length contains 
+		//done//Frame contains ready method boolean isStringIn (String checked_word)
+
 	}
 
+	public boolean areAllTilesInFrameVertically(String checked_word, firstPosition_x, firstPosition_y, Frame frame) {
+		StringBuffer copyOf_checked_word = checked_word;
+		char tempRemovedCharacter ;
+		Frame tempFrame = frame;
+		for (int i = 0; i<checked_word.length(); i++)
+			if (board[firstPosition_x+i][firstPosition_y].isEmpty())
+				continue;
+			else {
+				char tempRemovedCharacter = board[firstPosition_x+i][firstPosition_y].getCharacter();
+///////////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////copyOf_checked_word.delete(tempRemovedChar);////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////
+			}
+		if 	(copyOf_checked_word.length()==0)
+			{System.out.println("Word invalid- no letter from Frame used");
+			return false;}
+		else 
+		{
+		return frame.isStringIn(copyOf_checked_word.toString());
+		
+		}
+		}	
+	}
+
+	
+	
+	
 	public boolean isWordWithinBoundsVertically(String checked_word, int firstPosition_x, int firstPosition_y)
 	{
 		//if Square at first position is invalid, return false, else (continue) 
@@ -111,65 +167,75 @@ private int SIZE = 15;
 	}
 	
 	public boolean isInHarmonyWithTilesOnBoardVertically(String checked_word, int firstPosition_x, int firstPosition_y)
-	{
-	//for (int i=; i<checked_word.length(); i++) {
-		
-	//have to loop through squares IN RIGHT DIRECTION VERTICALLY
-	//if square.isEmpty()   //This method I made for displaying if Tile is not on Square yet	
-		//do nothing, carry on, i++, continue
-	//else if (square.getCharacter() == checked_word[i])
-		//do nothing, carry on, i++
-	//else if (square.getCharacter() != checked_word[i])
-		//return false
-		
-	//outside of loop: return true
-		return false;
+	{		
+		for (int i=0; i<checked_word.length(); i++) {
+			
+			
+			if (board[firstPosition_x+i][firstPosition_x].isEmpty())   //This method I made for displaying if Tile is not on Square yet	
+				 continue;
+			else if (board[firstPosition_x+i][firstPosition_y].getCharacter() == checked_word.charAt(i))
+				continue;
+			/else if (board[firstPosition_x+i][firstPosition_y+i].getCharacter() != checked_word.charAt(i))
+				return false;
+				
+
+		return true;
+
+
 	}
 	
 	
 	
 	public boolean isInHarmonyWithTilesOnBoardHorizontally(String checked_word, int firstPosition_x, int firstPosition_y)
-	{
-		//for (int i=; i<checked_word.length(); i++) {
+	{ 
+		for (int i=0; i<checked_word.length(); i++) {
 			
 			//have to loop through squares IN RIGHT DIRECTION HORIZONTALLY
-			//if square.isEmpty()   //This method I made for displaying if Tile is not on Square yet	
-				//do nothing, carry on, i++, continue
-			//else if (square.getCharacter() == checked_word[i])
-				//do nothing, carry on, i++
-			//else if (square.getCharacter() != checked_word[i])
-				//return false
+			if (board[firstPosition_x][firstPosition_x+i].isEmpty())   //This method I made for displaying if Tile is not on Square yet	
+				 continue;
+			else if (board[firstPosition_x][firstPosition_y+i].getCharacter() == checked_word.charAt(i))
+				continue;
+			/else if (board[firstPosition_x][firstPosition_y+i].getCharacter() != checked_word.charAt(i))
+				return false;
 				
 			//outside of loop: return true
-		return false;
+		return true;
 			}
 		
 	
 	
 	
 	public boolean isFirstWord() {
-		// how to make program aware what is the first word??????????????????????
-			
-	
-	  //if first, this big first testing method at the end has test if inTheMiddle(checked_word)
-	  //if not first, this big first testing method at the beginning has test if connectsToTileOnBoard(...) 
-		return true;
+		 if (this.temporaryWord==null)
+			 return true;
+		 else 
+			return false;
+		
+		 // how to make program aware what is the first word??????????????????????
+		
+		  //if first, this big first testing method at the beginning has test if inTheMiddle(checked_word)
+		  //if not first, this big first testing method at the beginning has test if connectsToTileOnBoard(...)
 	}
 	
 	
 	public boolean inTheMiddleVertically(String checked_word, int firstPosition_x, int firstPosition_y)
 	{
-	//x=8
-		//AND
-	//firstPosition_y<=8 && checked_word.length()+firstPosition_y>=8
-	return false;
+		
+			if(firstPosition_x!=7)
+				return false;
+			else if (firstPosition_y<=7 && checked_word.length()+firstPosition_y>=7)
+				return true;
+		return false;
+		
+	
 	}
 	
 	public boolean inTheMiddleHorizontally(String checked_word, int firstPosition_x, int firstPosition_y)
 	{
-		//y=8
-				//AND
-			//firstPosition_x<=8 && checked_word.length()+firstPosition_x>=8
+		if(firstPosition_y!=7)
+			return false;
+		else if (firstPosition_x<=7 && checked_word.length()+firstPosition_x>=7)
+			return true;
 	return false;
 	}
 	
@@ -198,7 +264,7 @@ private int SIZE = 15;
 		//
 	
 	//void reset()
-		//set isEmpty = false
+		//set isEmpty = false and set temporaryWord = null
 		//{if (this.tile.isEmpty == false) 
 			//this.tile = userInputterTile
 		//else if (!this.tile.isEmpty == true)
