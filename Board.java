@@ -5,6 +5,7 @@ public class Board {
 private Square[][] board;
 private int SIZE = 15;
 private String temporaryWord; //proposed implementation for checking if it's first turn. Will help in some implementations of challenging the word. GetWord() gets a word here, rest of functions access it from here.
+protected Tile uninitializedNullTile; //never gets initialized. Reassign * pointer to this null-returning object for Square's Tile to return Null on reset/challenge again
 //private boolean [][] isEmpty; 
 //anything else?
 
@@ -55,9 +56,9 @@ private String temporaryWord; //proposed implementation for checking if it's fir
 		
 	}
 	
-	public void placeWordHorizontally(){ //necessary to be separate!
+	public void placeWordHorizontally(){ //necessary to be separate! //change interface
 		//does set of checks first
-		if (this.isWordValidHorizontally(temporaryWord)
+		if (this.isWordValidHorizontally(this.temporaryWord))
 		//ArrayList <Tile> dummy = new ArrayList() ;
 				for (int i=0; i<this.temporaryWord.length(); i++)
 					System.out.println("I'm in progress");
@@ -87,7 +88,27 @@ private String temporaryWord; //proposed implementation for checking if it's fir
 			//...
 				//...
 	// return true; 
+	if(this.isFirstWord())	
+		if(!this.inTheMiddleHorizontally(checked_word, firstPosition_x, firstPosition_y)) //change interface, unneeded vars
+		{System.out.println("First word needs to connect to Square in the middle, 8th, 8th");
+		return false;}
+	
+	if (!this.isFirstPositionValid(firstPosition_x, firstPosition_y))
+		{System.out.println("You can't start your word here- square index out of Board");
+		return false;}	
+	else if (!this.isWordWithinBoundsHorizontally(checked_word, firstPosition_x, firstPosition_y)) //change interface
+		{System.out.println("Your word is too long to be placed here at this place on Board");
+		return false;}	
+	else if(!this.isInHarmonyWithTilesOnBoardHorizontally(firstPosition_x, firstPosition_y)
+			{System.out.println("Your word clashes with letters on the board.");
+			return false;}		
+	else if(!this.areAllTilesInFrameHorizontally(checked_word, firstPosition_x, firstPosition_y, frame)) 
+	//function prints one of 3 errors- all has to be inside
 	return false;
+	
+	
+	
+return true; 
 	}
 	
 	//all sets of tests together
@@ -137,8 +158,10 @@ private String temporaryWord; //proposed implementation for checking if it's fir
 			return false;}
 		else 
 		{
-		return frame.isStringIn(copyOf_checked_word.toString());
-		
+		if (!frame.isStringIn(copyOf_checked_word.toString()))
+		{System.out.println("You don't have necessary tiles in the frame to create this word");
+		return false;}
+		else return true;
 		}
 		}		
 		
@@ -290,7 +313,7 @@ private String temporaryWord; //proposed implementation for checking if it's fir
 		//b) in Square as check tile.isNull()
 		//c) make board a two-dimensional boolean Array[15][15] //that's what Chris said...
 		//
-	System.out.println("Use me! \n For: \n resetting whole board at beginning/end game \n refreshing Square on each (whole word)/(tile?) placement")
+	System.out.println("Use me! \n For: \n resetting whole board at beginning/end game \n refreshing Square on each (whole word)/(tile?) placement");
 	//void reset()
 		//set isEmpty = false and set temporaryWord = null
 		//{if (this.tile.isEmpty == false) 
