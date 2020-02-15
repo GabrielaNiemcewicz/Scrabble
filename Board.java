@@ -46,17 +46,22 @@ private String temporaryWord; //proposed implementation for checking if it's fir
 	}
 	
 	
-	public ArrayList<Tile> placeWordVertically(){ //necessary to be separate!
-		//does set of checks first
-		ArrayList <Tile> dummy = new ArrayList() ;
-		return dummy;
+	public void placeWordVertically(ArrayList <Tile> tilesFromFrame, int firstPosition_x,int firstPosition_y){ //in main: board.placeWordVertically(frame.someGetterFunction()) //best get all Tiles needed, get one Tile ok
+		//does its set of checks first
+		if (this.isWordValidVertically(temporaryWord))
+			
+			for (int i=0; i<this.temporaryWord.length(); i++)
+					System.out.println("I'm in progress");	//ArrayList <Tile> dummy = new ArrayList() ;
+		
 	}
 	
-	public ArrayList<Tile> placeWordHorizontally(){ //necessary to be separate!
+	public void placeWordHorizontally(){ //necessary to be separate!
 		//does set of checks first
+		if (this.isWordValidHorizontally(temporaryWord)
+		//ArrayList <Tile> dummy = new ArrayList() ;
+				for (int i=0; i<this.temporaryWord.length(); i++)
+					System.out.println("I'm in progress");
 		
-		ArrayList <Tile> dummy = new ArrayList() ;
-		return dummy;
 	}
 	
 	
@@ -76,7 +81,17 @@ private String temporaryWord; //proposed implementation for checking if it's fir
 	
 	
 	//all sets of tests together
-	public boolean isWordValid(String checked_word) {
+	public boolean isWordValidHorizontally(String checked_word) {
+	//if first not valid, on false, throw new Exception with explanation what happened, else (continue testing)
+		//else if second not valid, throw, else (continue testing)
+			//...
+				//...
+	// return true; 
+	return false;
+	}
+	
+	//all sets of tests together
+	public boolean isWordValidVertically(String checked_word) {
 	//if first not valid, on false, throw new Exception with explanation what happened, else (continue testing)
 		//else if second not valid, throw, else (continue testing)
 			//...
@@ -94,9 +109,17 @@ private String temporaryWord; //proposed implementation for checking if it's fir
 //	return false;
 //	}
 	
+	
 //commented out, because there is a neat way to check it on the way to areAllTilesInTheFrame, but nice code idea if we resign from this implementation
 	
-	public boolean areAllTilesInFrameHorizontally(String checked_word, firstPosition_x, firstPosition_y, Frame frame) {
+	public boolean isFirstPositionValid(int firstPosition_x, int firstPosition_y) {
+		if(firstPosition_x> -1 && firstPosition_x<15 && firstPosition_y> -1 && firstPosition_y<15)
+			return true;
+		else return false;
+	
+	}
+	
+	public boolean areAllTilesInFrameHorizontally(StringBuffer checked_word, int firstPosition_x, int firstPosition_y, Frame frame) {
 		StringBuffer copyOf_checked_word = checked_word;
 		char tempRemovedCharacter ;
 		Frame tempFrame = frame;
@@ -104,7 +127,7 @@ private String temporaryWord; //proposed implementation for checking if it's fir
 			if (board[firstPosition_x][firstPosition_y+i].isEmpty())
 				continue;
 			else {
-				char tempRemovedCharacter = board[firstPosition_x][firstPosition_y+i].getCharacter();
+				 tempRemovedCharacter = board[firstPosition_x][firstPosition_y+i].getCharacter(); //error in Square method. Not in Bord method.
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////copyOf_checked_word.delete(tempRemovedChar);////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -122,30 +145,34 @@ private String temporaryWord; //proposed implementation for checking if it's fir
 		//done//necessary - remove from "word search" character(s) already "on the path" on Board that word of this length contains 
 		//done//Frame contains ready method boolean isStringIn (String checked_word)
 
-	}
-
-	public boolean areAllTilesInFrameVertically(String checked_word, firstPosition_x, firstPosition_y, Frame frame) {
+	
+	//EXTREMELY IMPORTANT- DO THIS TEST AFTER CHECKING FOR CLASHES WITH EXISTING TILES
+	public boolean areAllTilesInFrameVertically(StringBuffer checked_word,int firstPosition_x,int firstPosition_y, Frame frame) {
 		StringBuffer copyOf_checked_word = checked_word;
-		char tempRemovedCharacter ;
-		Frame tempFrame = frame;
+		char tempRemovedCharacter;
+		
 		for (int i = 0; i<checked_word.length(); i++)
 			if (board[firstPosition_x+i][firstPosition_y].isEmpty())
 				continue;
 			else {
-				char tempRemovedCharacter = board[firstPosition_x+i][firstPosition_y].getCharacter();
+				 tempRemovedCharacter = board[firstPosition_x+i][firstPosition_y].getCharacter(); //error in Square at Tile initialization. GetCharacter errors with Tile on.
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////copyOf_checked_word.delete(tempRemovedChar);////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////////////
 			}
-		if 	(copyOf_checked_word.length()==0)
+		if 	(copyOf_checked_word.length()==0) 
 			{System.out.println("Word invalid- no letter from Frame used");
+			return false;}
+		
+		else if (copyOf_checked_word.length()==this.temporaryWord.length()) //on start of game. temp.length=0, so no need to check if it's beginning
+			{System.out.println("Word invalid- doesn't connect to any words on Board");
 			return false;}
 		else 
 		{
 		return frame.isStringIn(copyOf_checked_word.toString());
 		
 		}
-		}	
+			
 	}
 
 	
@@ -166,39 +193,40 @@ private String temporaryWord; //proposed implementation for checking if it's fir
 		else return true;
 	}
 	
-	public boolean isInHarmonyWithTilesOnBoardVertically(String checked_word, int firstPosition_x, int firstPosition_y)
+	public boolean isInHarmonyWithTilesOnBoardVertically(int firstPosition_x, int firstPosition_y) throws Exception
 	{		
-		for (int i=0; i<checked_word.length(); i++) {
+		for (int i=0; i<this.temporaryWord.length(); i++) {
 			
 			
 			if (board[firstPosition_x+i][firstPosition_x].isEmpty())   //This method I made for displaying if Tile is not on Square yet	
 				 continue;
-			else if (board[firstPosition_x+i][firstPosition_y].getCharacter() == checked_word.charAt(i))
+			else if (board[firstPosition_x+i][firstPosition_y].getCharacter() == this.temporaryWord.charAt(i))
 				continue;
-			/else if (board[firstPosition_x+i][firstPosition_y+i].getCharacter() != checked_word.charAt(i))
+			else if (board[firstPosition_x+i][firstPosition_y+i].getCharacter() != this.temporaryWord.charAt(i))
 				return false;
-				
+			else throw new Exception("Equality between Square.getCharacter(i) and String.charAt(i) is failing");}
+		return true;	
 
-		return true;
+
 
 
 	}
 	
 	
 	
-	public boolean isInHarmonyWithTilesOnBoardHorizontally(String checked_word, int firstPosition_x, int firstPosition_y)
+	public boolean isInHarmonyWithTilesOnBoardHorizontally( int firstPosition_x, int firstPosition_y) throws Exception
 	{ 
-		for (int i=0; i<checked_word.length(); i++) {
+		for (int i=0; i<this.temporaryWord.length(); i++) {
 			
 			//have to loop through squares IN RIGHT DIRECTION HORIZONTALLY
 			if (board[firstPosition_x][firstPosition_x+i].isEmpty())   //This method I made for displaying if Tile is not on Square yet	
 				 continue;
-			else if (board[firstPosition_x][firstPosition_y+i].getCharacter() == checked_word.charAt(i))
+			else if (board[firstPosition_x][firstPosition_y+i].getCharacter() == this.temporaryWord.charAt(i))
 				continue;
-			/else if (board[firstPosition_x][firstPosition_y+i].getCharacter() != checked_word.charAt(i))
+			else if (board[firstPosition_x][firstPosition_y+i].getCharacter() != this.temporaryWord.charAt(i))
 				return false;
-				
-			//outside of loop: return true
+			else throw new Exception("Equality between Square.getCharacter(i) and String.charAt(i) is failing");}
+		
 		return true;
 			}
 		
@@ -239,18 +267,18 @@ private String temporaryWord; //proposed implementation for checking if it's fir
 	return false;
 	}
 	
-	public boolean connectsToTileOnBoardHorizontally(String checked_word, int firstPosition_x, int firstPosition_y) {
+	//public boolean connectsToTileOnBoard(String checked_word, int firstPosition_x, int firstPosition_y) {
 	//EXTREMELY IMPORTANT- DO THIS TEST ~AFTER~ TESTING FOR CONFLICTS WITH TILES ON BOARD! 
 	//have to loop through squares IN RIGHT DIRECTION HORIZONTALLY
 		//if square.isEmpty()   //This method I made for displaying if Tile is not on Square yet	
 			//do nothing, carry on, i++, continue
 		//else if (!square.isEmpty())
 			//continue;
-	return false;	
+//	return false;	
 			
 //outside of loop: return false
-		}
-		
+//		}
+//if added to areAllTilesInFrame, doesn't need a separate function. And doesn't anymore need distinction vertical vs horizontal.		
 	
 	
 	public void reset() {
@@ -262,7 +290,7 @@ private String temporaryWord; //proposed implementation for checking if it's fir
 		//b) in Square as check tile.isNull()
 		//c) make board a two-dimensional boolean Array[15][15] //that's what Chris said...
 		//
-	
+	System.out.println("Use me! \n For: \n resetting whole board at beginning/end game \n refreshing Square on each (whole word)/(tile?) placement")
 	//void reset()
 		//set isEmpty = false and set temporaryWord = null
 		//{if (this.tile.isEmpty == false) 
