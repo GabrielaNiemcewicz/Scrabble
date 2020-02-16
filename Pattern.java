@@ -54,29 +54,35 @@ public void draw_V_right() { //part of X
 }
 
 public void draw_X_as_VV() {
-	draw_V_right(this.SIZE);
-	draw_V_left(this.SIZE);
+	draw_V_right();
+	draw_V_left();
 }
 
 public void draw_V_left(int size) {
 	int j;
+	int absolut;
 	for (int i=(this.SIZE-size)/2; i<(size+this.SIZE)/2; i++)
-		{j=this.middle(size)-java.lang.Math.abs(i-(this.SIZE-size)/2-this.middle(size));
-		this.cardboard[i][j] = 'v'; }
+	{	absolut= java.lang.Math.abs(i-(this.SIZE-size)/2-this.middle(size));
+		j=this.middle(size)- absolut;
+		this.cardboard[i][j] = 'v';}
 }
 
 public void draw_V_right(int size) {
 	int j;
+	int absolut; 
 	for (int i=(this.SIZE-size)/2; i<(size+this.SIZE)/2; i++)
-		{j=this.SIZE-1-(this.middle(size)-java.lang.Math.abs(i-(this.SIZE-size)/2-this.middle(size)));
+		{absolut= java.lang.Math.abs(i-(this.SIZE-size)/2-this.middle(size));
+		j=this.SIZE-1-(this.middle(size)-absolut);
 		this.cardboard[i][j] = 'v'; }
 	
 }
 
 public void draw_V_up(int size) {
 	int j;
+	int absolut;
 	for (int i=(this.SIZE-size)/2; i<(size+this.SIZE)/2; i++)
-		{j=this.middle(size)-java.lang.Math.abs(i-(this.SIZE-size)/2-this.middle(size));
+		{absolut=java.lang.Math.abs(i-(this.SIZE-size)/2-this.middle(size));
+		j=this.middle(size)-absolut;
 		this.cardboard[j][i] = 'v'; }
 }
 
@@ -84,8 +90,10 @@ public void draw_V_up(int size) {
 
 public void draw_V_down (int size) {
 	int j;
+	int absolut;
 	for (int i=(this.SIZE-size)/2; i<(size+this.SIZE)/2; i++) {
-		{j=this.SIZE-1-(this.middle(size)-java.lang.Math.abs(i-(this.SIZE-size)/2-this.middle(size)));
+		{	absolut = java.lang.Math.abs(i-(this.SIZE-size)/2-this.middle(size));
+			j=this.SIZE-1-(this.middle(size)-absolut);
 		this.cardboard[j][i] = 'v'; }
 }
 
@@ -93,14 +101,16 @@ public void draw_V_down (int size) {
 
 public void draw_all_V (int size) {
 	int j;
+	int absolut;
 	for (int i=(this.SIZE-size)/2; i<(size+this.SIZE)/2; i++)
-		j=this.middle(size)-java.lang.Math.abs(i-(this.SIZE-size)/2-this.middle(size));
+		{absolut = java.lang.Math.abs(i-(this.SIZE-size)/2-this.middle(size));
+		j=this.middle(size)-absolut;
 			this.cardboard[i][j] = 'v';
 			this.cardboard[j][i] = 'v';
-		j=this.SIZE-1-(this.middle(size)-java.lang.Math.abs(i-(this.SIZE-size)/2-this.middle(size)));
+		j=this.SIZE-1-(this.middle(size)-absolut);
 			this.cardboard[i][j] = 'v';
 			this.cardboard[j][i] = 'v';
 }
 
-
+}
 }
