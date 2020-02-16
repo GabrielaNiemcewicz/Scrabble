@@ -40,25 +40,25 @@ protected Tile uninitializedNullTile; //never gets initialized. Reassign * point
 		this.temporaryWord = userWord;
 		//in 3rd assignment, gets word from **Player** keyboard input. Now no parsing input needed.  
 		//doing it this way from beginning might save work for later. 
-		//maybe separate Class for storing a word and checking its validity? Maybe? 
 		//I'm leaving it in Board for a now
 		//merge to 1 function
 		
 	}
 	
 	
-	public void placeWordVertically(ArrayList <Tile> tilesFromFrame, int firstPosition_x,int firstPosition_y){ //in main: board.placeWordVertically(frame.someGetterFunction()) //best get all Tiles needed, get one Tile ok
+	public void placeWordVertically(ArrayList <Tile> tilesFromFrame, int firstPosition_x,int firstPosition_y)
+	{ //in main: board.placeWordVertically(frame.someGetterFunction()) //best get all Tiles needed, get one Tile ok
 		//does its set of checks first
-		if (!this.isWordValidVertically(temporaryWord))
-		{
+		//if (!this.isWordValidVertically())
+		
 			
 			//this.temporaryWord = ""; //only if this is the first round
-			System.out.println("Choose your word again");
+			System.out.println("Choose your word again, I'm a method in progress");
 			//give user input
-		}
-		else	//if passed tests
+		//}
+		//else	//if passed tests
 			for (int i=0; i<this.temporaryWord.length(); i++)
-					System.out.println("I'm in progress");	//ArrayList <Tile> dummy = new ArrayList() ;
+					System.out.println("x is mobile. x+i. I'm in progress");	//ArrayList <Tile> dummy = new ArrayList() ;
 		
 		
 		
@@ -66,10 +66,10 @@ protected Tile uninitializedNullTile; //never gets initialized. Reassign * point
 	
 	public void placeWordHorizontally(ArrayList <Tile> tilesFromFrame, int firstPosition_x,int firstPosition_y){ //necessary to be separate! //change interface
 		//does set of checks first
-		if (this.isWordValidHorizontally())
+		//if (this.isWordValidHorizontally(/*variables variable variable*/))
 		//ArrayList <Tile> dummy = new ArrayList() ;
 				for (int i=0; i<this.temporaryWord.length(); i++)
-					System.out.println("I'm in progress");
+					System.out.println("y is mobile. y+i. I'm in progress");
 		
 	}
 	
@@ -94,20 +94,20 @@ protected Tile uninitializedNullTile; //never gets initialized. Reassign * point
 				//...
 	// return true; 
 	if(this.isFirstWord())	
-		if(!this.inTheMiddleHorizontally(firstPosition_x,  firstPosition_y)) //change interface, unneeded vars
+		if(!this.inTheMiddle(firstPosition_x,  firstPosition_y)) //x is fixed, y is mobile
 		{System.out.println("First word needs to connect to Square in the middle, 8th, 8th");
 		return false;}
 	
-	if (!this.isFirstPositionValid( firstPosition_x, firstPosition_y))
+	if (!this.isFirstPositionValid(firstPosition_x, firstPosition_y))
 		{System.out.println("You can't start your word here- square index out of Board");
 		return false;}	
-	else if (!this.isWordWithinBoundsHorizontally(firstPosition_x, firstPosition_y)) //change interface
+	else if (!this.isWordWithinBounds(firstPosition_y)) //change interface
 		{System.out.println("Your word is too long to be placed here at this place on Board");
 		return false;}	
-	else if(!this.isInHarmonyWithTilesOnBoardHorizontally( firstPosition_x, firstPosition_y)
+	else if(!this.isInHarmonyWithTilesOnBoard(firstPosition_x, firstPosition_y)
 			{System.out.println("Your word clashes with letters on the board.");
 			return false;}		
-	else if(!this.areAllTilesInFrameHorizontally( firstPosition_x, firstPosition_y, frame)) 
+	else if(!this.areAllTilesInFrame(firstPosition_x, firstPosition_y, frame)) 
 	//function prints one of 3 errors- all has to be inside
 	return false;
 	
@@ -118,42 +118,30 @@ return true;
 	
 	//all sets of tests together
 	public boolean isWordValidVertically(int firstPosition_x, int firstPosition_y, Frame frame) {
-	//if first not valid, on false, throw new Exception with explanation what happened, else (continue testing)
-		//else if second not valid, throw, else (continue testing)
-			//...
-				//...
-	// return true; 
-	return false;
+		return this.isWordValidHorizontally(firstPosition_y, firstPosition_x, frame)
+		//we swap indices = now x is mobile, and y is fixed
+		//because algorithms are symmetrical
 	}
 	
 	
-	////sets of tests
-	//public boolean isAnyTileFromFrame(String checked_word) {
-	////necessary - remove from word search character(s) already "on the path" on Board that word of this length contains 
-	//// Frame contains ready method	boolean isLetterIn (char checkedLetter)
-	//	// loop until first letter found - then break
-//	return false;
-//	}
 	
-	
-//commented out, because there is a neat way to check it on the way to areAllTilesInTheFrame, but nice code idea if we resign from this implementation
 	
 	public boolean isFirstPositionValid(int firstPosition_x, int firstPosition_y) {
 		if(firstPosition_x> -1 && firstPosition_x<15 && firstPosition_y> -1 && firstPosition_y<15)
 			return true;
-		else return false;
-	
+		else return false;	
 	}
 	
-	public boolean areAllTilesInFrameHorizontally(int firstPosition_x, int firstPosition_y, Frame frame) {
+	//EXTREMELY IMPORTANT- DO THIS TEST AFTER CHECKING FOR CLASHES WITH EXISTING TILES
+	public boolean areAllTilesInFrame(int firstPositionFixed, int firstPositionMobile, Frame frame) {
 		String copyOf_checked_word = this.temporaryWord;
 		char tempRemovedCharacter ;
 		Frame tempFrame = frame;
 		for (int i = 0; i<this.temporaryWord.length(); i++)
-			if (board[firstPosition_x][firstPosition_y+i].isEmpty())
+			if (board[firstPositionFixed][firstPositionMobile+i].isEmpty())
 				continue;
 			else {
-				 tempRemovedCharacter = board[firstPosition_x][firstPosition_y+i].getCharacter(); //error in Square method. Not in Bord method.
+				 tempRemovedCharacter = board[firstPositionFixed][firstPositionMobile+i].getCharacter(); //error in Square method. Not in Bord method.
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////copyOf_checked_word.delete(tempRemovedChar);////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -178,88 +166,35 @@ return true;
 		//done//Frame contains ready method boolean isStringIn (String checked_word)
 
 	
-	//EXTREMELY IMPORTANT- DO THIS TEST AFTER CHECKING FOR CLASHES WITH EXISTING TILES
-	public boolean areAllTilesInFrameVertically(int firstPosition_x,int firstPosition_y, Frame frame) {
-		String copyOf_checked_word = this.temporaryWord; 
-		char tempRemovedCharacter; 
-		
-		for (int i = 0; i<this.temporaryWord.length(); i++)
-			if (board[firstPosition_x+i][firstPosition_y].isEmpty())
-				continue;
-			else {
-				 tempRemovedCharacter = board[firstPosition_x+i][firstPosition_y].getCharacter(); //error in Square at Tile initialization. GetCharacter errors with Tile on.
-///////////////////////////////////////////////////////////////////////////////////////////////////////
-////////////////copyOf_checked_word.delete(tempRemovedChar);////////////////////////////////////////////
-//////////////////////////////////////////////////////////////////////////////////////////////////////
-			}
-		if 	(copyOf_checked_word.length()==0) 
-			{System.out.println("Word invalid- no letter from Frame used");
-			return false;}
-		
-		else if (copyOf_checked_word.length()==this.temporaryWord.length()) //on start of game. temp.length=0, so no need to check if it's beginning
-			{System.out.println("Word invalid- doesn't connect to any words on Board");
-			return false;}
-		else 
-		{
-			if (!frame.isStringIn(copyOf_checked_word.toString()))
-			{System.out.println("You don't have necessary tiles in the frame to create this word");
-			return false;}
-			
-			else return true;
-		}
-		
-			
-	}
+
+
 
 	
 	
 	
-	public boolean isWordWithinBoundsVertically(int firstPosition_x, int firstPosition_y)
+	public boolean isWordWithinBounds  (int firstPositionMobile)
 	{
-		//if Square at first position is invalid, return false, else (continue) 
-		if (firstPosition_y+this.temporaryWord.length()>15) return false; 
+	
+		if (firstPositionMobile+this.temporaryWord.length()>15) return false; 
 		else return true;
 	
 	}
 	
-	public boolean isWordWithinBoundsHorizontally(int firstPosition_x, int firstPosition_y)
-	{
-		//if Square at first position is invalid, return false, else (continue) => used again, maybe separate function? Check in input function?
-		if (firstPosition_x+this.temporaryWord.length()>15) return false;
-		else return true;
-	}
 	
-	public boolean isInHarmonyWithTilesOnBoardVertically(int firstPosition_x, int firstPosition_y) throws Exception
-	{		
-		for (int i=0; i<this.temporaryWord.length(); i++) {
-			
-			
-			if (board[firstPosition_x+i][firstPosition_y].isEmpty())   //This method I made for displaying if Tile is not on Square yet	
-				 continue;
-			else if (board[firstPosition_x+i][firstPosition_y].getCharacter() == this.temporaryWord.charAt(i))
-				continue;
-			else if (board[firstPosition_x+i][firstPosition_y].getCharacter() != this.temporaryWord.charAt(i))
-				return false;
-			else throw new Exception("Equality between Square.getCharacter(i) and String.charAt(i) is failing");}
-		return true;	
 
-
-
-
-	}
 	
 	
 	
-	public boolean isInHarmonyWithTilesOnBoardHorizontally( int firstPosition_x, int firstPosition_y) throws Exception
+	public boolean isInHarmonyWithTilesOnBoard( int firstPositionFixed, int firstPositionMobile) throws Exception
 	{ 
 		for (int i=0; i<this.temporaryWord.length(); i++) {
 			
-			//have to loop through squares IN RIGHT DIRECTION HORIZONTALLY
-			if (board[firstPosition_x][firstPosition_y+i].isEmpty())   //This method I made for displaying if Tile is not on Square yet	
+		
+			if (board[firstPositionFixed][firstPositionMobile+i].isEmpty())   //This method I made for displaying if Tile is not on Square yet	
 				 continue;
-			else if (board[firstPosition_x][firstPosition_y+i].getCharacter() == this.temporaryWord.charAt(i))
+			else if (board[firstPositionFixed][firstPositionMobile+i].getCharacter() == this.temporaryWord.charAt(i))
 				continue;
-			else if (board[firstPosition_x][firstPosition_y+i].getCharacter() != this.temporaryWord.charAt(i))
+			else if (board[firstPositionFixed][firstPositionMobile+i].getCharacter() != this.temporaryWord.charAt(i))
 				return false;
 			else 
 				throw new Exception("Equality between Square.getCharacter(i) and String.charAt(i) is failing");
@@ -284,40 +219,18 @@ return true;
 	}
 	
 	
-	public boolean inTheMiddleVertically(int firstPosition_x, int firstPosition_y)
-	{
-		
-			if(firstPosition_x!=7)
-				return false;
-			else if (firstPosition_y<=7 && this.temporaryWord.length()+firstPosition_y>=7)
-				return true;
-		return false;
-		
+
 	
-	}
-	
-	public boolean inTheMiddleHorizontally(int firstPosition_x, int firstPosition_y)
+	public boolean inTheMiddle(int firstPositionFixed, int firstPositionMobile)
 	{
-		if(firstPosition_y!=7)
+		if(firstPositionFixed!=7)
 			return false;
-		else if (firstPosition_x<=7 && this.temporaryWord.length()+firstPosition_x>=7)
+		else if (firstPositionMobile<=7 && this.temporaryWord.length()+firstPositionMobile>=7)
 			return true;
 	return false;
 	}
 	
-	//public boolean connectsToTileOnBoard(String checked_word, int firstPosition_x, int firstPosition_y) {
-	//EXTREMELY IMPORTANT- DO THIS TEST ~AFTER~ TESTING FOR CONFLICTS WITH TILES ON BOARD! 
-	//have to loop through squares IN RIGHT DIRECTION HORIZONTALLY
-		//if square.isEmpty()   //This method I made for displaying if Tile is not on Square yet	
-			//do nothing, carry on, i++, continue
-		//else if (!square.isEmpty())
-			//continue;
-//	return false;	
-			
-//outside of loop: return false
-//		}
-//if added to areAllTilesInFrame, doesn't need a separate function. And doesn't anymore need distinction vertical vs horizontal.		
-	
+
 	
 	public void reset() {
 //at initialization, Tile is null. => isEmpty= true
