@@ -94,7 +94,7 @@ public void draw_V_down (int size) {
 	for (int i=(this.SIZE-size)/2; i<(size+this.SIZE)/2; i++) {
 		{	absolut = java.lang.Math.abs(i-(this.SIZE-size)/2-this.middle(size));
 			j=this.SIZE-1-(this.middle(size)-absolut);
-		this.cardboard[j][i] = 'v'; }
+		this.cardboard[j][i] = 'v'; System.out.print(absolut); }
 }
 
 }
@@ -113,4 +113,36 @@ public void draw_all_V (int size) {
 }
 
 }
+
+public char assign_type_X(int absolut) throws Exception
+{ 
+	//absolut for X: 765432101234567 and mirror 
+	//A = TRIPLE WORD SCORE
+	//B = DOUBLE WORD SCORE
+	//C= TRIPLE LETTER SCORE
+	//D= DOUBLE LETTER SCORE
+	if (absolut==0)
+		return 'B';
+	else 
+		return this.assign_type_V(absolut);
+}
+
+public char assign_type_V(int absolut) throws Exception {
+	//absolut for V: 21012
+	//A = TRIPLE WORD SCORE
+	//B = DOUBLE WORD SCORE
+	//C= TRIPLE LETTER SCORE
+	//D= DOUBLE LETTER SCORE
+	if (absolut<2)
+		return 'D';
+	else if (absolut==2)
+		return 'C';
+	else if (absolut<7)
+		return 'B';
+	else if (absolut ==7)
+		return 'A';
+	else throw new Exception("Distance of Tile with value multiplier from the middle is out of bounds of the board");
+	
+}
+
 }
