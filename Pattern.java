@@ -1,4 +1,4 @@
-
+//to draw valid Scrabble Board, use Board SIZE = 15, function V argument size=7, methods in progress
 public class Pattern {
 private char [][] cardboard;
 
@@ -37,7 +37,7 @@ public void reset() {
 			
 //}
 public int middle() {
-	return middle(this.SIZE/2);
+	return middle(this.SIZE);
 }
 
 public int middle(int size)
@@ -112,6 +112,28 @@ public void draw_all_V (int size) {
 			this.cardboard[j][i] = 'v';
 }
 
+}
+
+public void draw_scattered_3W () {
+	for (int i=0; i<this.SIZE; i+=this.middle())
+		for (int j=0; j<this.SIZE; j+=this.middle())
+			{ if (i==j && i==this.middle())
+				this.cardboard[i][j] = 'f';
+			  else
+				this.cardboard[i][j] = 's';}
+	
+	
+}
+
+public void draw_scattered_2L () {
+	int [] I = {0,14};
+	int [] J = {2,this.SIZE-1-2};
+		for (int i: I)
+		for (int j: J)
+		{this.cardboard[i][j] = 'S';
+		this.cardboard[j][i] = 'S';
+		//System.out.printf("i: %d, j: %d\n",i,j);
+		}
 }
 
 public char assign_type_X(int absolut) throws Exception
