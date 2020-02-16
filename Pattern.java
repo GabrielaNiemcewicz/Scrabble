@@ -90,4 +90,17 @@ public void draw_V_down (int size) {
 }
 
 }
+
+public void draw_all_V (int size) {
+	int j;
+	for (int i=(this.SIZE-size)/2; i<(size+this.SIZE)/2; i++)
+		j=this.middle(size)-java.lang.Math.abs(i-(this.SIZE-size)/2-this.middle(size));
+			this.cardboard[i][j] = 'v';
+			this.cardboard[j][i] = 'v';
+		j=this.SIZE-1-(this.middle(size)-java.lang.Math.abs(i-(this.SIZE-size)/2-this.middle(size)));
+			this.cardboard[i][j] = 'v';
+			this.cardboard[j][i] = 'v';
+}
+
+
 }
