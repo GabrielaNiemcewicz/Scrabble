@@ -61,7 +61,7 @@ public void draw_X_as_VV() {
 public void draw_V_left(int size) {
 	int j;
 	int absolut;
-	for (int i=(this.SIZE-size)/2; i<(size+this.SIZE)/2; i++)
+	for (int i=(this.SIZE-size)/2+1; i<(size+this.SIZE)/2-1; i++)
 	{	absolut= java.lang.Math.abs(i-(this.SIZE-size)/2-this.middle(size));
 		j=this.middle(size)- absolut;
 		this.cardboard[i][j] = 'v';}
@@ -70,7 +70,7 @@ public void draw_V_left(int size) {
 public void draw_V_right(int size) {
 	int j;
 	int absolut; 
-	for (int i=(this.SIZE-size)/2; i<(size+this.SIZE)/2; i++)
+	for (int i=(this.SIZE-size)/2+1; i<(size+this.SIZE)/2-1; i++)
 		{absolut= java.lang.Math.abs(i-(this.SIZE-size)/2-this.middle(size));
 		j=this.SIZE-1-(this.middle(size)-absolut);
 		this.cardboard[i][j] = 'v'; }
@@ -80,7 +80,7 @@ public void draw_V_right(int size) {
 public void draw_V_up(int size) {
 	int j;
 	int absolut;
-	for (int i=(this.SIZE-size)/2; i<(size+this.SIZE)/2; i++)
+	for (int i=(this.SIZE-size)/2+1; i<(size+this.SIZE)/2-1; i++)
 		{absolut=java.lang.Math.abs(i-(this.SIZE-size)/2-this.middle(size));
 		j=this.middle(size)-absolut;
 		this.cardboard[j][i] = 'v'; }
@@ -91,7 +91,7 @@ public void draw_V_up(int size) {
 public void draw_V_down (int size) {
 	int j;
 	int absolut;
-	for (int i=(this.SIZE-size)/2; i<(size+this.SIZE)/2; i++) {
+	for (int i=(this.SIZE-size)/2+1; i<(size+this.SIZE)/2-1; i++) {
 		{	absolut = java.lang.Math.abs(i-(this.SIZE-size)/2-this.middle(size));
 			j=this.SIZE-1-(this.middle(size)-absolut);
 		this.cardboard[j][i] = 'v'; System.out.print(absolut); }
@@ -102,7 +102,7 @@ public void draw_V_down (int size) {
 public void draw_all_V (int size) {
 	int j;
 	int absolut;
-	for (int i=(this.SIZE-size)/2; i<(size+this.SIZE)/2; i++)
+	for (int i=(this.SIZE-size)/2+1; i<(size+this.SIZE)/2-1; i++)
 		{absolut = java.lang.Math.abs(i-(this.SIZE-size)/2-this.middle(size));
 		j=this.middle(size)-absolut;
 			this.cardboard[i][j] = 'v';
@@ -161,8 +161,6 @@ public char assign_type_V(int absolut) throws Exception {
 		return 'C';
 	else if (absolut<7)
 		return 'B';
-	else if (absolut ==7)
-		return 'A';
 	else throw new Exception("Distance of Tile with value multiplier from the middle is out of bounds of the board");
 	
 }
