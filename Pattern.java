@@ -30,6 +30,12 @@ public void reset() {
 	
 }
 
+public void drawScrabble() {
+this.draw_all_V(7);
+this.draw_X_as_VV();
+this.draw_scattered_2L();
+this.draw_scattered_3W();
+}
 //public void draw_X () {
 //	for (int i=0; i<this.SIZE; i++)
 //		{this.cardboard[i][i] = 'x';
@@ -64,7 +70,11 @@ public void draw_V_left(int size) {
 	for (int i=(this.SIZE-size)/2+1; i<(size+this.SIZE)/2-1; i++)
 	{	absolut= java.lang.Math.abs(i-(this.SIZE-size)/2-this.middle(size));
 		j=this.middle(size)- absolut;
-		this.cardboard[i][j] = 'v';}
+		
+		if (this.SIZE==size) //think over lambda as an argument? Or rewrite to separate function?
+			this.cardboard[i][j] = this.assign_type_X(absolut);
+		else
+			this.cardboard[i][j] = this.assign_type_V(absolut);}
 }
 
 public void draw_V_right(int size) {
@@ -73,7 +83,10 @@ public void draw_V_right(int size) {
 	for (int i=(this.SIZE-size)/2+1; i<(size+this.SIZE)/2-1; i++)
 		{absolut= java.lang.Math.abs(i-(this.SIZE-size)/2-this.middle(size));
 		j=this.SIZE-1-(this.middle(size)-absolut);
-		this.cardboard[i][j] = 'v'; }
+		if (this.SIZE==size) //think over lambda as an argument? Or rewrite to separate function?
+			this.cardboard[i][j] = this.assign_type_X(absolut);
+		else
+			this.cardboard[i][j] = this.assign_type_V(absolut); }
 	
 }
 
@@ -83,7 +96,7 @@ public void draw_V_up(int size) {
 	for (int i=(this.SIZE-size)/2+1; i<(size+this.SIZE)/2-1; i++)
 		{absolut=java.lang.Math.abs(i-(this.SIZE-size)/2-this.middle(size));
 		j=this.middle(size)-absolut;
-		this.cardboard[j][i] = 'v'; }
+		this.cardboard[j][i] = this.assign_type_V(absolut); }
 }
 
 
@@ -94,7 +107,7 @@ public void draw_V_down (int size) {
 	for (int i=(this.SIZE-size)/2+1; i<(size+this.SIZE)/2-1; i++) {
 		{	absolut = java.lang.Math.abs(i-(this.SIZE-size)/2-this.middle(size));
 			j=this.SIZE-1-(this.middle(size)-absolut);
-		this.cardboard[j][i] = 'v'; System.out.print(absolut); }
+		this.cardboard[j][i] = this.assign_type_V(absolut); }
 }
 
 }
@@ -105,11 +118,11 @@ public void draw_all_V (int size) {
 	for (int i=(this.SIZE-size)/2+1; i<(size+this.SIZE)/2-1; i++)
 		{absolut = java.lang.Math.abs(i-(this.SIZE-size)/2-this.middle(size));
 		j=this.middle(size)-absolut;
-			this.cardboard[i][j] = 'v';
-			this.cardboard[j][i] = 'v';
+			this.cardboard[i][j] = this.assign_type_V(absolut);
+			this.cardboard[j][i] = this.assign_type_V(absolut);
 		j=this.SIZE-1-(this.middle(size)-absolut);
-			this.cardboard[i][j] = 'v';
-			this.cardboard[j][i] = 'v';
+			this.cardboard[i][j] = this.assign_type_V(absolut);
+			this.cardboard[j][i] = this.assign_type_V(absolut);
 }
 
 }
@@ -118,9 +131,9 @@ public void draw_scattered_3W () {
 	for (int i=0; i<this.SIZE; i+=this.middle())
 		for (int j=0; j<this.SIZE; j+=this.middle())
 			{ if (i==j && i==this.middle())
-				this.cardboard[i][j] = 'f';
+				continue; //covered by assign_type_X
 			  else
-				this.cardboard[i][j] = 's';}
+				this.cardboard[i][j] = this.assign_type_scattered_3W();}
 	
 	
 }
@@ -130,13 +143,13 @@ public void draw_scattered_2L () {
 	int [] J = {2,this.SIZE-1-2};
 		for (int i: I)
 		for (int j: J)
-		{this.cardboard[i][j] = 'S';
-		this.cardboard[j][i] = 'S';
+		{this.cardboard[i][j] = this.assign_type_scattered_2L();
+		this.cardboard[j][i] = this.assign_type_scattered_2L();
 		//System.out.printf("i: %d, j: %d\n",i,j);
 		}
 }
 
-public char assign_type_X(int absolut) throws Exception
+public char assign_type_X(int absolut) 
 { 
 	//absolut for X: 765432101234567 and mirror 
 	//A = TRIPLE WORD SCORE
@@ -149,20 +162,29 @@ public char assign_type_X(int absolut) throws Exception
 		return this.assign_type_V(absolut);
 }
 
-public char assign_type_V(int absolut) throws Exception {
+public char assign_type_V(int absolut) {
 	//absolut for V: 21012
 	//A = TRIPLE WORD SCORE
 	//B = DOUBLE WORD SCORE
 	//C= TRIPLE LETTER SCORE
 	//D= DOUBLE LETTER SCORE
+	char d = 'D';
+	char c = 'C';
+	char b = 'B';
 	if (absolut<2)
-		return 'D';
+		return d;
 	else if (absolut==2)
-		return 'C';
+		return c;
 	else if (absolut<7)
-		return 'B';
-	else throw new Exception("Distance of Tile with value multiplier from the middle is out of bounds of the board");
+		return b;
+	else return 'e';
 	
 }
+
+public char assign_type_scattered_3W()//A = TRIPLE WORD SCORE
+{return 'A'; }
+
+public char assign_type_scattered_2L () 	//D= DOUBLE LETTER SCORE
+{ return 'D'; }
 
 }
