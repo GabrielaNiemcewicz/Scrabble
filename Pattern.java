@@ -1,116 +1,86 @@
-//to draw valid Scrabble Board, use Board SIZE = 15, function V argument size=7, methods in progress
+//to draw valid Scrabble Board, use  use .drawScrabble. 
+//To use smaller methods, Board SIZE = 15, V argument size=7. use method. use print. use reset().
+ 	//A = TRIPLE WORD SCORE
+	//B = DOUBLE WORD SCORE
+	//C= TRIPLE LETTER SCORE
+	//D= DOUBLE LETTER SCORE
+	//o= regular Square
+
 public class Pattern {
-private char [][] cardboard;
+private char [][] cardboard; //Scrabble Board in chars
 
-private int SIZE;
+private int SIZE; //size of Board. For scrabble, SIZE=15
 
-Pattern(int size){
+Pattern(int size){ //initializer
 	this.SIZE = size;
 	this.cardboard = new char[SIZE][SIZE];
-	this.reset();
+	this.reset(); //sets all characters to regular square, "o"
 
 }
 	
-public void print() {
+public void print() { //print board at any moment
 	for (int i=0; i<this.SIZE; i++)
 		for (int j=0; j<this.SIZE; j++) {
-			System.out.print(this.cardboard[i][j]+" ");
+			System.out.print(this.cardboard[i][j]+" "); //display each char one by one
 			if (j==this.SIZE-1) 
-				System.out.println("");
+				System.out.println(""); //go down a line if the row is over
 			else continue;}
 		
 }
 
 
-public void reset() {
-	
+public void reset() { 
 	for (int i=0; i<this.SIZE; i++)
 		for (int j=0; j<this.SIZE; j++)
 			this.cardboard[i][j] = 'o';
-	
 }
 
-public void drawScrabble() {
+
+public void drawScrabble() { //invoke this method to draw a valid Scrabble board at once
 this.draw_all_V(7);
 this.draw_X_as_VV();
 this.draw_scattered_2L();
 this.draw_scattered_3W();
-}
-//public void draw_X () {
-//	for (int i=0; i<this.SIZE; i++)
-//		{this.cardboard[i][i] = 'x';
-//		this.cardboard[this.SIZE-1-i][i] = 'x';}
-			
-//}
-public int middle() {
-	return middle(this.SIZE);
+this.print();
 }
 
-public int middle(int size)
-{
-	return size/2;
-}
 
-public void draw_V_left () { //part of X
-	draw_V_left(this.SIZE);
-}
+private int middle() //middle of the board- single index
+{ return middle(this.SIZE); }
 
-public void draw_V_right() { //part of X
-	draw_V_right(this.SIZE);
-}
+private int middle(int size) //middle of V pattern- absolut here equals 0, it's "peak", "pointed part"
+{ return size/2; }
 
-public void draw_X_as_VV() {
+
+
+public void draw_X_as_VV() { 
 	draw_V_right();
 	draw_V_left();
 }
 
-public void draw_V_left(int size) {
+private void draw_V_left() { //part of drawing X
 	int j;
 	int absolut;
-	for (int i=(this.SIZE-size)/2+1; i<(size+this.SIZE)/2-1; i++)
-	{	absolut= java.lang.Math.abs(i-(this.SIZE-size)/2-this.middle(size));
-		j=this.middle(size)- absolut;
+	for (int i=0+1; i<this.SIZE-1; i++)
+	{	absolut= java.lang.Math.abs(i-this.middle(this.SIZE));
+		j=this.middle(this.SIZE)- absolut;
 		
-		if (this.SIZE==size) //think over lambda as an argument? Or rewrite to separate function?
-			this.cardboard[i][j] = this.assign_type_X(absolut);
-		else
-			this.cardboard[i][j] = this.assign_type_V(absolut);}
+			this.cardboard[i][j] = this.assign_type_X(absolut);}
 }
 
-public void draw_V_right(int size) {
+private void draw_V_right() { //part of drawing X
 	int j;
 	int absolut; 
-	for (int i=(this.SIZE-size)/2+1; i<(size+this.SIZE)/2-1; i++)
-		{absolut= java.lang.Math.abs(i-(this.SIZE-size)/2-this.middle(size));
-		j=this.SIZE-1-(this.middle(size)-absolut);
-		if (this.SIZE==size) //think over lambda as an argument? Or rewrite to separate function?
-			this.cardboard[i][j] = this.assign_type_X(absolut);
-		else
-			this.cardboard[i][j] = this.assign_type_V(absolut); }
+	for (int i=0+1; i<this.SIZE-1; i++){
+			absolut= java.lang.Math.abs(i-this.middle(this.SIZE));
+			j=this.SIZE-1-(this.middle(this.SIZE)-absolut);
+
+			this.cardboard[i][j] = this.assign_type_X(absolut); }
 	
 }
 
-public void draw_V_up(int size) {
-	int j;
-	int absolut;
-	for (int i=(this.SIZE-size)/2+1; i<(size+this.SIZE)/2-1; i++)
-		{absolut=java.lang.Math.abs(i-(this.SIZE-size)/2-this.middle(size));
-		j=this.middle(size)-absolut;
-		this.cardboard[j][i] = this.assign_type_V(absolut); }
-}
 
 
-
-public void draw_V_down (int size) {
-	int j;
-	int absolut;
-	for (int i=(this.SIZE-size)/2+1; i<(size+this.SIZE)/2-1; i++) {
-		{	absolut = java.lang.Math.abs(i-(this.SIZE-size)/2-this.middle(size));
-			j=this.SIZE-1-(this.middle(size)-absolut);
-		this.cardboard[j][i] = this.assign_type_V(absolut); }
-}
-
-}
 
 public void draw_all_V (int size) {
 	int j;
@@ -118,16 +88,16 @@ public void draw_all_V (int size) {
 	for (int i=(this.SIZE-size)/2+1; i<(size+this.SIZE)/2-1; i++)
 		{absolut = java.lang.Math.abs(i-(this.SIZE-size)/2-this.middle(size));
 		j=this.middle(size)-absolut;
-			this.cardboard[i][j] = this.assign_type_V(absolut);
-			this.cardboard[j][i] = this.assign_type_V(absolut);
+			this.cardboard[i][j] = this.assign_type_V(absolut); //left
+			this.cardboard[j][i] = this.assign_type_V(absolut); //up
 		j=this.SIZE-1-(this.middle(size)-absolut);
-			this.cardboard[i][j] = this.assign_type_V(absolut);
-			this.cardboard[j][i] = this.assign_type_V(absolut);
+			this.cardboard[i][j] = this.assign_type_V(absolut); //right
+			this.cardboard[j][i] = this.assign_type_V(absolut); //down
 }
 
 }
 
-public void draw_scattered_3W () {
+public void draw_scattered_3W () { //scattered squares "multiply word score by 3" 
 	for (int i=0; i<this.SIZE; i+=this.middle())
 		for (int j=0; j<this.SIZE; j+=this.middle())
 			{ if (i==j && i==this.middle())
@@ -138,53 +108,41 @@ public void draw_scattered_3W () {
 	
 }
 
-public void draw_scattered_2L () {
+public void draw_scattered_2L () { //scattered squares "multiply letter score by 2" 
 	int [] I = {0,14};
-	int [] J = {2,this.SIZE-1-2};
+	int [] J = {3,this.SIZE-1-3};
 		for (int i: I)
 		for (int j: J)
 		{this.cardboard[i][j] = this.assign_type_scattered_2L();
-		this.cardboard[j][i] = this.assign_type_scattered_2L();
-		//System.out.printf("i: %d, j: %d\n",i,j);
-		}
+		this.cardboard[j][i] = this.assign_type_scattered_2L();}
 }
 
-public char assign_type_X(int absolut) 
+private char assign_type_X(int absolut) 
 { 
-	//absolut for X: 765432101234567 and mirror 
-	//A = TRIPLE WORD SCORE
-	//B = DOUBLE WORD SCORE
-	//C= TRIPLE LETTER SCORE
-	//D= DOUBLE LETTER SCORE
+	//absolut for X: 6543210123456 and 1 more mirror 
 	if (absolut==0)
 		return 'B';
 	else 
 		return this.assign_type_V(absolut);
 }
 
-public char assign_type_V(int absolut) {
-	//absolut for V: 21012
-	//A = TRIPLE WORD SCORE
-	//B = DOUBLE WORD SCORE
-	//C= TRIPLE LETTER SCORE
-	//D= DOUBLE LETTER SCORE
-	char d = 'D';
-	char c = 'C';
-	char b = 'B';
+private char assign_type_V(int absolut) {
+	//absolut for V: 21012 and 3 more mirrors
+
+	
 	if (absolut<2)
-		return d;
+		return 'D';
 	else if (absolut==2)
-		return c;
-	else if (absolut<7)
-		return b;
-	else return 'e';
+		return 'C';
+	else //if (absolut<7)
+		return 'B';
 	
 }
 
-public char assign_type_scattered_3W()//A = TRIPLE WORD SCORE
+private char assign_type_scattered_3W()//A = TRIPLE WORD SCORE
 {return 'A'; }
 
-public char assign_type_scattered_2L () 	//D= DOUBLE LETTER SCORE
+private char assign_type_scattered_2L () 	//D= DOUBLE LETTER SCORE
 { return 'D'; }
 
 }
