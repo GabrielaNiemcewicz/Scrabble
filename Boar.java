@@ -19,7 +19,7 @@ private boolean [][] hasTile;
 		scrabble.drawScrabble();
 		for (int i=0;i<this.SIZE; i++)
 			for (int j=0;j<this.SIZE; j++)
-				{ this.cardboard[i][j]= scrabble.cardboard[i][j];  //bad encapsulation, will fix later
+				{ this.cardboard[i][j]= scrabble.getCardboard()[i][j];  //bad encapsulation, will fix later
 				  this.hasTile[i][j] = false;
 				}
 	}
@@ -27,7 +27,7 @@ private boolean [][] hasTile;
 	
 	
 	public char display_Tile(int row, int column) {  
-		return board[row][column].getLetter();
+		return board[row][column].readLetter();
 	}
 	
 	public char display_Square(int row, int column) {

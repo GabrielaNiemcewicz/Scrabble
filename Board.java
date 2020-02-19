@@ -87,7 +87,7 @@ protected Tile uninitializedNullTile; //never gets initialized. Reassign * point
 	
 	
 	//all sets of tests together
-	public boolean isWordValidHorizontally(int firstPosition_x, int firstPosition_y, Frame frame) {
+	public boolean isWordValidHorizontally(int firstPosition_x, int firstPosition_y, Frame frame) throws Exception {
 	//if first not valid, on false, write output what happened, else (continue testing)
 		//else if second not valid, throw, else (continue testing)
 			//...
@@ -104,7 +104,7 @@ protected Tile uninitializedNullTile; //never gets initialized. Reassign * point
 	else if (!this.isWordWithinBounds(firstPosition_y)) //change interface
 		{System.out.println("Your word is too long to be placed here at this place on Board");
 		return false;}	
-	else if(!this.isInHarmonyWithTilesOnBoard(firstPosition_x, firstPosition_y)
+	else if(!this.isInHarmonyWithTilesOnBoard(firstPosition_x, firstPosition_y))
 			{System.out.println("Your word clashes with letters on the board.");
 			return false;}		
 	else if(!this.areAllTilesInFrame(firstPosition_x, firstPosition_y, frame)) 
@@ -117,8 +117,8 @@ return true;
 	}
 	
 	//all sets of tests together
-	public boolean isWordValidVertically(int firstPosition_x, int firstPosition_y, Frame frame) {
-		return this.isWordValidHorizontally(firstPosition_y, firstPosition_x, frame)
+	public boolean isWordValidVertically(int firstPosition_x, int firstPosition_y, Frame frame) throws Exception {
+		return this.isWordValidHorizontally(firstPosition_y, firstPosition_x, frame);
 		//we swap indices = now x is mobile, and y is fixed
 		//because algorithms are symmetrical
 	}

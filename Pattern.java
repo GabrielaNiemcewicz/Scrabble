@@ -13,7 +13,7 @@ private int SIZE; //size of Board. For scrabble, SIZE=15
 
 Pattern(int size){ //initializer
 	this.SIZE = size;
-	this.cardboard = new char[SIZE][SIZE];
+	this.setCardboard(new char[SIZE][SIZE]);
 	this.reset(); //sets all characters to regular square, "o"
 
 }
@@ -21,7 +21,7 @@ Pattern(int size){ //initializer
 public void print() { //print board at any moment
 	for (int i=0; i<this.SIZE; i++)
 		for (int j=0; j<this.SIZE; j++) {
-			System.out.print(this.cardboard[i][j]+" "); //display each char one by one
+			System.out.print(this.getCardboard()[i][j]+" "); //display each char one by one
 			if (j==this.SIZE-1) 
 				System.out.println(""); //go down a line if the row is over
 			else continue;}
@@ -32,7 +32,7 @@ public void print() { //print board at any moment
 public void reset() { 
 	for (int i=0; i<this.SIZE; i++)
 		for (int j=0; j<this.SIZE; j++)
-			this.cardboard[i][j] = 'o';
+			this.getCardboard()[i][j] = 'o';
 }
 
 
@@ -65,7 +65,7 @@ private void draw_V_left() { //part of drawing X
 	{	absolut= java.lang.Math.abs(i-this.middle(this.SIZE));
 		j=this.middle(this.SIZE)- absolut;
 		
-			this.cardboard[i][j] = this.assign_type_X(absolut);}
+			this.getCardboard()[i][j] = this.assign_type_X(absolut);}
 }
 
 private void draw_V_right() { //part of drawing X
@@ -75,7 +75,7 @@ private void draw_V_right() { //part of drawing X
 			absolut= java.lang.Math.abs(i-this.middle(this.SIZE));
 			j=this.SIZE-1-(this.middle(this.SIZE)-absolut);
 
-			this.cardboard[i][j] = this.assign_type_X(absolut); }
+			this.getCardboard()[i][j] = this.assign_type_X(absolut); }
 	
 }
 
@@ -88,11 +88,11 @@ public void draw_all_V (int size) {
 	for (int i=(this.SIZE-size)/2+1; i<(size+this.SIZE)/2-1; i++)
 		{absolut = java.lang.Math.abs(i-(this.SIZE-size)/2-this.middle(size));
 		j=this.middle(size)-absolut;
-			this.cardboard[i][j] = this.assign_type_V(absolut); //left
-			this.cardboard[j][i] = this.assign_type_V(absolut); //up
+			this.getCardboard()[i][j] = this.assign_type_V(absolut); //left
+			this.getCardboard()[j][i] = this.assign_type_V(absolut); //up
 		j=this.SIZE-1-(this.middle(size)-absolut);
-			this.cardboard[i][j] = this.assign_type_V(absolut); //right
-			this.cardboard[j][i] = this.assign_type_V(absolut); //down
+			this.getCardboard()[i][j] = this.assign_type_V(absolut); //right
+			this.getCardboard()[j][i] = this.assign_type_V(absolut); //down
 }
 
 }
@@ -103,7 +103,7 @@ public void draw_scattered_3W () { //scattered squares "multiply word score by 3
 			{ if (i==j && i==this.middle())
 				continue; //covered by assign_type_X
 			  else
-				this.cardboard[i][j] = this.assign_type_scattered_3W();}
+				this.getCardboard()[i][j] = this.assign_type_scattered_3W();}
 	
 	
 }
@@ -113,8 +113,8 @@ public void draw_scattered_2L () { //scattered squares "multiply letter score by
 	int [] J = {3,this.SIZE-1-3};
 		for (int i: I)
 		for (int j: J)
-		{this.cardboard[i][j] = this.assign_type_scattered_2L();
-		this.cardboard[j][i] = this.assign_type_scattered_2L();}
+		{this.getCardboard()[i][j] = this.assign_type_scattered_2L();
+		this.getCardboard()[j][i] = this.assign_type_scattered_2L();}
 }
 
 private char assign_type_X(int absolut) 
@@ -144,5 +144,13 @@ private char assign_type_scattered_3W()//A = TRIPLE WORD SCORE
 
 private char assign_type_scattered_2L () 	//D= DOUBLE LETTER SCORE
 { return 'D'; }
+
+public char [][] getCardboard() {
+	return cardboard;
+}
+
+public void setCardboard(char [][] cardboard) {
+	this.cardboard = cardboard;
+}
 
 }
