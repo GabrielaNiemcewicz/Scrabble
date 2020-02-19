@@ -127,7 +127,7 @@ private char assign_type_X(int absolut)
 }
 
 private char assign_type_V(int absolut) {
-	//absolut for V: 21012 and 3 more mirrors
+	//absolute for V: 21012 and 3 more mirrors
 
 	
 	if (absolut<2)

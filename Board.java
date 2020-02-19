@@ -15,8 +15,7 @@ protected Tile uninitializedNullTile; //never gets initialized. Reassign * point
 		
 		//What do you think is better: 
 		//a)hard-coding in input 4 score multipliers
-		//b) do two classes extending Square- makes display code cleaner, without ifs/switch cases
-		
+		//b) do two classes extending Square- makes display code cleaner, without ifs/switch cases	
 	}
 	
 	

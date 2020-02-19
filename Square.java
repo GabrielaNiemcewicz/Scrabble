@@ -7,7 +7,6 @@ private Tile tile;
 Square(){
 	this.TILE_VALUE_MULTIPLIER = 1;
 	this.WORD_SCORE_MULTIPLIER = 1;
-
 	
 }
 
