@@ -1,12 +1,13 @@
+
 public class Square {
 
-private int TILE_VALUE_MULTIPLIER;
-private int WORD_SCORE_MULTIPLIER;
+private int TILE_MULTIPLIER;
+private int WORD_MULTIPLIER;
 private Tile tile; 
 
 Square(){
-	this.TILE_VALUE_MULTIPLIER = 1;
-	this.WORD_SCORE_MULTIPLIER = 1;
+	this.TILE_MULTIPLIER = 1;
+	this.WORD_MULTIPLIER = 1;
 	
 }
 
@@ -16,7 +17,7 @@ Square(){
 public void placeTile(Tile tile) throws Exception {
 	if (this.isEmpty())	
 		this.tile = tile;
-	else throw new Exception("Error! There's already a Tile placed on the Square...");
+	//else throw new Exception("Error! There's already a Tile placed on the Square...");
 }
 
 public char getCharacter() {
@@ -29,11 +30,11 @@ public char getCharacter() {
 public int getSinglePlacementScore() {
 	if((this.isEmpty())) 
 	return 0; //CHECK LATER: isn't checking Score of empty Square *ALWAYS* indicative of ERROR? => Exception  	
-	else return this.TILE_VALUE_MULTIPLIER*this.tile.getValue();
+	else return this.TILE_MULTIPLIER*this.tile.getValue();
 }
 
 public int getWordScoreMultiplier() {
-	return this.WORD_SCORE_MULTIPLIER ;
+	return this.WORD_MULTIPLIER ;
 }
 
 public boolean isEmpty() {
@@ -41,14 +42,16 @@ public boolean isEmpty() {
 
 }
 
-
+public void removeTile(){
+	this.tile = null;
+}
 	
 
 
 
 
 
-public void display() { //doesn't go wrong when initiating whole Board, but is quite simplistic...
+/*public void display() { //doesn't go wrong when initiating whole Board, but is quite simplistic...
 	//multiple if statements=> 1. multiple functions? (not nice for board initiation...)
 	//2. DoubleWordSquare, TripleWordSquare, DoubleLetterSquare, TripleLetterSquare extend Square (too many?)
 	//3. MultipleWordSquare, MultipleLetterSquare extend Square (nice!)
@@ -63,7 +66,7 @@ public void display() { //doesn't go wrong when initiating whole Board, but is q
 	System.out.printf("[_%c_],this.getCharacter()");
 	else System.out.print("Cell Display error- neither empty nor full");
 	
-}
+}*/
 
 
 

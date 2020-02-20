@@ -83,14 +83,14 @@ boolean isFirstRound = true;
 	else throw new Exception("Wrong character inputted into vertically or horizontally in board");
 	} 
 	
-	
+	/*
 	//all sets of tests together
 	public boolean isWordValidHorizontally(int firstPosition_x, int firstPosition_y, Frame frame, String temporaryWord) {
 	//if first not valid, on false, write output what happened, else (continue testing)
 		//else if second not valid, throw, else (continue testing)
 			//...
 				//...
-	// return true; 
+	// return true; 	
 	if(this.isFirstWord())	
 		if(!this.inTheMiddle(firstPosition_x,  firstPosition_y)) //x is fixed, y is mobile
 		{System.out.println("First word needs to connect to Square in the middle, 8th, 8th");
@@ -254,6 +254,6 @@ return true;
 			//this.tile= dommyTile
 //last 4 lines should be the same in the initializer of Square
 	}
-	
+	*/
 
 }

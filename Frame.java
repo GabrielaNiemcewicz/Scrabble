@@ -56,7 +56,7 @@ import java.util.ArrayList;
 		public int atWhichIndex (char checkedLetter) throws Exception{
 			if (!frame.isEmpty()){
 			   for (int i=0; i<frame.size(); i++) {
-			       if (frame.get(i).readLetter() == checkedLetter) return i;
+			       if (frame.get(i).getLetter() == checkedLetter) return i;
 			       else continue;
 			       } return -1;
 			}
@@ -73,7 +73,7 @@ import java.util.ArrayList;
 			for (int i=0; i<frame.size(); i++)
 			for (int j=0; j<passedString.length();j++) //enhance it
 			if (wasFound[j]==false){
-			 if (passedString.charAt(j)==frame.get(i).readLetter()){
+			 if (passedString.charAt(j)==frame.get(i).getLetter()){
 			wasFound[j]=true;
 			break;
 			} else continue;
@@ -168,7 +168,7 @@ import java.util.ArrayList;
 		public String displayAllTilesAsLetters()
 		{
 		String word = new String();
-		for (int i=0; i<frame.size(); i++) {word = word + (frame.get(i).readLetter());}
+		for (int i=0; i<frame.size(); i++) {word = word + (frame.get(i).getLetter());}
 		return word;}
 	}
 	
