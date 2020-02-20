@@ -14,7 +14,7 @@ Square(){
 	
 
 
-public void placeTile(Tile tile) throws Exception {
+public void placeTile(Tile tile){
 	if (this.isEmpty())	
 		this.tile = tile;
 	//else throw new Exception("Error! There's already a Tile placed on the Square...");

@@ -12,6 +12,10 @@ boolean isFirstRound = true;
 
 	public Board() {
 		
+		for(int i=0; i<15; i++)
+			for(int j=0; j<15; j++)
+				board[i][j] = new Square();
+				
 		//initialize board of [SIZE][SIZE] squares
 		
 		//What do you think is better: 
