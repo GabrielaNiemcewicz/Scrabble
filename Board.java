@@ -4,9 +4,10 @@ public class Board {
 
 private Square[][] board;
 private int SIZE = 15;
-private String temporaryWord; //proposed implementation for checking if it's first turn. Will help in some implementations of challenging the word. GetWord() gets a word here, rest of functions access it from here.
-protected Tile uninitializedNullTile; //never gets initialized. Reassign * pointer to this null-returning object for Square's Tile to return Null on reset/challenge again
-//private boolean [][] isEmpty; 
+
+boolean isFirstRound = true;
+//private String temporaryWord; //proposed implementation for checking if it's first turn. Will help in some implementations of challenging the word. GetWord() gets a word here, rest of functions access it from here.
+//protected Tile uninitializedNullTile; //never gets initialized. Reassign * pointer to this null-returning object for Square's Tile to return Null on reset/challenge again
 //anything else?
 
 	public Board() {
@@ -15,7 +16,8 @@ protected Tile uninitializedNullTile; //never gets initialized. Reassign * point
 		
 		//What do you think is better: 
 		//a)hard-coding in input 4 score multipliers
-		//b) do two classes extending Square- makes display code cleaner, without ifs/switch cases	
+		//b) do two classes extending Square- makes display code cleaner, without ifs/switch cases
+		
 	}
 	
 	
@@ -34,18 +36,15 @@ protected Tile uninitializedNullTile; //never gets initialized. Reassign * point
 //QUESTION- DO WE PUT REFRESH IN TILE, OR IN BOARD?//
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
 	
-	public void getWord(String userWord) {
+
+	public void refresh() {
 		
-		this.temporaryWord = userWord;
-		//in 3rd assignment, gets word from **Player** keyboard input. Now no parsing input needed.  
-		//doing it this way from beginning might save work for later. 
-		//I'm leaving it in Board for a now
-		//merge to 1 function
+		System.out.println("Use me in display on ending each successful word placement");
 		
 	}
+
 	
-	
-	public void placeWordVertically(ArrayList <Tile> tilesFromFrame, int firstPosition_x,int firstPosition_y)
+	public void placeWordVertically(ArrayList <Tile> tilesFromFrame, int firstPosition_x,int firstPosition_y, String temporaryWord)
 	{ //in main: board.placeWordVertically(frame.someGetterFunction()) //best get all Tiles needed, get one Tile ok
 		//does its set of checks first
 		//if (!this.isWordValidVertically())
@@ -56,18 +55,18 @@ protected Tile uninitializedNullTile; //never gets initialized. Reassign * point
 			//give user input
 		//}
 		//else	//if passed tests
-			for (int i=0; i<this.temporaryWord.length(); i++)
+			for (int i=0; i<temporaryWord.length(); i++)
 					System.out.println("x is mobile. x+i. I'm in progress");	//ArrayList <Tile> dummy = new ArrayList() ;
 		
 		
 		
 	}
 	
-	public void placeWordHorizontally(ArrayList <Tile> tilesFromFrame, int firstPosition_x,int firstPosition_y){ //necessary to be separate! //change interface
+	public void placeWordHorizontally(ArrayList <Tile> tilesFromFrame, int firstPosition_x,int firstPosition_y, String temporaryWord){ //necessary to be separate! //change interface
 		//does set of checks first
 		//if (this.isWordValidHorizontally(/*variables variable variable*/))
 		//ArrayList <Tile> dummy = new ArrayList() ;
-				for (int i=0; i<this.temporaryWord.length(); i++)
+				for (int i=0; i<temporaryWord.length(); i++)
 					System.out.println("y is mobile. y+i. I'm in progress");
 		
 	}
@@ -86,7 +85,7 @@ protected Tile uninitializedNullTile; //never gets initialized. Reassign * point
 	
 	
 	//all sets of tests together
-	public boolean isWordValidHorizontally(int firstPosition_x, int firstPosition_y, Frame frame) throws Exception {
+	public boolean isWordValidHorizontally(int firstPosition_x, int firstPosition_y, Frame frame, String temporaryWord) {
 	//if first not valid, on false, write output what happened, else (continue testing)
 		//else if second not valid, throw, else (continue testing)
 			//...
@@ -103,7 +102,7 @@ protected Tile uninitializedNullTile; //never gets initialized. Reassign * point
 	else if (!this.isWordWithinBounds(firstPosition_y)) //change interface
 		{System.out.println("Your word is too long to be placed here at this place on Board");
 		return false;}	
-	else if(!this.isInHarmonyWithTilesOnBoard(firstPosition_x, firstPosition_y))
+	else if(!this.isInHarmonyWithTilesOnBoard(firstPosition_x, firstPosition_y)
 			{System.out.println("Your word clashes with letters on the board.");
 			return false;}		
 	else if(!this.areAllTilesInFrame(firstPosition_x, firstPosition_y, frame)) 
@@ -116,8 +115,8 @@ return true;
 	}
 	
 	//all sets of tests together
-	public boolean isWordValidVertically(int firstPosition_x, int firstPosition_y, Frame frame) throws Exception {
-		return this.isWordValidHorizontally(firstPosition_y, firstPosition_x, frame);
+	public boolean isWordValidVertically(int firstPosition_x, int firstPosition_y, Frame frame, String temporaryWord) {
+		return this.isWordValidHorizontally(firstPosition_y, firstPosition_x, frame)
 		//we swap indices = now x is mobile, and y is fixed
 		//because algorithms are symmetrical
 	}
@@ -132,11 +131,11 @@ return true;
 	}
 	
 	//EXTREMELY IMPORTANT- DO THIS TEST AFTER CHECKING FOR CLASHES WITH EXISTING TILES
-	public boolean areAllTilesInFrame(int firstPositionFixed, int firstPositionMobile, Frame frame) {
-		String copyOf_checked_word = this.temporaryWord;
+	public boolean areAllTilesInFrame(int firstPositionFixed, int firstPositionMobile, Frame frame, String temporaryWord) {
+		String copyOf_checked_word = temporaryWord;
 		char tempRemovedCharacter ;
 		Frame tempFrame = frame;
-		for (int i = 0; i<this.temporaryWord.length(); i++)
+		for (int i = 0; i<temporaryWord.length(); i++)
 			if (board[firstPositionFixed][firstPositionMobile+i].isEmpty())
 				continue;
 			else {
@@ -148,7 +147,7 @@ return true;
 		if 	(copyOf_checked_word.length()==0)
 			{System.out.println("Word invalid- no letter from Frame used");
 			return false;}
-		else if (copyOf_checked_word.length()==this.temporaryWord.length()) //on start of game. temp.length=0, so no need to check if it's beginning
+		else if (copyOf_checked_word.length()==temporaryWord.length()) //on start of game. temp.length=0, so no need to check if it's beginning
 			{System.out.println("Word invalid- doesn't connect to any words on Board");
 			return false;}
 		
@@ -171,29 +170,28 @@ return true;
 	
 	
 	
-	public boolean isWordWithinBounds  (int firstPositionMobile)
+	public boolean isWordWithinBounds  (int firstPositionMobile, String temporaryWord)
 	{
 	
-		if (firstPositionMobile+this.temporaryWord.length()>15) return false; 
+		if (firstPositionMobile+temporaryWord.length()>14) return false; 
 		else return true;
 	
 	}
-	
 	
 
 	
 	
 	
-	public boolean isInHarmonyWithTilesOnBoard( int firstPositionFixed, int firstPositionMobile) throws Exception
+	public boolean isInHarmonyWithTilesOnBoard( int firstPositionFixed, int firstPositionMobile, String temporaryWord) throws Exception
 	{ 
-		for (int i=0; i<this.temporaryWord.length(); i++) {
+		for (int i=0; i<temporaryWord.length(); i++) {
 			
 		
 			if (board[firstPositionFixed][firstPositionMobile+i].isEmpty())   //This method I made for displaying if Tile is not on Square yet	
 				 continue;
-			else if (board[firstPositionFixed][firstPositionMobile+i].getCharacter() == this.temporaryWord.charAt(i))
+			else if (board[firstPositionFixed][firstPositionMobile+i].getCharacter() == temporaryWord.charAt(i))
 				continue;
-			else if (board[firstPositionFixed][firstPositionMobile+i].getCharacter() != this.temporaryWord.charAt(i))
+			else if (board[firstPositionFixed][firstPositionMobile+i].getCharacter() != temporaryWord.charAt(i))
 				return false;
 			else 
 				throw new Exception("Equality between Square.getCharacter(i) and String.charAt(i) is failing");
@@ -205,11 +203,18 @@ return true;
 	
 	
 	
-	public boolean isFirstWord() {
-		 if (this.temporaryWord==null)
-			 return true;
-		 else 
-			return false;
+	public boolean isFirstPlacement() {
+		if (this.isFirstPlacement()==true) 
+			for (int i=0; i<this.SIZE; i++)
+				for (int j=0; j<this.SIZE; j++)
+					if (this.board[i][j].isEmpty())
+						continue;
+					else if (!this.board[i][j].isEmpty())
+						{this.isFirstRound = false; 
+						return this.isFirstRound;}
+					else System.out.println("Error in FirstPlacement, likely caused by isEmpty function in Square")
+					
+		return false;
 		
 		 // how to make program aware what is the first word??????????????????????
 		
@@ -220,11 +225,11 @@ return true;
 	
 
 	
-	public boolean inTheMiddle(int firstPositionFixed, int firstPositionMobile)
+	public boolean inTheMiddle(int firstPositionFixed, int firstPositionMobile, String temporaryWord)
 	{
 		if(firstPositionFixed!=7)
 			return false;
-		else if (firstPositionMobile<=7 && this.temporaryWord.length()+firstPositionMobile>=7)
+		else if (firstPositionMobile<=7 && temporaryWord.length()+firstPositionMobile>=7)
 			return true;
 	return false;
 	}
