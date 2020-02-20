@@ -21,7 +21,7 @@ public void placeTile(Tile tile) throws Exception {
 
 public char getCharacter() {
 	//if(this.tile == null) {//use isEmpty() if check needed; I THINK not needed- it may return NULL if object is NULL => desired property!!
-		return tile.readLetter(); 
+		return tile.getLetter(); 
 		//else return ''; //see later whether Exception or NULL is more useful
 	}
 
@@ -29,7 +29,7 @@ public char getCharacter() {
 public int getSinglePlacementScore() {
 	if((this.isEmpty())) 
 	return 0; //CHECK LATER: isn't checking Score of empty Square *ALWAYS* indicative of ERROR? => Exception  	
-	else return this.TILE_VALUE_MULTIPLIER*this.tile.readValue();
+	else return this.TILE_VALUE_MULTIPLIER*this.tile.getValue();
 }
 
 public int getWordScoreMultiplier() {

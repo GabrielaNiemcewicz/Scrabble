@@ -1,44 +1,69 @@
-class Tile {
+	import javax.swing.text.AttributeSet;
 
-/***** The Private Instance Variables of Class Tile *****/
-	private char letter;
-	private int value;
+	public class Tile {
 
-	/***** Tile Constructor *****/
-	public Tile (char letter, int value) {
-		if(letter >= 'a' && letter <= 'z') // This if statement checks for lowerCase characters, 
-			letter = (char) (letter - 32); // Converts LowerCase to UpperCase.
-		
-		if(!(letter >= 'a' && letter <= 'z') && !(letter >= 'A' && letter <= 'Z') && letter !=' ') // if the letter isn't A-z then it throws an exception.
-			throw new IllegalArgumentException();
-		
-		this.letter = letter; // if the above if statement is passed, then it assigns the passed letter to the Instance Var letter.
-		
-		if(value >= 0 || value <= 10)    // This if statement checks for the value for it to be 0-10 
-			this.value = value;
-		else throw new IllegalArgumentException();
-			
-	}
+	    private static final int BLANK_VALUE = 0;
+	    private static final int[] TILE_VALUE = {1,3,3,2,1,4,2,4,1,8,5,1,3,1,1,3,10,1,1,1,1,4,4,8,4,10};
 
-/***** Extra Methods *****/
-	
-	public char readLetter ()           // Method readLetter() acts like a getter so returns the instance Var letter.
-	{ return letter; }
-	
-	public int readValue ()             // Method readValue() acts like a getter so returns the instance Var Value.
-	{ return value; }
-	
-	public void display ()             // Method display() prints out each letter with its value beside each other.
-	{ System.out.println(letter + " " + value); }
-	
-	public String toString() {        // method toString() is used for display the letter and the value on the Tile.
-		return letter + "\n" + value;
+	    private boolean blank;
+	    private char letter;
+	    private int value;
+
+	    // Tile precondition: must be Uppercase letter
+	    Tile(char letter) {
+	        if (letter == '_' || letter==' ') {
+	            this.blank = true;
+	            this.value = BLANK_VALUE;
+	        } 
+	        
+	        else {
+	        	this.blank = false;
+	            
+	             if(letter >= 'a' && letter <= 'z') // This if statement checks for lowerCase characters, 
+	            	this.letter = (char) (letter - 32);  // Converts LowerCase to UpperCase.
+	            else if (letter >= 'A' && letter <= 'Z')
+	            	this.letter = letter;
+	            else 
+	            	throw new IllegalArgumentException();
+	           
+	             this.value = TILE_VALUE[(int) letter - (int) 'A'];
+	        }
+	    }
+	    
+	    
+	    public boolean isBlank() {
+	        return blank;
+	    }
+
+	    // getLetter precondition isBlank() = false;
+	    public char getLetter() {
+	        return letter;
+	    }
+
+	    // getValue precondition isBlank() = false;
+	    public int getValue() {
+	        return value;
+	    }
+
+	    // equals is used by the contains method to find matching objects in an ArrayList
+	    @Override
+	    public boolean equals(Object object) {
+	        if (!(object instanceof Tile)) {
+	            return false;
+	        } else {
+	            return this.letter == ((Tile) object).letter;
+	        }
+	    }
+
+	  
+	    public String display() {
+	        if (blank) {
+	            return "_"+" "+Tile.BLANK_VALUE;
+	        } else {
+	            return this.letter+" "+this.value;
+	        }
+	    }
+	    
+	    
+
 	}
-	
-	
-public static void main(String[] args) {
-	// Small Test for Display.
-		Tile t = new Tile('a', 1);
-		System.out.print(t);
-	}
-}
