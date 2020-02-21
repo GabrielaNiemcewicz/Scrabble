@@ -12,10 +12,11 @@ boolean isFirstRound = true;
 
 	public Board() {
 		
-		for(int i=0; i<15; i++)
-			for(int j=0; j<15; j++)
+
+		for(int i=0; i<this.SIZE; i++)
+			for(int j=0; j<this.SIZE; j++)
 				board[i][j] = new Square();
-				
+		
 		//initialize board of [SIZE][SIZE] squares
 		
 		//What do you think is better: 
@@ -66,6 +67,31 @@ boolean isFirstRound = true;
 		
 	}
 	
+	private Square[] squareWalkerHorizontal (int firstPosition_x, int firstPosition_y, int temporaryWordSize)
+	{
+		Square [] squareWalker = new Square[temporaryWordSize];
+				
+		for (int i=0; i<temporaryWordSize; i++)
+			squareWalker[i] = this.board[firstPosition_x][firstPosition_y+i];
+		
+		return squareWalker;
+		
+	}
+	
+	private Square[] squareWalkerVertical (int firstPosition_x, int firstPosition_y, int temporaryWordSize)
+	{
+		Square [] squareWalker = new Square[temporaryWordSize];
+		
+		for (int i=0; i<temporaryWordSize; i++)
+			squareWalker[i] = this.board[firstPosition_x+i][firstPosition_y];
+		
+		return squareWalker;
+		
+		
+		
+	}
+	
+	
 	public void placeWordHorizontally(ArrayList <Tile> tilesFromFrame, int firstPosition_x,int firstPosition_y, String temporaryWord){ //necessary to be separate! //change interface
 		//does set of checks first
 		//if (this.isWordValidHorizontally(/*variables variable variable*/))
@@ -87,29 +113,29 @@ boolean isFirstRound = true;
 	else throw new Exception("Wrong character inputted into vertically or horizontally in board");
 	} 
 	
-	/*
+	
 	//all sets of tests together
 	public boolean isWordValidHorizontally(int firstPosition_x, int firstPosition_y, Frame frame, String temporaryWord) {
 	//if first not valid, on false, write output what happened, else (continue testing)
 		//else if second not valid, throw, else (continue testing)
 			//...
 				//...
-	// return true; 	
+	// return true; 
 	if(this.isFirstWord())	
-		if(!this.inTheMiddle(firstPosition_x,  firstPosition_y)) //x is fixed, y is mobile
+		if(!this.inTheMiddle(firstPosition_x,  firstPosition_y, temporaryWord)) //x is fixed, y is mobile
 		{System.out.println("First word needs to connect to Square in the middle, 8th, 8th");
 		return false;}
 	
 	if (!this.isFirstPositionValid(firstPosition_x, firstPosition_y))
 		{System.out.println("You can't start your word here- square index out of Board");
 		return false;}	
-	else if (!this.isWordWithinBounds(firstPosition_y)) //change interface
+	else if (!this.isWordWithinBounds(firstPosition_y, temporaryWord)) //change interface
 		{System.out.println("Your word is too long to be placed here at this place on Board");
 		return false;}	
-	else if(!this.isInHarmonyWithTilesOnBoard(firstPosition_x, firstPosition_y)
+	else if(!this.isInHarmonyWithTilesOnBoard(firstPosition_x, firstPosition_y, temporaryWord)
 			{System.out.println("Your word clashes with letters on the board.");
 			return false;}		
-	else if(!this.areAllTilesInFrame(firstPosition_x, firstPosition_y, frame)) 
+	else if(!this.areAllTilesInFrame(firstPosition_x, firstPosition_y, frame, temporaryWord)) 
 	//function prints one of 3 errors- all has to be inside
 	return false;
 	
@@ -207,17 +233,15 @@ return true;
 	
 	
 	
-	public boolean isFirstPlacement() {
-		if (this.isFirstPlacement()==true) 
+	public boolean isFirstWord() {
+		if (this.isFirstRound==true) {
 			for (int i=0; i<this.SIZE; i++)
 				for (int j=0; j<this.SIZE; j++)
-					if (this.board[i][j].isEmpty())
-						continue;
-					else if (!this.board[i][j].isEmpty())
+					{if (!this.board[i][j].isEmpty())
 						{this.isFirstRound = false; 
-						return this.isFirstRound;}
-					else System.out.println("Error in FirstPlacement, likely caused by isEmpty function in Square")
-					
+						return false;}}
+			return true;}
+			else if(this.isFirstRound==false)			
 		return false;
 		
 		 // how to make program aware what is the first word??????????????????????
@@ -258,6 +282,6 @@ return true;
 			//this.tile= dommyTile
 //last 4 lines should be the same in the initializer of Square
 	}
-	*/
+	
 
 }
