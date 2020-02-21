@@ -13,7 +13,6 @@ public class Square {
 	public void placeTile(Tile tile){
 		if (this.isEmpty())	
 			this.tile = tile;
-		//else throw new Exception("Error! There's already a Tile placed on the Square...");
 	}
 
 	public void removeTile(){
@@ -29,7 +28,7 @@ public class Square {
 	
 	public int getSinglePlacementScore() {
 		if((this.isEmpty())) 
-		return 0; //CHECK LATER: isn't checking Score of empty Square *ALWAYS* indicative of ERROR? => Exception  	
+			return 0; //CHECK LATER: isn't checking Score of empty Square *ALWAYS* indicative of ERROR? => Exception  	
 		else return this.TILE_MULTIPLIER*this.tile.getValue();
 	}
 	
