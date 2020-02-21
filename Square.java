@@ -10,6 +10,14 @@ public class Square {
 		this.WORD_MULTIPLIER = 1;
 	}
 	
+	public void setTILE_MULTIPLIER(int TILE_MULTIPLIER) {
+		this.TILE_MULTIPLIER = TILE_MULTIPLIER;
+	}
+	
+	public void setWORD_MULTIPLIER(int WORD_MULTIPLIER) {
+		this.WORD_MULTIPLIER = WORD_MULTIPLIER;
+	}
+	
 	public void placeTile(Tile tile){
 		if (this.isEmpty())	
 			this.tile = tile;

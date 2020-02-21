@@ -11,7 +11,6 @@ boolean isFirstRound = true;
 //anything else?
 
 	public Board() {
-		
 
 		for(int i=0; i<this.SIZE; i++)
 			for(int j=0; j<this.SIZE; j++)
@@ -181,7 +180,9 @@ return true;
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////copyOf_checked_word.delete(tempRemovedChar);////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////////////
+				// copyOf_checked_word.replace(tempRemovedCharacter, '\0');
 			}
+		
 		if 	(copyOf_checked_word.length()==0)
 			{System.out.println("Word invalid- no letter from Frame used");
 			return false;}
