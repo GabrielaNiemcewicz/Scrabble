@@ -11,9 +11,6 @@ Square(){
 	
 }
 
-	
-
-
 public void placeTile(Tile tile){
 	if (this.isEmpty())	
 		this.tile = tile;
@@ -45,30 +42,5 @@ public boolean isEmpty() {
 public void removeTile(){
 	this.tile = null;
 }
-	
-
-
-
-
-
-/*public void display() { //doesn't go wrong when initiating whole Board, but is quite simplistic...
-	//multiple if statements=> 1. multiple functions? (not nice for board initiation...)
-	//2. DoubleWordSquare, TripleWordSquare, DoubleLetterSquare, TripleLetterSquare extend Square (too many?)
-	//3. MultipleWordSquare, MultipleLetterSquare extend Square (nice!)
-	if (this.isEmpty()) {
-		if (this.TILE_VALUE_MULTIPLIER>1)
-			System.out.printf("[_%iL]",this.TILE_VALUE_MULTIPLIER);
-		else if (this.WORD_SCORE_MULTIPLIER>1)
-			System.out.printf("[_%iW]",this.WORD_SCORE_MULTIPLIER);
-		else System.out.printf("[__]");}
-		
-	else if (!this.isEmpty())
-	System.out.printf("[_%c_],this.getCharacter()");
-	else System.out.print("Cell Display error- neither empty nor full");
-	
-}*/
-
-
-
 
 }
