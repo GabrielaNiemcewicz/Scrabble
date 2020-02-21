@@ -20,7 +20,7 @@ Pattern(int size){ //initializer
 	this.SIZE = size;
 	this.setScrabble(new char[SIZE][SIZE]);
 	this.reset(); //sets all characters to regular square, "o"
-
+	drawScrabble();
 }
 	
 public void print() { //print board at any moment
@@ -46,7 +46,6 @@ this.draw_all_V(this.middle());
 this.draw_X_as_VV();
 this.draw_scattered_2L();
 this.draw_scattered_3W();
-this.print();
 }
 
 
