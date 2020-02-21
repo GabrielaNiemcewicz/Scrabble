@@ -73,5 +73,6 @@ public class Pool {
 	
 	public int valueOfTile(Tile tile) 
 	{	return tile.getValue(); }
+
 	
 }

@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Player{
@@ -136,37 +137,37 @@ public class Player{
 	
 	//******************* Testing Draw() ******************************
 	
-	Tile[] temp = pool.Draw(5);
+	ArrayList<Tile> temp = pool.drawTiles(5);
 	System.out.println("--- Testing Pool - Draw() ---\n\n*Testing Tiles are removed*");
-	System.out.println("Expected tiles in pool: 95" + "\nResult: " + pool.NumOfTiles());
+	System.out.println("Expected tiles in pool: 95" + "\nResult: " + pool.size());
 	System.out.println("\n*Testing tiles are generated*");
 	for(int i=0; i<10; i++) {
 		if(i==5)
 			System.out.println();
 		if(i<5)
-			System.out.print("|" + temp[i].readLetter() + "| ");
+			System.out.print("|" + temp.get(i).getLetter() + "| ");
 		else
-			System.out.print("|" + temp[i%5].readValue() + "| ");
+			System.out.print("|" + temp.get(i%5).getValue() + "| ");
 	}
 	
 //******************* Testing IsEmpty() ******************************
 	System.out.println("\n\n--- Testing Pool - IsEmpty() ---\n\n*When pool is full*");
-	System.out.println("Expected Result: False" + "\nResult: " + pool.IsEmpty());
+	System.out.println("Expected Result: False" + "\nResult: " + pool.isEmpty());
 		
 	for(int i=0;i<19;i++)
-		pool.Draw(5);
+		pool.drawTiles(5);
 	    System.out.println("\n*When pool is empty*");
-	    System.out.println("Expected Result: True" + "\nResult: " + pool.IsEmpty());
+	    System.out.println("Expected Result: True" + "\nResult: " + pool.isEmpty());
 		
 //******************* Testing resetPool() ******************************
 	pool.resetPool();
 	System.out.println("\n--- Testing Pool - resetPool() ---\n\n*When pool is empty*");
-	System.out.println("Expected Result: 100" + "\nResult: " + pool.NumOfTiles());
+	System.out.println("Expected Result: 100" + "\nResult: " + pool.size());
 	
-	pool.Draw(7);
+	pool.drawTiles(7);
 	pool.resetPool();
 	System.out.println("\n*When pool contains tiles*");
-    System.out.println("Expected Result: 100" + "\nResult: " + pool.NumOfTiles());
+    System.out.println("Expected Result: 100" + "\nResult: " + pool.size());
 	
 	}
 	

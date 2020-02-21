@@ -19,14 +19,14 @@ class FrameTest {
 	Tile letterH;
 	@BeforeEach
 	void setUp() throws Exception {
-		letterA = new Tile('a',2);
-		letterB = new Tile('b',3);
-		letterC = new Tile('c',4);
-		letterD = new Tile('d',5);
-		letterE = new Tile('e',6);
-		letterF = new Tile('f',7);
-		letterG = new Tile('g',8);
-		letterH = new Tile('h',9);
+		letterA = new Tile('a');
+		letterB = new Tile('b');
+		letterC = new Tile('c');
+		letterD = new Tile('d');
+		letterE = new Tile('e');
+		letterF = new Tile('f');
+		letterG = new Tile('g');
+		letterH = new Tile('h');
 		
 		Tile letterss[] = new Tile[3];
 		letterss[0]= letterA;
