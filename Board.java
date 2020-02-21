@@ -2,7 +2,7 @@ import java.util.ArrayList;
 
 public class Board {
 
-private Square[][] board;
+private Square[][] board = new Square[15][15];
 private int SIZE = 15;
 
 boolean isFirstRound = true;
@@ -11,11 +11,25 @@ boolean isFirstRound = true;
 //anything else?
 
 	public Board() {
-
-		for(int i=0; i<this.SIZE; i++)
-			for(int j=0; j<this.SIZE; j++)
+		for (int i=0; i<this.SIZE; i++)	
+			for (int j=0; j<this.SIZE; j++)
 				board[i][j] = new Square();
+		Pattern p = new Pattern(15);
+		p.drawScrabble();
 		
+		
+		for (int i=0; i<this.SIZE; i++)	
+			for (int j=0; j<this.SIZE; j++) {
+				board[i][j] = new Square();
+				if(p.getScrabble()[i][j] == 'A')
+					board[i][j].setWORD_MULTIPLIER(3);
+				else if(p.getScrabble()[i][j] == 'B')
+					board[i][j].setWORD_MULTIPLIER(2);
+				else if(p.getScrabble()[i][j] == 'C')
+					board[i][j].setTILE_MULTIPLIER(3);
+				else if(p.getScrabble()[i][j] == 'D')
+					board[i][j].setTILE_MULTIPLIER(2);
+			}
 		//initialize board of [SIZE][SIZE] squares
 		
 		//What do you think is better: 
@@ -30,10 +44,7 @@ boolean isFirstRound = true;
 		for(int i=0; i<15;i++) {
 			System.out.print("          -------------------------------------------------------------\n          ");
 			for(int j=0; j<15; j++) {
-				String temp = "  "; //= checkSquare(board[i][j]);
-				if(i==7 || j == 7)
-					temp = "2L";
-				System.out.print("| " + temp);
+				System.out.print("| " + board[i][j]);
 			}
 			System.out.println("|");
 		}
@@ -294,5 +305,9 @@ return true;
 //last 4 lines should be the same in the initializer of Square
 	}
 	
-
+	public static void main(String[] args) {
+		Board b = new Board();
+		b.display();
+	}
+	
 }

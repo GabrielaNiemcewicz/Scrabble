@@ -47,5 +47,20 @@ public class Square {
 	public boolean isEmpty() {
 		return  this.tile == null ? true : false;
 	}
+	
+	public String toString() {
+		if(!isEmpty())
+			return " " + getCharacter();
+		else if(TILE_MULTIPLIER == 2)
+			return "2L";
+		else if(TILE_MULTIPLIER == 3)
+			return "3L";
+		else if(WORD_MULTIPLIER == 2)
+			return "2W";
+		else if(WORD_MULTIPLIER == 3)
+			return "3W";
+		else 
+			return "  ";
+	}
 
 }
