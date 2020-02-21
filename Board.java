@@ -28,9 +28,17 @@ boolean isFirstRound = true;
 	
 	
 	public void display() {  
-	 //display board as an enhanced loop of for each square in squares, square.display()
-	 //at the end of each 15 for loop, \n
-	//can add a || left and right, or ___ top and bottom if feeling fancy
+		for(int i=0; i<15;i++) {
+			System.out.print("          -------------------------------------------------------------\n          ");
+			for(int j=0; j<15; j++) {
+				String temp = "  "; //= checkSquare(board[i][j]);
+				if(i==7 || j == 7)
+					temp = "2L";
+				System.out.print("| " + temp);
+			}
+			System.out.println("|");
+		}
+		System.out.print("          -------------------------------------------------------------\n          ");
 	}
 	
 	
