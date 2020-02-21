@@ -30,12 +30,6 @@ boolean isFirstRound = true;
 				else if(p.getScrabble()[i][j] == 'D')
 					board[i][j].setTILE_MULTIPLIER(2);
 			}
-		//initialize board of [SIZE][SIZE] squares
-		
-		//What do you think is better: 
-		//a)hard-coding in input 4 score multipliers
-		//b) do two classes extending Square- makes display code cleaner, without ifs/switch cases
-		
 	}
 	
 	
