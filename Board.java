@@ -122,7 +122,7 @@ boolean isFirstRound = true;
 	
 	
 	//all sets of tests together
-	public boolean isWordValidHorizontally(int firstPosition_x, int firstPosition_y, Frame frame, String temporaryWord) {
+	public boolean isWordValidHorizontally(int firstPosition_x, int firstPosition_y, Frame frame, String temporaryWord) throws Exception {
 	//if first not valid, on false, write output what happened, else (continue testing)
 		//else if second not valid, throw, else (continue testing)
 			//...
@@ -139,7 +139,7 @@ boolean isFirstRound = true;
 	else if (!this.isWordWithinBounds(firstPosition_y, temporaryWord)) //change interface
 		{System.out.println("Your word is too long to be placed here at this place on Board");
 		return false;}	
-	else if(!this.isInHarmonyWithTilesOnBoard(firstPosition_x, firstPosition_y, temporaryWord)
+	else if(!this.isInHarmonyWithTilesOnBoard(firstPosition_x, firstPosition_y, temporaryWord))
 			{System.out.println("Your word clashes with letters on the board.");
 			return false;}		
 	else if(!this.areAllTilesInFrame(firstPosition_x, firstPosition_y, frame, temporaryWord)) 
@@ -152,8 +152,8 @@ return true;
 	}
 	
 	//all sets of tests together
-	public boolean isWordValidVertically(int firstPosition_x, int firstPosition_y, Frame frame, String temporaryWord) {
-		return this.isWordValidHorizontally(firstPosition_y, firstPosition_x, frame)
+	public boolean isWordValidVertically(int firstPosition_x, int firstPosition_y, Frame frame, String temporaryWord) throws Exception {
+		return this.isWordValidHorizontally(firstPosition_y, firstPosition_x, frame, temporaryWord);
 		//we swap indices = now x is mobile, and y is fixed
 		//because algorithms are symmetrical
 	}
@@ -252,6 +252,8 @@ return true;
 			return true;}
 			else if(this.isFirstRound==false)			
 		return false;
+			else
+				return false;  // random return statement
 		
 		 // how to make program aware what is the first word??????????????????????
 		

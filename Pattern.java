@@ -113,9 +113,6 @@ public void draw_scattered_2L () { //scattered squares "multiply letter score by
 		for (int j: J)
 		{this.getScrabble()[i][j]  = this.assign_type_scattered_2L();
 		this.getScrabble()[j][i] = this.assign_type_scattered_2L();}
-		
-		board[0][0].setWORD_MULTIPLIER();
-		board[0][0].setTILE_MULTIPLIER()
 }
 
 
