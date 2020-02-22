@@ -305,12 +305,18 @@ boolean isFirstRound = true;
 	
 	public boolean isFirstWord() {
 		if (this.isFirstRound==true) {
-			for (int i=0; i<this.SIZE; i++)
-				for (int j=0; j<this.SIZE; j++)
+			for (int i=0; i<this.SIZE; i++) {
+				for (int j=0; j<this.SIZE; j++) {
 					if (!this.board[i][j].isEmpty())
-						{this.isFirstRound = false; 
-						return false;}
-			}	
+					{
+					  this.isFirstRound = false; 
+					  return false;
+					}
+				   return true; 
+				}
+				return false;
+			}
+		}	
 		
 		return true;
 		 // how to make program aware what is the first word?????????????????????
