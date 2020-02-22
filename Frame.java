@@ -1,116 +1,81 @@
 import java.util.ArrayList;
 
-	public class Frame {
-		
-		private ArrayList<Tile> frame;
+public class Frame {
+
+	private static final int MAX_TILES = 7;
+	private ArrayList<Tile> frame;
+	
+//initialization
+	Frame() {
+		frame = new ArrayList<Tile>();
+	}
 
 
-		//stores the letters that each player has in their frame- stores empty frame
-		public Frame()
-		{
-		 this.frame = new ArrayList<Tile>();
+
+
+//size-related
+	public int size() {
+		return(frame.size());
+	}
+	
+	public boolean isEmpty() {
+		return(frame.size()==0?true:false);
+	}
+	
+	public boolean isFull() {
+		return frame.size() == MAX_TILES?true:false;
+	}
+
+
+
+//check if Tile(s) are in the Frame	
+	public boolean isStringIn(String letters) {
+		boolean found = true;
+		if (letters.length() > frame.size()) {
+			found = false;
 		}
-
-		//allows letters to be removed from the frame - one tile
-		public Tile passTiles(char passedLetter) throws Exception
-		{return frame.get(atWhichIndex(passedLetter));}
-
-		//allows letters to be removed from the frame- one tile
-		public void removeTiles (char passedLetter) throws Exception
-		{ frame.remove(atWhichIndex(passedLetter)); }
-	        
-
-		//allows letters to be removed from the frame - no longer return before clearing
-		public Tile removeTilesTo(char passedLetter) throws Exception{
-			if (isLetterIn(passedLetter)){
-				Tile t = passTiles(passedLetter);
-				removeTiles(passedLetter);
-				return t;
+		else {
+			ArrayList<Tile> copyTiles = new ArrayList<Tile>(frame);
+			for (int i=0; (i<letters.length()) && found; i++) {
+				Tile tileSought = new Tile(letters.charAt(i));
+				if (copyTiles.contains(tileSought)) {
+					copyTiles.remove(tileSought);
+				}
+				else {
+					found = false;
+					break;
+				}
 			}
-			return null;
 		}
-
-		//allows letters to be removed from the frame- probably not needed- alternative implementation
-		public void removeAllTiles()
-		{
-			frame.clear();
+		return found;
+	}
+	
+	public boolean isStringIn(char letter) {
+		boolean found;
+		if (this.size() < 1) {
+			found = false;
 		}
-
-		//allows letters to be removed from the frame- uses method that has commands after return
-		public void removeString(String passedString) throws Exception{
-			if (passedString.length()>frame.size()) throw new Exception("Too many letters entered");
-			for (int i=0; i<passedString.length();i++) removeTilesTo(passedString.charAt(passedString.length()));
-		}
-		
-
-		//allows a check to be made if letters are in the frame- isIn covers this case too- check if isLetter in is significantly faster or needs type casting- otherwise don't implement
-		public boolean isLetterIn (char checkedLetter) throws Exception{
-			if (atWhichIndex(checkedLetter) == -1)
-			return false;
-			else if (atWhichIndex(checkedLetter)<frame.size())
-			return true;
-			else throw new Exception("Wrong index passed");
-		}
-
-		//helps allow a check to be made if letters are in the frame- could do with enhanced loop
-		public int atWhichIndex (char checkedLetter) throws Exception{
-			if (!frame.isEmpty()){
-			   for (int i=0; i<frame.size(); i++) {
-			       if (frame.get(i).getLetter() == checkedLetter) return i;
-			       else continue;
-			       } return -1;
+		else {
+			
+			 {
+				Tile tileSought = new Tile(letter);
+				if (frame.contains(tileSought))
+				{	found = true;	}
+				else 
+				{	found = false; }
 			}
-			else throw new Exception("The frame is empty");
-			//return checkedLetter;
 		}
+		return found;
+	}
+	
+	
 
-		//allows a check to be made if letters are in the frame- good algorithm, could do with 'enhanced for loop'
-		public boolean isStringIn(String passedString){
-			boolean wasFound[] = new boolean[passedString.length()];
-			for (int i = 0; i<passedString.length(); i++) 
-				wasFound[i] = false;
-		
-			for (int i=0; i<frame.size(); i++)
-			for (int j=0; j<passedString.length();j++) //enhance it
-			if (wasFound[j]==false){
-			 if (passedString.charAt(j)==frame.get(i).getLetter()){
-			wasFound[j]=true;
-			break;
-			} else continue;
-		} 
+//accessors
+	public ArrayList<Tile> getAllTiles() {
+		return frame;
+	}
 
-		for (int j=0;j<passedString.length(); j++)  //enhance it
-		if(wasFound[j]==false) return false; else continue;
-		return true;
-		}
-
-
-
-
-		//allows check to be made if frame is empty
-		public boolean Empty()
-		{
-		return frame.isEmpty();
-		}
-
-
-
-
-
-
-		//allows access to letters in the frame
-		public ArrayList<Tile> accessAll()
-		{ return(frame); }
-
-		//allows access to single letter in the frame
-		public Tile accessTileByLetter (char checkedCharacter) throws Exception{
-			if (isLetterIn(checkedCharacter)) 
-			return frame.get(atWhichIndex(checkedCharacter));	//frame.get(accessTileByIndex(atWhichIndex(checkedCharacter)));
-			else throw new Exception("Letter not in the Frame");
-		}
-
-		//allows access to letter in the frame
-		public Tile accessTileByIndex (int i) throws Exception
+	public Tile accessByIndex (int i) throws Exception
 		{ 
 		if (i<frame.size()&&i>-1)
 		return frame.get(i);
@@ -119,57 +84,89 @@ import java.util.ArrayList;
 		 }
 
 
+			//allows access to single letter in the frame
+	public Tile accessByLetter (char checkedCharacter) {
+			if (this.isStringIn(checkedCharacter)) 
+			return frame.get(atWhichIndex(checkedCharacter));	//frame.get(accessTileByIndex(atWhichIndex(checkedCharacter)));
+			else return null; 
+		}
 
 
-
-
-		//allows a frame to be refilled from the pool
-		public void addTiles (Tile[] letters) throws Exception
-		{ 
-			int i=0;
-			if (Full()) throw new Exception("Frame is full, you can't add another tile");
-			else {
-				for(i=0;i<letters.length; i++){
-					frame.add(letters[i]);
-				}
+		public int atWhichIndex (char checkedLetter) {
+			int whichIndex = -1;
+			if (!frame.isEmpty())
+				if (this.isStringIn(checkedLetter)){
+			   for (int i=0; i<frame.size(); i++) {
+			       		if (frame.get(i).getLetter() == checkedLetter) 
+			       			{whichIndex = i; return whichIndex;}
+			       		else continue;
+			       } //if not in, in previous version, return -1
 			}
+				return whichIndex;
+			
+			//return checkedLetter;
 		}
 
+//setters
+	public void refill(Pool pool) {
+		int numTilesToDraw = MAX_TILES - this.size();
+		ArrayList<Tile> draw = pool.drawTiles(numTilesToDraw);
+		frame.addAll(draw);
+	}
 
-		//add exchange all tiles- or maybe it's combination of existing functions to implement in main?
 
-
-		//helps allow a frame to be refilled from the pool 
-		public boolean Full()
-		{
-			if (frame.size() == 7) 
-				return true;
-			else 
-				return false;
+// helps/aids for getters
+	private void cleanString(String letters) {
+             if(this.isStringIn(letters))
+		for (int i=0; (i<letters.length()); i++) {
+			frame.remove(new Tile(letters.charAt(i)));
 		}
-
-		//allows frame to be refilled from the pool
-		public int requestTiles()
-		{
-		int n= 7-frame.size();
-		return n;
-		}
+	}
+  	
 
 
-		//allows a frame to be displayed
-		public void readAll()
-		{
+	//getters
+	public ArrayList<Tile> returnTilesMakingWord(String letters){
+		ArrayList<Tile> copy_of_temporary_word = new ArrayList<Tile>(); //temporary_word = word user places on board. Copy has removed letters that are already on board.
+		Tile pickedTile;
+		char pickedLetter;
+		if(this.isStringIn(letters))		
+			for (int i=0; i<letters.length(); i++)
+				{pickedLetter = letters.charAt(i);
+				pickedTile = this.accessByLetter(pickedLetter);
+				copy_of_temporary_word.add(pickedTile);}
+		this.cleanString(letters);		
+		return copy_of_temporary_word;}
+	
+	
+	
+	
+	
+	
+	//display on screen
+		public void displayAsFrame(){
+			System.out.print(" || ");
+			
 		for (int i=0; i<frame.size();i++){ 
 			frame.get(i).display(); 
+			System.out.print(" | ");
 		   }
+			System.out.print(" || ");
 		}
-		
 
-		public String displayAllTilesAsLetters()
-		{
-		String word = new String();
-		for (int i=0; i<frame.size(); i++) {word = word + (frame.get(i).getLetter());}
-		return word;}
-	}
 	
+	public String displayAsString(){
+ {			String word = new String();
+				for (int i=0; i<frame.size(); i++)
+					{word = word + (frame.get(i).getLetter());}
+	return word;}
+	}
+		
+//cleaning
+		public void reset()
+		{ frame.clear();	}
+	
+
+	
+}
 	

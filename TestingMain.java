@@ -28,22 +28,26 @@ public class TestingMain {
 		String word = in.nextLine();
 		
 /********* TEST 1 - CHECK THE WORD VALIDITY *************/
-		if(f.isStringIn(word) == false)
+		if(f.isStringIn(word) == true)
 			System.out.println("PASS");
-		else if(f.isStringIn(word) == true)
+		else if(f.isStringIn(word) == false)
 			System.out.println("FAIL");
 		
 /********* TEST 2 - PLACEMENT WITHIN THE BOURD BOUNDS *************/
-		int firstPositionMobile = 7;
+		System.out.println("\nEnter The Row: ");
+		int firstPositionMobile = in.nextInt();
 		if(Bo.isWithinBounds(firstPositionMobile, word) == true)
-			System.out.println("Word is within the Board Bounds.");
+			System.out.println("Test For Bounds: Word is WITHIN the Board Bounds.");
 		else 
-			System.out.println("Word is out of the Board Bounds.");
+			System.out.println("Test For Bounds: Word is OUT of the Board Bounds.");
 		
 /********* TEST 3 - WHATHER THE WORD CONFLICTS WITH EXISTING LETTERS *************/	
 
 /********* TEST 4 - WHATHER ITS THE FIRST WORD OR NOT *************/	
-		
+		if(Bo.isFirstWord())
+			System.out.println("Test For First Word: This is the first word on the board.");
+		else
+			System.out.println("Test For First Word: This is NOT the first word on the board.");
 		
 	}
 }
