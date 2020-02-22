@@ -2,7 +2,7 @@ import java.util.ArrayList;
 
 public class Board {
 
-private Square[][] board;
+private Square[][] board = new Square[15][15];
 private int SIZE = 15;
 
 boolean isFirstRound = true;
@@ -16,7 +16,6 @@ boolean isFirstRound = true;
 				for (int j=0; j<this.SIZE; j++)
 					board[i][j] = new Square();
 			Pattern p = new Pattern(15);
-			p.drawScrabble();
 			
 			
 			for (int i=0; i<this.SIZE; i++)	
@@ -311,11 +310,10 @@ boolean isFirstRound = true;
 					if (!this.board[i][j].isEmpty())
 						{this.isFirstRound = false; 
 						return false;}
-					else continue;}
-			else if(this.isFirstRound==false)			
-		return false;
+			}	
 		
-		 // how to make program aware what is the first word??????????????????????
+		return true;
+		 // how to make program aware what is the first word?????????????????????
 		
 		  //if first, this big first testing method at the beginning has test if inTheMiddle(checked_word)
 		  //if not first, this big first testing method at the beginning has test if connectsToTileOnBoard(...)
