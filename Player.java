@@ -10,8 +10,8 @@ public class Player{
 
 /***** Player Constructor *****/
 	
-	public Player(String name, Frame frame){
-		setFrame(frame);
+	public Player(String name){
+		setFrame();
 		setName(name);	
 	}
 	
@@ -19,8 +19,8 @@ public class Player{
 	
 	public Frame getFrame() { return Frame; }
 
-	public void setFrame(Frame frame) {
-		Frame = frame;
+	public void setFrame() {
+		this.Frame = new Frame();
 	}
 
 	public String getName() { return Name; }
@@ -75,13 +75,12 @@ public class Player{
 	}
 	
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
+		
 	System.out.println("---------------- Player Testing ---------------\n");
 
   /*********************************************/
 	System.out.println("--- Player Testing - setName() ---");
-	Frame f = new Frame();
-	Player p1 = new Player("Nagham",f);
+	Player p1 = new Player("Nagham");
 	String expectedResult = "Nagham";
 	String actualResult = p1.getName();
 				
@@ -98,7 +97,7 @@ public class Player{
 				
 	System.out.println("\n--- Player Testing - setScore() ---");
 				
-	Player p2 = new Player("Adam",f);
+	Player p2 = new Player("Adam");
 	int actualResultScore = p2.getScore();
 	int expectedResultScore = 0;
 	System.out.println("Player Name: "+p2.getName()+"\t Score = "+actualResultScore);
