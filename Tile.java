@@ -19,13 +19,13 @@
 	        	this.blank = false;
 	            
 	             if(letter >= 'a' && letter <= 'z') // This if statement checks for lowerCase characters, 
-	            	this.letter = (char) (letter - 32);  // Converts LowerCase to UpperCase.
-	            else if (letter >= 'A' && letter <= 'Z')
+	            	letter = (char) (letter - 32);  // Converts LowerCase to UpperCase.
+	            if (letter >= 'A' && letter <= 'Z')
 	            	this.letter = letter;
 	            else 
 	            	throw new IllegalArgumentException();
 	           
-	             this.value = TILE_VALUE[(int) letter - (int) 'A'];
+	             this.value = TILE_VALUE[(int) letter - ((int) 'A')];
 	        }
 	    }
 	    
