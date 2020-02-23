@@ -11,22 +11,9 @@ boolean isFirstRound = true;
 //anything else?
 
 
-		public Board() {
-			Pattern p = new Pattern(15);
-			
-			for (int i=0; i<this.SIZE; i++)	
-				for (int j=0; j<this.SIZE; j++) {
-					board[i][j] = new Square();
-					if(p.getScrabble()[i][j] == 'A')
-						board[i][j].setWORD_MULTIPLIER(3);
-					else if(p.getScrabble()[i][j] == 'B')
-						board[i][j].setWORD_MULTIPLIER(2);
-					else if(p.getScrabble()[i][j] == 'C')
-						board[i][j].setTILE_MULTIPLIER(3);
-					else if(p.getScrabble()[i][j] == 'D')
-						board[i][j].setTILE_MULTIPLIER(2);
-				}
-		}
+	public Board() {
+		Pattern p = new Pattern(SIZE, board);
+	}
 		
 		
 		
@@ -302,8 +289,4 @@ return true;
 			return true;
 	return false;
 	}
-	
-
-	
-
 }
