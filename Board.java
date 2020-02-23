@@ -78,7 +78,7 @@ boolean isFirstRound = true;
 			}
 
 	
-	public void placeWordVertically(ArrayList <Tile> tilesFromFrame, int firstPosition_x,int firstPosition_y, String temporaryWord)
+	public void placeWordVertically(ArrayList <Tile> tilesFromFrame, int firstPosition_x,int firstPosition_y, String word)
 	{ //in main: board.placeWordVertically(frame.someGetterFunction()) //best get all Tiles needed, get one Tile ok
 		//does its set of checks first
 		//if (!this.isWordValidVertically())
@@ -89,7 +89,7 @@ boolean isFirstRound = true;
 			//give user input
 		//}
 		//else	//if passed tests
-			for (int i=0; i<temporaryWord.length(); i++)
+			for (int i=0; i<word.length(); i++)
 					System.out.println("x is mobile. x+i. I'm in progress");	//ArrayList <Tile> dummy = new ArrayList() ;
 		
 		
@@ -99,12 +99,15 @@ boolean isFirstRound = true;
 
 	
 	
-	public void placeWordHorizontally(Frame frame, int firstPosition_x,int firstPosition_y, String temporaryWord){ //necessary to be separate! //change interface
-		//does set of checks first
-		//if (this.isWordValidHorizontally(/*variables variable variable*/))
-		//ArrayList <Tile> dummy = new ArrayList() ;
-				for (int i=0; i<temporaryWord.length(); i++)
-					System.out.println("y is mobile. y+i. I'm in progress");
+	public void placeWordHorizontally(Frame frame, int firstPosition_x,int firstPosition_y, String word){ //necessary to be separate! //change interface
+		Tile currentTile;
+		if(isValidHorizontally(firstPosition_x, firstPosition_y, frame, word)) {
+			for (int i=0; i<word.length(); i++) {
+					currentTile = frame.getTilesByWord(word).get(i);
+					board[firstPosition_x+i][firstPosition_y+i].placeTile(currentTile);
+			}
+		}
+					
 		
 	}
 	

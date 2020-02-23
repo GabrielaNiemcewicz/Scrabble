@@ -126,7 +126,7 @@ public class Frame {
 
 
 	//getters
-	public ArrayList<Tile> returnTilesMakingWord(String letters){
+	public ArrayList<Tile> getTilesByWord(String letters){
 		ArrayList<Tile> copy_of_temporary_word = new ArrayList<Tile>(); //temporary_word = word user places on board. Copy has removed letters that are already on board.
 		Tile pickedTile;
 		char pickedLetter;
@@ -144,7 +144,7 @@ public class Frame {
 	
 	
 	//display on screen
-		public void displayAsFrame(){
+	public void displayAsFrame(){
 			System.out.print(" || ");
 			
 		for (int i=0; i<frame.size();i++){ 
