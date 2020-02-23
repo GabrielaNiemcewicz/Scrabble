@@ -38,17 +38,22 @@ public class TestingMain {
 		
 		if(PF == 0) {
 			System.out.println("*****************\nWould You like to Place it Horizontally Or Virtaclly: ");
-			HV = in.next();
+			HV = in.nextLine();
 			System.out.println("Choose What Row: ");
 			int x = in.nextInt();
 			System.out.println("Choose What Column: ");
 			int y = in.nextInt();
 			
-			if(true)
+			if(HV == "H" || HV == "h" || HV == "Horizontally" || HV == "horizontally")
 			{
+				if(Bo.isValidHorizontally(x, y, f, word, p) == true)
+				{
 					System.out.println("The place Is valid Horizontally.");
 					Bo.placeWordHorizontally(f, x, y, word, p);
-					Bo.display();	
+					Bo.display();
+				}
+				else 
+					System.out.println("The place Is NOT valid Horizontally.");		
 			}
 			
 			if(HV == "V" || HV == "v" || HV == "Vertically" || HV == "vertically")
@@ -65,8 +70,6 @@ public class TestingMain {
 		
 			
 		}
-		
-		f.displayAsFrame();
 
 /********* TEST 4 - WHATHER ITS THE FIRST WORD OR NOT *************/	
 		if(Bo.isFirstWord())
