@@ -146,13 +146,6 @@ public class Frame {
 	
 	//display on screen
 	public void displayAsFrame(){
-			/*System.out.print(" || ");
-			
-		for (int i=0; i<frame.size();i++){ 
-			frame.get(i).display(); 
-			System.out.print(" | ");
-		   }
-			System.out.print(" || ");*/
 		
 		for(int i=0; i<frame.size()*2; i++) {
 			if(i==frame.size())
@@ -160,7 +153,7 @@ public class Frame {
 			if(i<frame.size())
 				System.out.print("|" + frame.get(i).getLetter() + "| ");
 			else
-				System.out.print("|" + frame.get(i%frame.size()).getValue() + "| ");
+				System.out.printf("|" + frame.get(i%frame.size()).getValue() + "|%s");
 		}
 		}
 

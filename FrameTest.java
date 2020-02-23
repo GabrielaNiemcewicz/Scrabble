@@ -67,7 +67,7 @@ class FrameTest {
 	
 	}
 	
-/*	@Test
+	@Test
 	void check_passTiles() throws Exception{
 	try{
 		assertEquals(letterA, frame.passTiles('A'));
@@ -99,13 +99,12 @@ class FrameTest {
 	void check_isLetterIn() throws Exception {
 	
 	try{
-		assertTrue(frame.isLetterIn('C'));
-		assertTrue(frame3.isLetterIn('E'));
-		assertTrue(frame3.isLetterIn('F'));
-		
-		assertFalse(frame.isLetterIn('D'));
-		assertFalse(frame.isLetterIn('H'));
-		assertFalse(frame3.isLetterIn('H'));
+		assertTrue(frame.isStringIn('C'));
+		assertTrue(frame3.isStringIn('E'));
+		assertTrue(frame3.isStringIn('F'));
+		assertFalse(frame.isStringIn('D'));
+		assertFalse(frame.isStringIn('H'));
+		assertFalse(frame3.isStringIn('H'));
 	}catch(IllegalArgumentException ex) {}
 	}
 	
@@ -122,12 +121,12 @@ class FrameTest {
 	}
 	public void check_accessTileByIndex() throws Exception{
 	try{
-		assertEquals(letterC,frame.accessTileByIndex(2));
-		assertEquals(letterA,frame.accessTileByIndex(0));
-		assertEquals(letterD,frame3.accessTileByIndex(3));
-		assertNotEquals(letterD,frame3.accessTileByIndex(5));
+		assertEquals(letterC,frame.accessByIndex(2));
+		assertEquals(letterA,frame.accessByIndex(0));
+		assertEquals(letterD,frame3.accessByIndex(3));
+		assertNotEquals(letterD,frame3.accessByIndex(5));
 		
 	
 	}catch(IllegalArgumentException ex){}
-	}  */
+	}  
 }
