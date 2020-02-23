@@ -71,9 +71,6 @@ boolean isFirstRound = true;
 		
 	}
 	
-
-	
-	
 	public void placeWordHorizontally(Frame frame, int firstPosition_x,int firstPosition_y, String word, Player player){ //necessary to be separate! //change interface
 		Tile currentTile;
 		ArrayList<Tile> wordTiles = new ArrayList<Tile>(frame.getTilesByWord(word));
