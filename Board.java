@@ -76,14 +76,14 @@ boolean isFirstRound = true;
 	
 	public void placeWordHorizontally(Frame frame, int firstPosition_x,int firstPosition_y, String word, Player player){ //necessary to be separate! //change interface
 		Tile currentTile;
+		ArrayList<Tile> wordTiles = new ArrayList<Tile>(frame.getTilesByWord(word));
 		if(isValidHorizontally(firstPosition_x, firstPosition_y, frame, word, player)) {
 			for (int i=0; i<word.length(); i++) {
-					currentTile = frame.getTilesByWord(word).get(i);
+					currentTile = wordTiles.get(i);
 					board[firstPosition_x][firstPosition_y+i].placeTile(currentTile);
 			}
 		}
-					
-		
+		frame.cleanString(word);			
 	}
 	
 	
@@ -192,8 +192,10 @@ boolean isFirstRound = true;
 		
 		 System.out.println("Bravo," + player.getName()+ "! You were able to create word: "+word+"...What a luck.");
 		for (int i=0;i<6-word.length(); i++) System.out.print("*CLAP*\t");
+		System.out.println();
 		 return true; //if all tests passed as true
 	}	
+	
 	
 	//all sets of tests together
 	public boolean isValidVertically(int firstPosition_x, int firstPosition_y, Frame frame, String Word, Player player) {
@@ -283,17 +285,18 @@ if(this.isFirstRound)
 	return true;
 
 for (Square squares: squareWalker)	
-	if (squares.isEmpty())
-		return false;
+	if (!squares.isEmpty())
+		return true;
 
 for (Square squares: squareWalkerUp)	
-	if (squares.isEmpty())
-		return false;
+	if (!squares.isEmpty())
+		return true;
 
 for (Square squares: squareWalkerDown)	
-	if (squares.isEmpty())
-		return false;
-return true;
+	if (!squares.isEmpty())
+		return true;
+
+return false;
 }
 	
 	
@@ -348,5 +351,9 @@ return true;
 		Board b = new Board();
 		
 		b.display();
+		ArrayList<Tile> t = new ArrayList<Tile>();
+		p1.getFrame().addTiles(new Tile('a'));
+		p1.getFrame().displayAsFrame();
+		p1.getFrame().getTilesByWord("a");
 	}
 }

@@ -11,8 +11,6 @@ public class Frame {
 	}
 
 
-
-
 //size-related
 	public int size() {
 		return(frame.size());
@@ -100,11 +98,12 @@ public class Frame {
 			   for (int i=0; i<frame.size(); i++) {
 			       		if (frame.get(i).getLetter() == checkedLetter) 
 			       			{whichIndex = i; return whichIndex;}
-			       		else continue;
 			       } //if not in, in previous version, return -1
 			}
-				return whichIndex;
 			
+			if(whichIndex == -1)
+				throw new IllegalArgumentException("Didnt convert to uppercase");
+				return whichIndex;
 			//return checkedLetter;
 		}
 
@@ -117,17 +116,19 @@ public class Frame {
 
 
 // helps/aids for getters
-	private void cleanString(String letters) {
+	void cleanString(String letters) {
              if(this.isStringIn(letters))
 		for (int i=0; (i<letters.length()); i++) {
 			frame.remove(new Tile(letters.charAt(i)));
 		}
+             
 	}
   	
 
 
 	//getters
 	public ArrayList<Tile> getTilesByWord(String letters){
+		letters = letters.toUpperCase();
 		ArrayList<Tile> copy_of_temporary_word = new ArrayList<Tile>(); //temporary_word = word user places on board. Copy has removed letters that are already on board.
 		Tile pickedTile;
 		char pickedLetter;
@@ -135,8 +136,7 @@ public class Frame {
 			for (int i=0; i<letters.length(); i++)
 				{pickedLetter = letters.charAt(i);
 				pickedTile = this.accessByLetter(pickedLetter);
-				copy_of_temporary_word.add(pickedTile);}
-		this.cleanString(letters);		
+				copy_of_temporary_word.add(pickedTile);}	
 		return copy_of_temporary_word;}
 	
 	
@@ -162,7 +162,7 @@ public class Frame {
 			else
 				System.out.print("|" + frame.get(i%frame.size()).getValue() + "| ");
 		}
-	}
+		}
 
 	
 	public String displayAsString(){
@@ -170,6 +170,10 @@ public class Frame {
 				for (int i=0; i<frame.size(); i++)
 					{word = word + (frame.get(i).getLetter());}
 	return word;}
+	}
+	
+	public void addTiles(Tile tile) {
+		frame.add(tile);
 	}
 		
 //cleaning

@@ -63,6 +63,8 @@
 	        }
 	    }
 	    
-	    
+	    public String toString() {
+	    	return this.letter + " ";
+	    }
 
 	}
