@@ -1,8 +1,6 @@
 
 public class Square {
 
-	private int letterMultiplier;
-	private int wordMultiplier;
 	private Tile tile;
 	private Type type;
 	
@@ -10,18 +8,8 @@ public class Square {
 		setType(Type.normal);
 	}
 	
-	private void setLetterMultiplier(int letterMultiplier) {
-		this.letterMultiplier = letterMultiplier;
-	}
-	
-	private void setWordMultiplier(int wordMultiplier) {
-		this.wordMultiplier = wordMultiplier;
-	}
-	
 	public void setType(Type type) {
 		this.type = type;
-		setWordMultiplier(type.getWordMultiplier());
-		setLetterMultiplier(type.getLetterMultiplier());
 	}
 	
 	public void placeTile(Tile tile){
@@ -41,11 +29,11 @@ public class Square {
 	}
 	
 	public int getWordScoreMultiplier() {
-		return this.wordMultiplier ;
+		return type.getWordMultiplier();
 	}
 	
 	public int getLetterScoreMultiplier() {
-		return this.letterMultiplier ;
+		return type.getLetterMultiplier();
 	}
 	
 	public boolean isEmpty() {
