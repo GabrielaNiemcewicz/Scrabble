@@ -9,7 +9,7 @@ public class TestingMain {
 		Bo.display();
 		
 		Frame f = new Frame();
-		Player p = new Player("Mary", f);
+		Player p = new Player("Mary");
 		System.out.println("\n"+p);
 		
 		Pool pool = new Pool();

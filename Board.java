@@ -12,9 +12,6 @@ boolean isFirstRound = true;
 
 
 		public Board() {
-			for (int i=0; i<this.SIZE; i++)	
-				for (int j=0; j<this.SIZE; j++)
-					board[i][j] = new Square();
 			Pattern p = new Pattern(15);
 			
 			
@@ -35,10 +32,10 @@ boolean isFirstRound = true;
 		
 		
 		public void display() {  
-			for(int i=0; i<this.SIZE;i++) {
+			for(Square[] rows: board) {
 				System.out.print("          -------------------------------------------------------------\n          ");
-				for(int j=0; j<this.SIZE; j++) {
-					System.out.print("| " + board[i][j]);
+				for(Square squares: rows) {
+					System.out.print("| " + squares);
 				}
 				System.out.println("|");
 			}
@@ -58,19 +55,25 @@ boolean isFirstRound = true;
 	}
 	
 	
-	public void reset() {		
+	public void reset() {
+		for (Square [] rows:board)
+			for (Square squares:rows)
+				squares.removeTile();
 	}
 	
 
 	
 	
 	//do we need this?
-	public boolean horizontallyOrVertically(char vh) throws Exception {
+	public boolean horizontallyOrVertically(char vh) {
 	if (vh=='h')
 		return true;
 	else if (vh =='v')
 		return false;
-	else throw new Exception("Wrong character inputted into vertically or horizontally in board");
+	else{ 
+		System.out.print("Wrong character, input again");
+		return false;
+	    }
 	} 
 
 	
@@ -100,8 +103,6 @@ boolean isFirstRound = true;
 		
 		return squareWalker;
 		
-		
-		
 	}
 
 
@@ -116,7 +117,8 @@ boolean isFirstRound = true;
 //////////////////////////////////////////////////////////////////////////////////////
 	//	List<Square []> validationTestsScope = new ArrayList(); proposition for loop in connectsParallely check
 /////////////////////////////////////////////////////////////////////////////////////
-///////////////////////////////////////////////////////////////////////////////////////////////////		
+///////////////////////////////////////////////////////////////////////////////////////////////////
+
 		ArrayList<Square[]> validationTestsScope = new ArrayList();
 		Square [] squareWalker; //= this.squareWalkerHorizontal(firstPosition_x, firstPosition_y-1, word.length()+2); //contains word and 1 square before and after word finishes
 		Square [] squareWalkerUp; //= this.squareWalkerHorizontal(firstPosition_x+1,firstPosition_y, word.length());		
@@ -137,7 +139,7 @@ boolean isFirstRound = true;
 		return false;}	
 
 	else if (!this.isWithinBounds(firstPosition_y, word)) //y is mobile
-		{System.out.println("You can't start your word here- square from which you started the word is out of Board");
+		{System.out.println("You can't place your word here-last square is out of Board");
 		return false;	
 		}	
 	else
@@ -165,8 +167,8 @@ boolean isFirstRound = true;
 		return false;}
 		 
 		
-		 System.out.println("Congrats" + player.getName()+ "! What a surprise. You had intellectual capacity to create word: "+word+" How clever. How lucky");
-		for (int i=0;i<6-word.length(); i++) System.out.print("*CLAP* ");
+		 System.out.println("Bravo," + player.getName()+ "! You were able to create word: "+word+"...What a luck.");
+		for (int i=0;i<6-word.length(); i++) System.out.print("*CLAP*\t");
 		 return true; //if all tests passed as true
 	}	
 	
@@ -193,7 +195,7 @@ boolean isFirstRound = true;
 	
 	public boolean usesFrameTiles(Square[] squareWalker,  String word) {		
 		for (int i = 1; i<word.length()+1; i++) // first Square doesn't belong to a word
-			if (squareWalker[i].isEmpty()) //beginning and end of squareWalker is outside of word scope
+			if (squareWalker[i].isEmpty()) 
 				return true;
 		
 		return false;}
@@ -202,7 +204,7 @@ boolean isFirstRound = true;
 	{
 	String word_copy = "";	
 	
-	for (int i=0; i<squareWalker.length-2; i++)
+	for (int i=0; i<word.length(); i++)
 		if(squareWalker[i+1].isEmpty())
 			{
 			word_copy +=word.charAt(i);}
@@ -213,6 +215,9 @@ boolean isFirstRound = true;
 
 public boolean connectsToTiles(Square [] squareWalker, Square [] squareWalkerUp, Square [] squareWalkerDown)
 { //make a list of square walkers and loop through that list
+if(this.isFirstRound)
+	return true;
+
 for (Square squares: squareWalker)	
 	if (squares.isEmpty())
 		return false;
@@ -230,44 +235,35 @@ return true;
 	
 	public boolean isWithinBounds  (int firstPositionMobile, String temporaryWord)
 	{
-	
 		if (firstPositionMobile+temporaryWord.length()>15) return false; 
-		else return true;
-	
+		else return true;	
 	}
 	
 
 	
 	
 	
-	public boolean noConflicts(String word, Square[] squareWalker)
-	{ 
-		for (int i=1; i<word.length(); i++) { //squareWalker includes 2 squares that don't belong in the word
-			
-			if (squareWalker[i].getCharacter() != word.charAt(i-1))
-				return false; 
-			else 
-				continue;
-			}
+	public boolean noConflicts(String word, Square[] squareWalker)	{
+		if(this.isFirstRound)
+			return true;	
 		
-		return true;
-			}
+		for (int i=1; i<word.length(); i++)  //squareWalker includes 2 squares that don't belong in the word
+			if (squareWalker[i].getCharacter() != word.charAt(i-1))
+				return false; 	
+		
+		return true;  }
 		
 	public void set_IsFirstRoundToFalse () 
 	{ this.isFirstRound= false; }
 	
 	
 	public boolean isFirstWord() {
-		if (this.isFirstRound==true) {
-			for (int i=0; i<this.SIZE; i++)
-				for (int j=0; j<this.SIZE; j++)
-					if (!this.board[i][j].isEmpty())
-						{this.set_IsFirstRoundToFalse();
-						return false;}
-			
-		
-		return true; }
-		return false;
+		if (this.isFirstRound==true) 
+			for (Square []rows:board)
+				for (Square squares:rows)
+					if (!squares.isEmpty())
+						this.set_IsFirstRoundToFalse();
+		return this.isFirstRound;
 	}
 	
 	
@@ -277,12 +273,10 @@ return true;
 	{
 		if(firstPositionFixed!=7)
 			return false;
-		else if (firstPositionMobile<=7 && temporaryWord.length()+firstPositionMobile>=7)
+		else if (firstPositionMobile<=7 || temporaryWord.length()+firstPositionMobile>=7)
 			return true;
 	return false;
 	}
-	
-
 	
 
 	

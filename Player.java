@@ -64,7 +64,7 @@ public class Player{
 		name = in.nextLine();
 		setName(name);
 		setScore(0);
-		Frame.removeAllTiles();    /*removeAllTiles Method is a method in class Frame()
+		Frame.reset();    /*removeAllTiles Method is a method in class Frame()
 		                            * which remove all the tiles in the frame and reset them again. */
 		in.close();
 	}
