@@ -58,53 +58,11 @@ boolean isFirstRound = true;
 	}
 	
 	
-	public void reset() {
-		//at initialization, Tile is null. => isEmpty= true
-		//at placing Tile on Square, isEmpty = false, either square.reset or board.reset
-			//have 1 extra private uninitialized Tile dummyTile somewhere- possibly in the Board. It NEVER gets initialized!
-			//use created string isEmpty
-				//a) in Square as separate variable
-				//b) in Square as check tile.isNull()
-				//c) make board a two-dimensional boolean Array[15][15] //that's what Chris said...
-				//
-			System.out.println("Use me! \n For: \n resetting whole board at beginning/end game \n refreshing Square on each (whole word)/(tile?) placement");
-			//void reset()
-				//set isEmpty = false and set temporaryWord = null
-				//{if (this.tile.isEmpty == false) 
-					//this.tile = userInputterTile
-				//else if (!this.tile.isEmpty == true)
-					//this.tile= dommyTile
-		//last 4 lines should be the same in the initializer of Square
-			}
-
-	
-	public void placeWordVertically(Frame frame, int firstPosition_x,int firstPosition_y, String word)
-	{ //in main: board.placeWordVertically(frame.someGetterFunction()) //best get all Tiles needed, get one Tile ok
-		Tile currentTile;
-		if(isValidHorizontally(firstPosition_x, firstPosition_y, frame, word)) {
-			for (int i=0; i<word.length(); i++) {
-					currentTile = frame.getTilesByWord(word).get(i);
-					board[firstPosition_x+i][firstPosition_y].placeTile(currentTile);
-			}
-		}
-		
-		
+	public void reset() {		
 	}
 	
 
 	
-	
-	public void placeWordHorizontally(Frame frame, int firstPosition_x,int firstPosition_y, String word){ //necessary to be separate! //change interface
-		Tile currentTile;
-		if(isValidHorizontally(firstPosition_x, firstPosition_y, frame, word)) {
-			for (int i=0; i<word.length(); i++) {
-					currentTile = frame.getTilesByWord(word).get(i);
-					board[firstPosition_x][firstPosition_y+i].placeTile(currentTile);
-			}
-		}
-					
-		
-	}
 	
 	//do we need this?
 	public boolean horizontallyOrVertically(char vh) throws Exception {
@@ -151,16 +109,22 @@ boolean isFirstRound = true;
 	
 	
 	//all sets of tests together
-	public boolean isValidHorizontally(int firstPosition_x, int firstPosition_y, Frame frame, String word) {
+	public boolean isValidHorizontally(int firstPosition_x, int firstPosition_y, Frame frame, String word, Player player) {
 	//if first test not passed, immediately return false, output what happened, else (continue testing)
 	//if all tests return true, then isValid returns true.
-	//	List<Square []> validationTestsScope = new ArrayList(); proposition for loop in connectsParallely check 
-		Square [] squareWalker; //contains word and 1 square before and after word finishes
-		Square [] squareWalkerUp; //1 row of squares above the word
-		Square [] squareWalkerDown; ////1 row of squares below the word
-
-	
-
+/////////////////////////////////////////////////////////////////////////////////////////////		
+//////////////////////////////////////////////////////////////////////////////////////
+	//	List<Square []> validationTestsScope = new ArrayList(); proposition for loop in connectsParallely check
+/////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////		
+		ArrayList<Square[]> validationTestsScope = new ArrayList();
+		Square [] squareWalker; //= this.squareWalkerHorizontal(firstPosition_x, firstPosition_y-1, word.length()+2); //contains word and 1 square before and after word finishes
+		Square [] squareWalkerUp; //= this.squareWalkerHorizontal(firstPosition_x+1,firstPosition_y, word.length());		
+		Square [] squareWalkerDown; //= this.squareWalkerHorizontal(firstPosition_x-1,firstPosition_y, word.length()); //1 row of squares above the word; //
+		//possibly: change interfaces to take in ArrayList validationTestsScope instead of squareWalkers. Add to arraylist just before it's needed.
+		//validationTestsScope.add(squareWalker); //if index in frame! Important check
+		//validationTestsScope.add(squareWalkerDown); //if index in frame! Important check
+		//validationTestsScope.add(squareWalkerUp); //if i in frame
 		
 		
 	if(this.isFirstWord())	
@@ -174,35 +138,36 @@ boolean isFirstRound = true;
 
 	else if (!this.isWithinBounds(firstPosition_y, word)) //y is mobile
 		{System.out.println("You can't start your word here- square from which you started the word is out of Board");
-		
 		return false;	
 		}	
-	else 
+	else
 		squareWalker = this.squareWalkerHorizontal(firstPosition_x, firstPosition_y-1, word.length()+2);
-	
-	
-	if(!this.noConflicts(word, squareWalker))
+	 if(!this.noConflicts(word, squareWalker))
 			{System.out.println("Your word clashes with letters on the board.");
 			return false;}	
 	
 	
-		else if(!this.areFrameTilesSufficient(squareWalker, frame, word)) 
-		{//function prints one of 2 errors- outputs need to stay inside of the method
-			squareWalkerUp = this.squareWalkerVertical(firstPosition_x+1,firstPosition_y, word.length());
-			squareWalkerDown= this.squareWalkerVertical(firstPosition_x-1,firstPosition_y, word.length());
+	else if(!this.usesFrameTiles(squareWalker, word)) {
+			System.out.println("You used no Tile from Frame. All letters making word are already on Board. ");
 			return false;}
-		else 
+	
+	else if(!this.isInFrame(squareWalker, frame, word))
+	{System.out.println("You don't have enough Tiles of required type to produce this word there");
+		return false;}	
+		else
 		{
-			squareWalkerUp = this.squareWalkerVertical(firstPosition_x+1,firstPosition_y, word.length());
-			squareWalkerDown= this.squareWalkerVertical(firstPosition_x-1,firstPosition_y, word.length());
+			squareWalkerUp = this.squareWalkerHorizontal(firstPosition_x+1,firstPosition_y, word.length());		
+			squareWalkerDown = this.squareWalkerHorizontal(firstPosition_x-1,firstPosition_y, word.length());
 		}
 	
 		 if(!this.connectsToTiles(squareWalker, squareWalkerUp, squareWalkerDown))
 		{System.out.println("Your word neither uses Tiles on Board nor connects to them paralelly");
 		return false;}
-	
-	
-		return true; //if all tests passed as true
+		 
+		
+		 System.out.println("Congrats" + player.getName()+ "! What a surprise. You had intellectual capacity to create word: "+word+" How clever. How lucky");
+		for (int i=0;i<6-word.length(); i++) System.out.print("*CLAP* ");
+		 return true; //if all tests passed as true
 	}	
 	
 	//all sets of tests together
@@ -225,49 +190,29 @@ boolean isFirstRound = true;
 			return false;	
 	}
 	
-	//EXTREMELY IMPORTANT- DO THIS TEST AFTER CHECKING FOR CLASHES WITH EXISTING TILES
-	public boolean areFrameTilesSufficient(Square[] squareWalker, Frame frame, String temporaryWord) {
-		ArrayList<Character> copyOf_checked_word = new ArrayList();
-		
-		for(int i=0; i<temporaryWord.length(); i++)
-		copyOf_checked_word.add(temporaryWord.charAt(i));
-		
-		char tempRemovedCharacter;
-		
-		
-		for (int i = 1; i<temporaryWord.length()+1; i++)
-			if (!squareWalker[i].isEmpty()) //beginning and end of squareWalker is outside of word scope
-				 {
-				 tempRemovedCharacter = squareWalker[i].getCharacter(); 
-				 copyOf_checked_word.remove(tempRemovedCharacter);  //if error pops up, convert tempRemovedCharacter from char to Character Object
-///////////////////////////////////////////////////////////////////////////////////////////////////////
-////////////////copyOf_checked_word.delete(tempRemovedChar);////////////////////////////////////////////
-//////////////////////////////////////////////////////////////////////////////////////////////////////
-			}
-		
-		if 	(copyOf_checked_word.size()==0)
-			{System.out.println("Word invalid- no letter from Frame used");
-			return false;}
-
-		
-		else 
-		{
-		if (!frame.isStringIn(copyOf_checked_word.toString()))
-		{System.out.println("You don't have necessary tiles in the frame to create this word");
-		return false;}
-		else  /*possible to request Frame for Tiles from copy of string*/ return true;
-		}
-		}		
-		
-		//done with bugs//necessary - remove from "word search" character(s) already "on the path" on Board that word of this length contains 
-		//done//Frame contains ready method boolean isStringIn (String checked_word)
-
 	
+	public boolean usesFrameTiles(Square[] squareWalker,  String word) {		
+		for (int i = 1; i<word.length()+1; i++) // first Square doesn't belong to a word
+			if (squareWalker[i].isEmpty()) //beginning and end of squareWalker is outside of word scope
+				return true;
+		
+		return false;}
+	//EXTREMELY IMPORTANT- DO THIS TEST AFTER CHECKING FOR CLASHES WITH EXISTING TILES
+	public boolean isInFrame(Square[] squareWalker,Frame frame, String word)
+	{
+	String word_copy = "";	
+	
+	for (int i=0; i<squareWalker.length-2; i++)
+		if(squareWalker[i+1].isEmpty())
+			{
+			word_copy +=word.charAt(i);}
+	return frame.isStringIn(word_copy);
+	
+	}
 
 
 public boolean connectsToTiles(Square [] squareWalker, Square [] squareWalkerUp, Square [] squareWalkerDown)
-{ 
-	//make a list of squarewalkers and loop through that list
+{ //make a list of square walkers and loop through that list
 for (Square squares: squareWalker)	
 	if (squares.isEmpty())
 		return false;
