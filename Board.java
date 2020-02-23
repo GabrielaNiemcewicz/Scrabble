@@ -1,4 +1,4 @@
-import java.util.ArrayList; 
+import java.util.*; 
 
 public class Board {
 
@@ -153,14 +153,20 @@ boolean isFirstRound = true;
 	
 	
 	//all sets of tests together
-	public boolean isValidHorizontally(int firstPosition_x, int firstPosition_y, Frame frame, String temporaryWord) {
+	public boolean isValidHorizontally(int firstPosition_x, int firstPosition_y, Frame frame, String word) {
 	//if first test not passed, immediately return false, output what happened, else (continue testing)
 	//if all tests return true, then isValid returns true.
+	//	List<Square []> validationTestsScope = new ArrayList(); proposition for loop in connectsParallely check 
+		Square [] squareWalker; //contains word and 1 square before and after word finishes
+		Square [] squareWalkerUp; //1 row of squares above the word
+		Square [] squareWalkerDown; ////1 row of squares below the word
+
 	
-		Square [] squareWalker = this.squareWalkerHorizontal(firstPosition_x, firstPosition_y, temporaryWord.length());
+
+		
 		
 	if(this.isFirstWord())	
-		if(!this.inTheMiddle(firstPosition_x,  firstPosition_y, temporaryWord)) //x is fixed, y is mobile
+		if(!this.inTheMiddle(firstPosition_x,  firstPosition_y, word)) //x is fixed, y is mobile
 		{System.out.println("First word needs to connect to Square in the middle, 8th, 8th");
 		return false;}
 	
@@ -168,55 +174,47 @@ boolean isFirstRound = true;
 		{System.out.println("You can't start your word here- square index out of Board");
 		return false;}	
 
-	else if (!this.isWithinBounds(firstPosition_y, temporaryWord)) //change interface
+	else if (!this.isWithinBounds(firstPosition_y, word)) //y is mobile
 		{System.out.println("You can't start your word here- square from which you started the word is out of Board");
-		return false;}	
 		
-	else { 
-		squareWalker = this.squareWalkerHorizontal(firstPosition_x, firstPosition_y, temporaryWord.length());
-		
-		if(!this.noConflicts(temporaryWord, squareWalker))
+		return false;	
+		}	
+	else 
+		squareWalker = this.squareWalkerHorizontal(firstPosition_x, firstPosition_y-1, word.length()+2);
+	
+	
+	if(!this.noConflicts(word, squareWalker))
 			{System.out.println("Your word clashes with letters on the board.");
 			return false;}	
 	
-		else if(!this.areFrameTilesInsufficientToConnect(squareWalker, frame, temporaryWord)) 
-	//function prints one of 3 errors- all has to be inside
-			return false;
+	
+		else if(!this.areFrameTilesSufficient(squareWalker, frame, word)) 
+		{//function prints one of 2 errors- outputs need to stay inside of the method
+			squareWalkerUp = this.squareWalkerVertical(firstPosition_x+1,firstPosition_y, word.length());
+			squareWalkerDown= this.squareWalkerVertical(firstPosition_x-1,firstPosition_y, word.length());
+			return false;}
+		else 
+		{
+			squareWalkerUp = this.squareWalkerVertical(firstPosition_x+1,firstPosition_y, word.length());
+			squareWalkerDown= this.squareWalkerVertical(firstPosition_x-1,firstPosition_y, word.length());
+		}
+	
+		 if(!this.connectsToTiles(squareWalker, squareWalkerUp, squareWalkerDown))
+		{System.out.println("Your word neither uses Tiles on Board nor connects to them paralelly");
+		return false;}
 	
 	
-	else	return true; 
-	}	}
+		return true; //if all tests passed as true
+	}	
 	
 	//all sets of tests together
 	public boolean isValidVertically(int firstPosition_x, int firstPosition_y, Frame frame, String temporaryWord) {
-		Square [] squareWalker;
-		
-	if(this.isFirstWord())	
-		if(!this.inTheMiddle(firstPosition_y,  firstPosition_x, temporaryWord)) //y is fixed, x is mobile
-		{System.out.println("First word needs to connect to Square in the middle, 8th, 8th");
-		return false;}
-	
-	if (!this.isFirstPositionValid(firstPosition_x, firstPosition_y))
-		{System.out.println("You can't start your word here- square from which you started the word is out of Board");
-		return false;}	
-	else if (!this.isWithinBounds(firstPosition_x, temporaryWord)) //x is mobile
-		{System.out.println("Your word is too long to be placed here at this place on Board");
-		return false;}	
-		
-	else { 
-		squareWalker = this.squareWalkerVertical(firstPosition_x, firstPosition_y, temporaryWord.length());
-		
-		if(!this.noConflicts(temporaryWord, squareWalker))
-			{System.out.println("Your word clashes with letters on the board.");
-			return false;}	
-	else if(!this.areFrameTilesInsufficientToConnect(squareWalker, frame, temporaryWord))
-	//function prints one of 3 errors- all has to be inside
-			return false;
-	
-	
-	else	return true; 
+		Square [] squareWalker; //contains word and 1 square before and after word finishes
+		Square [] squareWalkerRight; //1 column of squares on the right to the word
+		Square [] squareWalkerLeft; //1 column of squares on the left the word
+	return true;
 	}	
-}
+
 
 	
 	
@@ -230,7 +228,7 @@ boolean isFirstRound = true;
 	}
 	
 	//EXTREMELY IMPORTANT- DO THIS TEST AFTER CHECKING FOR CLASHES WITH EXISTING TILES
-	public boolean areFrameTilesInsufficientToConnect(Square[] squareWalker, Frame frame, String temporaryWord) {
+	public boolean areFrameTilesSufficient(Square[] squareWalker, Frame frame, String temporaryWord) {
 		ArrayList<Character> copyOf_checked_word = new ArrayList();
 		
 		for(int i=0; i<temporaryWord.length(); i++)
@@ -239,8 +237,8 @@ boolean isFirstRound = true;
 		char tempRemovedCharacter;
 		
 		
-		for (int i = 0; i<temporaryWord.length(); i++)
-			if (!squareWalker[i].isEmpty())
+		for (int i = 1; i<temporaryWord.length()+1; i++)
+			if (!squareWalker[i].isEmpty()) //beginning and end of squareWalker is outside of word scope
 				 {
 				 tempRemovedCharacter = squareWalker[i].getCharacter(); 
 				 copyOf_checked_word.remove(tempRemovedCharacter);  //if error pops up, convert tempRemovedCharacter from char to Character Object
@@ -252,9 +250,7 @@ boolean isFirstRound = true;
 		if 	(copyOf_checked_word.size()==0)
 			{System.out.println("Word invalid- no letter from Frame used");
 			return false;}
-		else if (copyOf_checked_word.size()==temporaryWord.length()) //on start of game. temp.length=0, so no need to check if it's beginning
-			{System.out.println("Word invalid- doesn't connect to any words on Board");
-			return false;}
+
 		
 		else 
 		{
@@ -271,8 +267,22 @@ boolean isFirstRound = true;
 	
 
 
+public boolean connectsToTiles(Square [] squareWalker, Square [] squareWalkerUp, Square [] squareWalkerDown)
+{ 
+	//make a list of squarewalkers and loop through that list
+for (Square squares: squareWalker)	
+	if (squares.isEmpty())
+		return false;
 
-	
+for (Square squares: squareWalkerUp)	
+	if (squares.isEmpty())
+		return false;
+
+for (Square squares: squareWalkerDown)	
+	if (squares.isEmpty())
+		return false;
+return true;
+}
 	
 	
 	public boolean isWithinBounds  (int firstPositionMobile, String temporaryWord)
@@ -287,11 +297,11 @@ boolean isFirstRound = true;
 	
 	
 	
-	public boolean noConflicts(String temporaryWord, Square[] squareWalker)
+	public boolean noConflicts(String word, Square[] squareWalker)
 	{ 
-		for (int i=0; i<squareWalker.length; i++) {
+		for (int i=1; i<word.length(); i++) { //squareWalker includes 2 squares that don't belong in the word
 			
-			if (squareWalker[i].getCharacter() != temporaryWord.charAt(i))
+			if (squareWalker[i].getCharacter() != word.charAt(i-1))
 				return false; 
 			else 
 				continue;
@@ -300,29 +310,21 @@ boolean isFirstRound = true;
 		return true;
 			}
 		
-	
+	public void set_IsFirstRoundToFalse () 
+	{ this.isFirstRound= false; }
 	
 	
 	public boolean isFirstWord() {
 		if (this.isFirstRound==true) {
-			for (int i=0; i<this.SIZE; i++) {
-				for (int j=0; j<this.SIZE; j++) {
+			for (int i=0; i<this.SIZE; i++)
+				for (int j=0; j<this.SIZE; j++)
 					if (!this.board[i][j].isEmpty())
-					{
-					  this.isFirstRound = false; 
-					  return false;
-					}
-				   return true; 
-				}
-				return false;
-			}
-		}	
+						{this.set_IsFirstRoundToFalse();
+						return false;}
+			
 		
-		return true;
-		 // how to make program aware what is the first word?????????????????????
-		
-		  //if first, this big first testing method at the beginning has test if inTheMiddle(checked_word)
-		  //if not first, this big first testing method at the beginning has test if connectsToTileOnBoard(...)
+		return true; }
+		return false;
 	}
 	
 	
