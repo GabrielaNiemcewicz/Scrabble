@@ -18,15 +18,26 @@ boolean isFirstRound = true;
 		
 		
 		public void display() {  
-			for(Square[] rows: board) {
+			/*for(Square[] rows: board) {
 				System.out.print("          -------------------------------------------------------------\n          ");
 				for(Square squares: rows) {
 					System.out.print("| " + squares);
 				}
 				System.out.println("|");
 			}
-			System.out.print("          -------------------------------------------------------------\n          ");
+			System.out.print("          -------------------------------------------------------------\n          ");*/
+			
+			for(int i=0; i<this.SIZE;i++) {
+				System.out.printf("            -------------------------------------------------------------\n        %-4d", i);
+				for(int j=0; j<this.SIZE; j++) {
+					System.out.print("| " + board[i][j]);
+				}
+				System.out.println("|");
+			}
+			System.out.println("            -------------------------------------------------------------");
+			System.out.println("              0   1   2   3   4   5   6   7   8   9   10  11  12  13  14");
 		}
+		
 		
 		
 		//on square.placeTile(Tile), refresh so that updated display square.display() shows
@@ -288,5 +299,13 @@ return true;
 		else if (firstPositionMobile<=7 || temporaryWord.length()+firstPositionMobile>=7)
 			return true;
 	return false;
+	}
+	
+	public static void main(String[] args) {
+		Pool p = new Pool();
+		Player p1 = new Player("adam");
+		Board b = new Board();
+		
+		b.display();
 	}
 }
