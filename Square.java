@@ -1,21 +1,27 @@
 
 public class Square {
 
-	private int TILE_MULTIPLIER;
-	private int WORD_MULTIPLIER;
-	private Tile tile; 
+	private int letterMultiplier;
+	private int wordMultiplier;
+	private Tile tile;
+	private Type type;
 	
 	Square(){
-		this.TILE_MULTIPLIER = 1;
-		this.WORD_MULTIPLIER = 1;
+		setType(Type.normal);
 	}
 	
-	public void setTILE_MULTIPLIER(int TILE_MULTIPLIER) {
-		this.TILE_MULTIPLIER = TILE_MULTIPLIER;
+	private void setLetterMultiplier(int letterMultiplier) {
+		this.letterMultiplier = letterMultiplier;
 	}
 	
-	public void setWORD_MULTIPLIER(int WORD_MULTIPLIER) {
-		this.WORD_MULTIPLIER = WORD_MULTIPLIER;
+	private void setWordMultiplier(int wordMultiplier) {
+		this.wordMultiplier = wordMultiplier;
+	}
+	
+	public void setType(Type type) {
+		this.type = type;
+		setWordMultiplier(type.getWordMultiplier());
+		setLetterMultiplier(type.getLetterMultiplier());
 	}
 	
 	public void placeTile(Tile tile){
@@ -34,14 +40,12 @@ public class Square {
 			return tile.getLetter(); 
 	}
 	
-	public int getSinglePlacementScore() {
-		if((this.isEmpty())) 
-			return 0; //CHECK LATER: isn't checking Score of empty Square *ALWAYS* indicative of ERROR? => Exception  	
-		else return this.TILE_MULTIPLIER*this.tile.getValue();
+	public int getWordScoreMultiplier() {
+		return this.wordMultiplier ;
 	}
 	
-	public int getWordScoreMultiplier() {
-		return this.WORD_MULTIPLIER ;
+	public int getLetterScoreMultiplier() {
+		return this.letterMultiplier ;
 	}
 	
 	public boolean isEmpty() {
@@ -49,18 +53,7 @@ public class Square {
 	}
 	
 	public String toString() {
-		if(!isEmpty())
-			return " " + getCharacter();
-		else if(TILE_MULTIPLIER == 2)
-			return "2L";
-		else if(TILE_MULTIPLIER == 3)
-			return "3L";
-		else if(WORD_MULTIPLIER == 2)
-			return "2W";
-		else if(WORD_MULTIPLIER == 3)
-			return "3W";
-		else 
-			return "  ";
+		return type.toString();
 	}
 
 }
