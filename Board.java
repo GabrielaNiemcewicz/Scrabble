@@ -14,7 +14,6 @@ boolean isFirstRound = true;
 		public Board() {
 			Pattern p = new Pattern(15);
 			
-			
 			for (int i=0; i<this.SIZE; i++)	
 				for (int j=0; j<this.SIZE; j++) {
 					board[i][j] = new Square();
@@ -61,7 +60,33 @@ boolean isFirstRound = true;
 				squares.removeTile();
 	}
 	
+	public void placeWordVertically(Frame frame, int firstPosition_x,int firstPosition_y, String word, Player player)
+	{ //in main: board.placeWordVertically(frame.someGetterFunction()) //best get all Tiles needed, get one Tile ok
+		Tile currentTile;
+		if(isValidHorizontally(firstPosition_x, firstPosition_y, frame, word, player)) {
+			for (int i=0; i<word.length(); i++) {
+					currentTile = frame.getTilesByWord(word).get(i);
+					board[firstPosition_x+i][firstPosition_y].placeTile(currentTile);
+			}
+		}
+		
+		
+	}
+	
 
+	
+	
+	public void placeWordHorizontally(Frame frame, int firstPosition_x,int firstPosition_y, String word, Player player){ //necessary to be separate! //change interface
+		Tile currentTile;
+		if(isValidHorizontally(firstPosition_x, firstPosition_y, frame, word, player)) {
+			for (int i=0; i<word.length(); i++) {
+					currentTile = frame.getTilesByWord(word).get(i);
+					board[firstPosition_x][firstPosition_y+i].placeTile(currentTile);
+			}
+		}
+					
+		
+	}
 	
 	
 	//do we need this?
