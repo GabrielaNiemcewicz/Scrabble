@@ -30,6 +30,7 @@ public class Frame {
 
 //check if Tile(s) are in the Frame	
 	public boolean isStringIn(String letters) {
+		letters = letters.toUpperCase();
 		boolean found = true;
 		if (letters.length() > frame.size()) {
 			found = false;
@@ -145,13 +146,22 @@ public class Frame {
 	
 	//display on screen
 	public void displayAsFrame(){
-			System.out.print(" || ");
+			/*System.out.print(" || ");
 			
 		for (int i=0; i<frame.size();i++){ 
 			frame.get(i).display(); 
 			System.out.print(" | ");
 		   }
-			System.out.print(" || ");
+			System.out.print(" || ");*/
+		
+		for(int i=0; i<frame.size()*2; i++) {
+			if(i==frame.size())
+				System.out.println();
+			if(i<frame.size())
+				System.out.print("|" + frame.get(i).getLetter() + "| ");
+			else
+				System.out.print("|" + frame.get(i%frame.size()).getValue() + "| ");
+		}
 		}
 
 	
@@ -165,8 +175,6 @@ public class Frame {
 //cleaning
 		public void reset()
 		{ frame.clear();	}
-	
 
-	
 }
 	
