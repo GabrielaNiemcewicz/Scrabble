@@ -7,21 +7,16 @@ public class TestingMain {
 		// TODO Auto-generated method stub
 		Board Bo = new Board();
 		Bo.display();
-		
 		Frame f = new Frame();
+		int PF = 0;
 		Player p = new Player("Mary");
-		System.out.println("\n"+p);
-		
 		Pool pool = new Pool();
-		ArrayList<Tile> temp = pool.drawTiles(5);
-		for(int i=0; i<10; i++) {
-			if(i==5)
-				System.out.println();
-			if(i<5)
-				System.out.print("|" + temp.get(i).getLetter() + "| ");
-			else
-				System.out.print("|" + temp.get(i%5).getValue() + "| ");
-		}
+		String HV = null;
+		
+		System.out.println("\n"+p);
+	   
+		f.refill(pool);
+		f.displayAsFrame();
 		
 		Scanner in = new Scanner(System.in);
 		System.out.println("\nEnter The Word: ");
@@ -29,19 +24,52 @@ public class TestingMain {
 		
 /********* TEST 1 - CHECK THE WORD VALIDITY *************/
 		if(f.isStringIn(word) == true)
-			System.out.println("PASS");
+		{ 
+			System.out.println("Validity Test - PASS");
+		}
+		
 		else if(f.isStringIn(word) == false)
-			System.out.println("FAIL");
+		{
+			System.out.println("Validity Test - FAIL");
+			PF = 1;
+		}
 		
-/********* TEST 2 - PLACEMENT WITHIN THE BOURD BOUNDS *************/
-		System.out.println("\nEnter The Row: ");
-		int firstPositionMobile = in.nextInt();
-		if(Bo.isWithinBounds(firstPositionMobile, word) == true)
-			System.out.println("Test For Bounds: Word is WITHIN the Board Bounds.");
-		else 
-			System.out.println("Test For Bounds: Word is OUT of the Board Bounds.");
+/************** WHEN THE ENTERED WORD PASS THE TEST IT IS CONTINUED TO BE PLACED. **************/
 		
-/********* TEST 3 - WHATHER THE WORD CONFLICTS WITH EXISTING LETTERS *************/	
+		if(PF == 0) {
+			System.out.println("*****************\nWould You like to Place it Horizontally Or Virtaclly: ");
+			HV = in.nextLine();
+			System.out.println("Choose What Row: ");
+			int x = in.nextInt();
+			System.out.println("Choose What Column: ");
+			int y = in.nextInt();
+			
+			if(HV == "H" || HV == "h" || HV == "Horizontally" || HV == "horizontally")
+			{
+				if(Bo.isValidHorizontally(x, y, f, word, p) == true)
+				{
+					System.out.println("The place Is valid Horizontally.");
+					Bo.placeWordHorizontally(f, x, y, word, p);
+					Bo.display();
+				}
+				else 
+					System.out.println("The place Is NOT valid Horizontally.");		
+			}
+			
+			if(HV == "V" || HV == "v" || HV == "Vertically" || HV == "vertically")
+			{
+				if(Bo.isValidVertically(x, y, f, word, p) == true)
+				{
+					System.out.println("The place Is valid Horizontally.");
+					Bo.placeWordVertically(f, x, y, word, p);
+					Bo.display();
+				}
+				else 
+					System.out.println("The place Is NOT valid Vertically.");		
+			}
+		
+			
+		}
 
 /********* TEST 4 - WHATHER ITS THE FIRST WORD OR NOT *************/	
 		if(Bo.isFirstWord())

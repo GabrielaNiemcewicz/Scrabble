@@ -283,17 +283,18 @@ if(this.isFirstRound)
 	return true;
 
 for (Square squares: squareWalker)	
-	if (squares.isEmpty())
-		return false;
+	if (!squares.isEmpty())
+		return true;
 
 for (Square squares: squareWalkerUp)	
-	if (squares.isEmpty())
-		return false;
+	if (!squares.isEmpty())
+		return true;
 
 for (Square squares: squareWalkerDown)	
-	if (squares.isEmpty())
-		return false;
-return true;
+	if (!squares.isEmpty())
+		return true;
+
+return false;
 }
 	
 	

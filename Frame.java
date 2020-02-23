@@ -11,8 +11,6 @@ public class Frame {
 	}
 
 
-
-
 //size-related
 	public int size() {
 		return(frame.size());
