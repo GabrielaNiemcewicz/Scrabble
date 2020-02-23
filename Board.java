@@ -196,11 +196,52 @@ boolean isFirstRound = true;
 	}	
 	
 	//all sets of tests together
-	public boolean isValidVertically(int firstPosition_x, int firstPosition_y, Frame frame, String temporaryWord) {
+	public boolean isValidVertically(int firstPosition_x, int firstPosition_y, Frame frame, String Word, Player player) {
 		Square [] squareWalker; //contains word and 1 square before and after word finishes
 		Square [] squareWalkerRight; //1 column of squares on the right to the word
 		Square [] squareWalkerLeft; //1 column of squares on the left the word
-	return true;
+		
+		if(this.isFirstWord())
+		   if(!this.inTheMiddle(firstPosition_y,  firstPosition_x, Word))
+		   {System.out.println("First word needs to connect to Square in the middle, 8th, 8th");
+			return false;}
+		
+		if(!this.isFirstPositionValid(firstPosition_y, firstPosition_x))
+		{System.out.println("You can't start your word here- square index out of Board");
+		return false;}
+		
+		else if(!this.isWithinBounds(firstPosition_x, Word)) //x is mobile
+		{System.out.println("You can't place your word here-last square is out of Board");
+		return false;}
+		
+		else
+		squareWalker = this.squareWalkerHorizontal(firstPosition_y, firstPosition_x-1,Word.length()+2);
+		
+		 if(!this.noConflicts(Word, squareWalker))
+		 {System.out.println("Your word clashes with letters on the board.");
+		  return false;}
+		 
+		else if(!this.usesFrameTiles(squareWalker, Word)) {
+			System.out.println("You used no Tile from Frame. All letters making word are already on Board. ");
+				return false;}		 
+		
+		else if(!this.isInFrame(squareWalker, frame, Word))
+		{System.out.println("You don't have enough Tiles of required type to produce this word there");
+			return false;}	
+		 
+		else
+		{
+		   squareWalkerRight = this.squareWalkerHorizontal(firstPosition_y+1,firstPosition_x, Word.length());		
+		   squareWalkerLeft = this.squareWalkerHorizontal(firstPosition_y-1,firstPosition_x, Word.length());
+		}
+		
+		 if(!this.connectsToTiles(squareWalker, squareWalkerRight, squareWalkerLeft))
+			{System.out.println("Your word neither uses Tiles on Board nor connects to them paralelly");
+			return false;}
+		 
+		 System.out.println("OH LA LA!," + player.getName()+ "! You were able to create word: "+Word+"...Daamn You're GOOD!.");
+			for (int i=0;i<6-Word.length(); i++) System.out.print("*CLAP*\t");
+			 return true; //if all tests passed as true
 	}	
 
 
