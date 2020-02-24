@@ -349,7 +349,7 @@ return false;
 		
 		b.display();
 		ArrayList<Tile> t = new ArrayList<Tile>();
-		p1.getFrame().addTiles(new Tile('a'));
+		p1.getFrame().addTile(new Tile('a'));
 		p1.getFrame().displayAsFrame();
 		p1.getFrame().getTilesByWord("a");
 	}
