@@ -172,7 +172,7 @@ public class Frame {
 	return word;}
 	}
 	
-	public void addTiles(Tile tile) {
+	public void addTile(Tile tile) {
 		frame.add(tile);
 	}
 		

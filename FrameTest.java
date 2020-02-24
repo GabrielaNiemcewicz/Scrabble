@@ -34,7 +34,7 @@ class FrameTest {
 		letterss[2]= letterC;
 		
 		
-		frame.addTiles(letterss);
+		frame.addTile(letterB);
 		
 		Tile lettersFull[] = new Tile [7];
 		lettersFull[0]= letterA;
@@ -45,7 +45,7 @@ class FrameTest {
 		lettersFull[5]= letterF;
 		lettersFull[6]= letterG;
 		
-		frame3.addTiles(lettersFull);
+		frame3.addTile(letterA);
 	}
 	
 	@Test
