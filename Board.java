@@ -2,19 +2,17 @@ import java.util.*;
 
 public class Board {
 
-private Square[][] board;
+private Square[][] board= new Square [15][15];
 private int SIZE = 15;
 
-boolean isFirstRound = true;
+boolean isFirstRound;
 
 
 
 	public Board() {
-		Pattern p = new Pattern(SIZE, board);
-		
-		for (int i=0; i<15; i++)
-			for (int j=0; j<15; j++)
-				this.board[i][j] = new Square();
+		Pattern pattern = new Pattern(board);
+		this.board = pattern.drawScrabble(board);
+		this.isFirstRound = true;
 	}
 		
 		
