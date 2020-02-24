@@ -5,7 +5,6 @@ public class BoardTest {
 	
 	/***** Initializing necessary Variables. *****/
 	public static Board Bo = new Board();       
-	public static int PF = 0;
 	public static String HV = null;
 	public static Pool pool = new Pool();
 	static Scanner in1 = new Scanner(System.in);
@@ -20,9 +19,6 @@ public class BoardTest {
 		   else
 			   System.out.println("Test For First Word: This is NOT the first word on the board.");
 
-		
-		if(PF == 0) 
-		{	
 		 //********* HORIZALTAL / VERTICAL *************//
 		 
 			System.out.println("*****************\nWould You like to Place it Horizontally Or Vertically: ");
@@ -59,7 +55,6 @@ public class BoardTest {
 					System.out.println("The place Is NOT valid Vertically.");		
 			}
 		}	
-	}
 	
 	public static void main(String[] args) {
   
