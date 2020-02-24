@@ -12,13 +12,13 @@
 
 
 public class Pattern {
-public char [][] scrabble; //Scrabble Board in chars
+public Square [][] scrabble; //Scrabble Board in chars
 
 private int SIZE; //size of Board. For scrabble, SIZE=15
 
 Pattern(int size, Square[][] board){ //initializer
 	this.SIZE = size;
-	this.setScrabble(new char[SIZE][SIZE]);
+	this.setScrabble(board);
 	this.reset(board); //sets all characters to regular square, "o"
 	drawScrabble(board);
 }
@@ -26,7 +26,7 @@ Pattern(int size, Square[][] board){ //initializer
 public void print() { //print board at any moment
 	for (int i=0; i<this.SIZE; i++)
 		for (int j=0; j<this.SIZE; j++) {
-			System.out.print(this.getScrabble()[i][j]+" "); //display each char one by one
+			System.out.print(this.getScrabble()[i][j]+" "); 
 			if (j==this.SIZE-1) 
 				System.out.println(""); //go down a line if the row is over
 			else continue;}
@@ -41,11 +41,12 @@ public void reset(Square[][] board) {
 }
 
 
-public void drawScrabble(Square[][] board) { //invoke this method to draw a valid Scrabble board at once
+public Square [][] drawScrabble(Square[][] board) { //invoke this method to draw a valid Scrabble board at once
 this.draw_all_V(this.middle(), board);
 this.draw_X_as_VV(board);
 this.draw_scattered_2L(board);
 this.draw_scattered_3W(board);
+return board;
 }
 
 
@@ -97,7 +98,7 @@ public void draw_all_V (int size, Square[][] board) {
 
 }
 
-public void draw_scattered_3W (Square[][] board) { //scattered squares "multiply word score by 3" 
+public void draw_scattered_3W (Square[][] board) {
 	for (int i=0; i<this.SIZE; i+=this.middle())
 		for (int j=0; j<this.SIZE; j+=this.middle())
 				  board[i][j].setType(assign_type_scattered_3W(i,j));}
@@ -105,7 +106,7 @@ public void draw_scattered_3W (Square[][] board) { //scattered squares "multiply
 	
 
 
-public void draw_scattered_2L (Square[][] board) { //scattered squares "multiply letter score by 2" 
+public void draw_scattered_2L (Square[][] board) { 
 	int [] I = {0,this.SIZE-1}; //first [] => up and down border of Board, OR second [] => left and right border 
 	int [] J = {this.middle(this.middle()),I[1]-this.middle(this.middle())}; //3 positions away from left and right borders
 		for (int i: I) 
@@ -141,12 +142,14 @@ private Type assign_type_scattered_2L () 	//D= DOUBLE LETTER SCORE
 { return Type.doubleLetter; }
 
 
+private Type 
 
-public char [][] getScrabble() {
+
+public Square [][] getScrabble() {
 	return scrabble;
 }
 
-public void setScrabble(char [][] scrabble) {
+public void setScrabble(Square [][] scrabble) {
 	this.scrabble = scrabble;
 }
 
