@@ -129,33 +129,66 @@ private Type assign_type_V(int absolut) {
 
 	
 	if (absolut<2)
-		return Type.doubleLetter;
+		return Type.DOUBLE_LETTER;
 	else if (absolut==2)
-		return Type.tripleLetter;
+		return Type.TRIPPLE_LETTER;
 	else //if (absolut<7)
-		return Type.doubleWord;
+		return Type.DOUBLE_WORD;
 	
 }
 
 private Type assign_type_scattered_3W(int position_x, int position_y)
 {
 	if (position_x==this.middle() && position_y==this.middle())
-		return Type.doubleWord;
+		return Type.DOUBLE_LETTER;
 	else
-		return Type.tripleWord; }
+		return Type.TRIPLE_WORD; }
 
 private Type assign_type_scattered_2L () 	
-{ return Type.doubleLetter; }
+{ return Type.DOUBLE_LETTER; }
 
 
 private Type assign_type_normal ()
-{ return Type.normal; }
+{ return Type.NORMAL; }
 
 
 
 public void setScrabble(Square [][] board) {
 	this.scrabble = board;
 }
+
+
+private static enum Type {
+	NORMAL(1, 1, "  "),
+	DOUBLE_WORD(1, 2, "2W"),
+	TRIPLE_WORD(1, 3, "3W"),
+	DOUBLE_LETTER(2, 1, "2L"),
+	TRIPPLE_LETTER(3, 1, "3L");
+	
+	private final int WordMultiplier;
+	private final int LetterMultiplier;
+	private final String identifier;
+	
+	Type(int LetterMultiplier, int WordMultiplier, String identifier){
+		this.LetterMultiplier = LetterMultiplier;
+		this.WordMultiplier = WordMultiplier;
+		this.identifier = identifier;
+	}
+	
+	public int getWordMultiplier() {
+		return WordMultiplier;
+	}
+	
+	public int getLetterMultiplier() {
+		return LetterMultiplier;
+	}
+	
+	public String toString() {
+		return identifier;
+	}
+}
+
+
 
 }
 
