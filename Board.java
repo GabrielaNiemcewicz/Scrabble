@@ -2,17 +2,19 @@ import java.util.*;
 
 public class Board {
 
-private Square[][] board = new Square[15][15];
+private Square[][] board;
 private int SIZE = 15;
 
 boolean isFirstRound = true;
-//private String temporaryWord; //proposed implementation for checking if it's first turn. Will help in some implementations of challenging the word. GetWord() gets a word here, rest of functions access it from here.
 
-//anything else?
 
 
 	public Board() {
 		Pattern p = new Pattern(SIZE, board);
+		
+		for (int i=0; i<15; i++)
+			for (int j=0; j<15; j++)
+				this.board[i][j] = new Square();
 	}
 		
 		
@@ -60,40 +62,53 @@ boolean isFirstRound = true;
 	
 	public void placeWordVertically(Frame frame, int firstPosition_x,int firstPosition_y, String word, Player player)
 	{ //in main: board.placeWordVertically(frame.someGetterFunction()) //best get all Tiles needed, get one Tile ok
-		Tile currentTile;
-		if(isValidVertically(firstPosition_x, firstPosition_y, frame, word, player)) {
-			for (int i=0; i<word.length(); i++) {
-					currentTile = frame.getTilesByWord(word).get(i);
-					board[firstPosition_x+i][firstPosition_y].placeTile(currentTile);
+		ArrayList <Tile> tilesFromFrame= new ArrayList<Tile>();
+		String onlyNeededLetters = "";
+		
+		for (int i=0; i<word.length(); i++)
+			if (board[firstPosition_x+i][firstPosition_y].isEmpty())
+				onlyNeededLetters+= word.charAt(i);
+		
+		tilesFromFrame = frame.getTilesByWord(onlyNeededLetters);
+		if(isValidVertically(firstPosition_x, firstPosition_y, frame, onlyNeededLetters, player)) {
+			for (Tile tiles:tilesFromFrame) {
+				if (board[firstPosition_x+i][firstPosition_y].isEmpty())	
+					board[firstPosition_x+i][firstPosition_y].placeTile(tiles);
 			}
 		}
-		
+		frame.cleanString(onlyNeededLetters);
 		
 	}
 	
-	public void placeWordHorizontally(Frame frame, int firstPosition_x,int firstPosition_y, String word, Player player){ //necessary to be separate! //change interface
-		Tile currentTile;
-		ArrayList<Tile> wordTiles = new ArrayList<Tile>(frame.getTilesByWord(word));
-		if(isValidHorizontally(firstPosition_x, firstPosition_y, frame, word, player)) {
-			for (int i=0; i<word.length(); i++) {
-					currentTile = wordTiles.get(i);
-					board[firstPosition_x][firstPosition_y+i].placeTile(currentTile);
+	public void placeWordVertically(Frame frame, int firstPosition_x,int firstPosition_y, String word, Player player)
+	{ //in main: board.placeWordVertically(frame.someGetterFunction()) //best get all Tiles needed, get one Tile ok
+		ArrayList <Tile> tilesFromFrame= new ArrayList<Tile>();
+		
+		String onlyNeededLetters = "";
+		
+		for (int i=0; i<word.length(); i++)
+			if (board[firstPosition_x][firstPosition_y+i].isEmpty())
+				onlyNeededLetters+= word.charAt(i);
+		
+		tilesFromFrame = frame.getTilesByWord(onlyNeededLetters);
+		if(isValidVertically(firstPosition_x, firstPosition_y, frame, onlyNeededLetters, player)) {
+			for (Tile tiles:tilesFromFrame) {
+				if (board[firstPosition_x+i][firstPosition_y].isEmpty())	
+					board[firstPosition_x+i][firstPosition_y].placeTile(tiles);
 			}
 		}
-		frame.cleanString(word);			
+		frame.cleanString(onlyNeededLetters);
+		
 	}
 	
 	
 	//do we need this?
-	public boolean horizontallyOrVertically(char vh) {
-	if (vh=='h')
+	public boolean isPutHorizontally(char h) {
+	if (h=='h')
 		return true;
-	else if (vh =='v')
+	else
 		return false;
-	else{ 
-		System.out.print("Wrong character, input again");
-		return false;
-	    }
+
 	} 
 
 	
@@ -278,7 +293,7 @@ boolean isFirstRound = true;
 
 public boolean connectsToTiles(Square [] squareWalker, Square [] squareWalkerUp, Square [] squareWalkerDown)
 { //make a list of square walkers and loop through that list
-if(this.isFirstRound)
+if(this.isFirstWord())
 	return true;
 
 for (Square squares: squareWalker)	
