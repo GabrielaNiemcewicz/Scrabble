@@ -61,7 +61,7 @@ boolean isFirstRound = true;
 	public void placeWordVertically(Frame frame, int firstPosition_x,int firstPosition_y, String word, Player player)
 	{ //in main: board.placeWordVertically(frame.someGetterFunction()) //best get all Tiles needed, get one Tile ok
 		Tile currentTile;
-		if(isValidHorizontally(firstPosition_x, firstPosition_y, frame, word, player)) {
+		if(isValidVertically(firstPosition_x, firstPosition_y, frame, word, player)) {
 			for (int i=0; i<word.length(); i++) {
 					currentTile = frame.getTilesByWord(word).get(i);
 					board[firstPosition_x+i][firstPosition_y].placeTile(currentTile);
@@ -349,7 +349,7 @@ return false;
 		
 		b.display();
 		ArrayList<Tile> t = new ArrayList<Tile>();
-		p1.getFrame().addTiles(new Tile('a'));
+		p1.getFrame().addTile(new Tile('a'));
 		p1.getFrame().displayAsFrame();
 		p1.getFrame().getTilesByWord("a");
 	}
