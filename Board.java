@@ -202,7 +202,7 @@ boolean isFirstRound;
 		 
 		
 		 System.out.println("Bravo," + player.getName()+ "! You were able to create word: "+word+"...What a luck.");
-		for (int i=0;i<6-word.length(); i++) System.out.print("*CLAP*\t");
+		for (int i=0;i<(5-word.length())*3; i++) System.out.print("*CLAP*\t");
 		System.out.println();
 		 return true; //if all tests passed as true
 	}	
@@ -252,12 +252,12 @@ boolean isFirstRound;
 		
 		}
 		
-		 if(!this.connectsToTiles(ArrayList<Square> validationTestsScope))
+		 if(!this.connectsToTiles(validationTestsScope))
 			{System.out.println("Your word neither uses Tiles on Board nor connects to them paralelly");
 			return false;}
 		 
 		 System.out.println("OH LA LA!," + player.getName()+ "! You were able to create word: "+word+"...Daamn You're GOOD!.");
-			for (int i=0;i<6-word.length(); i++) System.out.print("*CLAP*\t");
+			for (int i=0;i<(6-word.length())*2; i++) System.out.print("*CLAP*\t");
 			 return true; //if all tests passed as true
 	}	
 
@@ -274,19 +274,19 @@ boolean isFirstRound;
 	}
 	
 	
-	public boolean usesFrameTiles(Square[] squareWalker,  String word) {		
+	public boolean usesFrameTiles(ArrayList<Square> validationTestsScope,  String word) {		
 		for (int i = 1; i<word.length()+1; i++) // first Square doesn't belong to a word
-			if (squareWalker[i].isEmpty()) 
+			if (validationTestsScope.get(i).isEmpty()) 
 				return true;
 		
 		return false;}
 	//EXTREMELY IMPORTANT- DO THIS TEST AFTER CHECKING FOR CLASHES WITH EXISTING TILES
-	public boolean isInFrame(Square[] squareWalker,Frame frame, String word)
+	public boolean isInFrame(ArrayList<Square> validationTestsScope,Frame frame, String word)
 	{
 	String word_copy = "";	
 	
 	for (int i=0; i<word.length(); i++)
-		if(squareWalker[i+1].isEmpty())
+		if(validationTestsScope.get(i).isEmpty())
 			{
 			word_copy +=word.charAt(i);}
 	return frame.isStringIn(word_copy);
@@ -294,22 +294,15 @@ boolean isFirstRound;
 	}
 
 
-public boolean connectsToTiles(Square [] squareWalker, Square [] squareWalkerUp, Square [] squareWalkerDown)
+public boolean connectsToTiles(ArrayList<Square> validationTestsScope)
 { //make a list of square walkers and loop through that list
 if(this.isFirstWord())
 	return true;
 
-for (Square squares: squareWalker)	
+for (Square squares: validationTestsScope)	
 	if (!squares.isEmpty())
 		return true;
 
-for (Square squares: squareWalkerUp)	
-	if (!squares.isEmpty())
-		return true;
-
-for (Square squares: squareWalkerDown)	
-	if (!squares.isEmpty())
-		return true;
 
 return false;
 }
@@ -325,16 +318,17 @@ return false;
 	
 	
 	
-	public boolean noConflicts(String word, Square[] squareWalker)	{
+	public boolean noConflicts(String word, ArrayList<Square> validationTestsScope)	{
 		if(this.isFirstRound)
 			return true;	
 		
-		for (int i=1; i<word.length(); i++)  //squareWalker includes 2 squares that don't belong in the word
-			if(!squareWalker[i].isEmpty)
-			if (squareWalker[i].getCharacter() != word.charAt(i-1))
-				return false; 	
+		for (Square square:validationTestsScope)  //squareWalker includes 2 squares that don't belong in the word
+			if(!square.isEmpty)
+				if (square.getCharacter() != word.charAt(i-1))
+					return false; 	
 		
 		return true;  }
+	
 		
 	public void set_IsFirstRoundToFalse () 
 	{ this.isFirstRound= false; }
@@ -342,9 +336,9 @@ return false;
 	
 	public boolean isFirstWord() {
 		if (this.isFirstRound==true) 
-			for (Square []rows:board)
-				for (Square squares:rows)
-					if (!squares.isEmpty())
+			for (int i=0; i<this.SIZE; i++)
+				for (int j=0; j<this.SIZE; j++)
+					if (!this.board[i][j].isEmpty())
 						this.set_IsFirstRoundToFalse();
 		return this.isFirstRound;
 	}
