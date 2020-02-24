@@ -124,7 +124,8 @@ boolean isFirstRound;
 		ArrayList <Square> squareWalker = new ArrayList<Square>();
 				
 		for (int i=0; i<temporaryWordSize; i++)
-			squareWalker.add(this.board[firstPosition_x][firstPosition_y+i]);
+			if(firstPosition_y+i>-1 &&firstPosition_y+i<15)
+				squareWalker.add(this.board[firstPosition_x][firstPosition_y+i]);
 		
 		return squareWalker;
 		
@@ -133,9 +134,9 @@ boolean isFirstRound;
 	private ArrayList<Square> squareWalkerVertical (int firstPosition_x, int firstPosition_y, int temporaryWordSize)
 	{
 		ArrayList <Square> squareWalker = new ArrayList<Square>();
-				
 		for (int i=0; i<temporaryWordSize; i++)
-			squareWalker.add(this.board[firstPosition_x+i][firstPosition_y]);
+			if(firstPosition_y+i>-1 &&firstPosition_y+i<15)		
+				squareWalker.add(this.board[firstPosition_x+i][firstPosition_y]);
 		
 		return squareWalker;
 		
@@ -172,7 +173,8 @@ boolean isFirstRound;
 		return false;	
 		}	
 	else
-		{squareWalker = this.squareWalkerHorizontal(firstPosition_x, firstPosition_y-1, word.length()+2);
+		{
+		squareWalker = this.squareWalkerHorizontal(firstPosition_x, firstPosition_y-1, word.length()+2);
 		validationTestsScope.addAll(squareWalker);
 		
 		}
