@@ -13,5 +13,10 @@
 /Pattern.class
 /TestingMain.class
 /Type.class
+<<<<<<< HEAD
 /Pattern$Type.class
 /SquareType.class
+=======
+/BoardTest.class
+/Pattern$Type.class
+>>>>>>> refs/remotes/origin/master
