@@ -11,7 +11,7 @@ boolean isFirstRound;
 
 	public Board() {
 		Pattern pattern = new Pattern(board);
-		this.board = pattern.drawScrabble();
+		pattern.drawScrabble(board);
 		this.isFirstRound = true;
 	}
 		

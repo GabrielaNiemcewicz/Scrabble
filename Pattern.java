@@ -23,18 +23,17 @@ Pattern(Square[][] board){ //initializer
 	
 	for (int i=0; i<this.SIZE; i++)
 		for (int j=0; j<this.SIZE; j++)
-				scrabble[i][j] = new Square();
+				board[i][j] = new Square();
 	
-	this.setScrabble(board);
+	//this.setScrabble(board);
 	 
 }
 
-public Square [][] drawScrabble() { //invoke this method to draw a valid Scrabble board at once
-this.draw_all_V(this.middle());
-this.draw_X_as_VV();
-this.draw_scattered_2L();
-this.draw_scattered_3W();
-return scrabble;
+public void drawScrabble(Square[][] board) { //invoke this method to draw a valid Scrabble board at once
+this.draw_all_V(this.middle(), board);
+this.draw_X_as_VV(board);
+this.draw_scattered_2L(board);
+this.draw_scattered_3W(board);
 }
 
 
@@ -47,7 +46,7 @@ private int middle(int size) //middle of V pattern- absolut here equals 0, it's 
 
 
 
-private void draw_X_as_VV() { //part of drawing X. X, ><, as > and <. Draws from up 0 row, down to bottom row, by going left>-right<-left>-right<-left>-right<....
+private void draw_X_as_VV(Square[][] board) { //part of drawing X. X, ><, as > and <. Draws from up 0 row, down to bottom row, by going left>-right<-left>-right<-left>-right<....
 	int j;
 	int absolut;
 	for (int i=0+1; i<this.SIZE-1; i++) //Vs don't 'touch' edges of Board
@@ -56,11 +55,11 @@ private void draw_X_as_VV() { //part of drawing X. X, ><, as > and <. Draws from
 	
 		//left half of the X,  V-shape. Draw >
 		j=this.middle(this.SIZE)- absolut;	
-		scrabble[j][i].setType(assign_type_V(absolut));
+		board[j][i].setType(assign_type_V(absolut));
 		
 		//right half of the X, of V-shape. Draw <
 		j=this.SIZE-1-j;
-		scrabble[j][i].setType(assign_type_V(absolut));
+		board[j][i].setType(assign_type_V(absolut));
 		
 	
 	}
@@ -69,38 +68,38 @@ private void draw_X_as_VV() { //part of drawing X. X, ><, as > and <. Draws from
 
 
 
-private void draw_all_V (int size) {
+private void draw_all_V (int size, Square[][] board) {
 	int j;
 	int absolut;
 	for (int i=(this.SIZE-size)/2+1; i<(size+this.SIZE)/2-1; i++)
 		{absolut = java.lang.Math.abs(i-(this.SIZE-size)/2-this.middle(size));
 		
 		  j=this.middle(size)-absolut;
-		  scrabble[i][j].setType(assign_type_V(absolut)); //left
-		  scrabble[j][i].setType(assign_type_V(absolut)); //up
+		  board[i][j].setType(assign_type_V(absolut)); //left
+		  board[j][i].setType(assign_type_V(absolut)); //up
 		
 		  j=this.SIZE-1-j;
-		  scrabble[i][j].setType(assign_type_V(absolut)); //right
-		  scrabble[j][i].setType(assign_type_V(absolut)); //down
+		  board[i][j].setType(assign_type_V(absolut)); //right
+		  board[j][i].setType(assign_type_V(absolut)); //down
 }
 
 }
 
-private void draw_scattered_3W () {
+private void draw_scattered_3W (Square[][] board) {
 	for (int i=0; i<this.SIZE; i+=this.middle())
 		for (int j=0; j<this.SIZE; j+=this.middle())
-				  scrabble[i][j].setType(assign_type_scattered_3W(i,j));}
+				  board[i][j].setType(assign_type_scattered_3W(i,j));}
 	
 	
 
 
-private void draw_scattered_2L () { 
+private void draw_scattered_2L (Square[][] board) { 
 	int [] I = {0,this.SIZE-1}; //first [] => up and down border of Board, OR second [] => left and right border 
 	int [] J = {this.middle(this.middle()),I[1]-this.middle(this.middle())}; //3 positions away from left and right borders
 		for (int i: I) 
 		for (int j: J)
-		{scrabble[i][j].setType(assign_type_scattered_2L());
-		scrabble[j][i].setType(assign_type_scattered_2L());}
+		{board[i][j].setType(assign_type_scattered_2L());
+		board[j][i].setType(assign_type_scattered_2L());}
 }
 
 
