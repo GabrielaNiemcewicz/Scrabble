@@ -11,7 +11,7 @@ boolean isFirstRound;
 
 	public Board() {
 		Pattern pattern = new Pattern(board);
-		this.board = pattern.drawScrabble(board);
+		this.board = pattern.drawScrabble();
 		this.isFirstRound = true;
 	}
 		
@@ -72,13 +72,14 @@ boolean isFirstRound;
 			for (Tile tiles:tilesFromFrame) 
 				if (board[firstPosition_x+i][firstPosition_y].isEmpty())	
 					board[firstPosition_x+i][firstPosition_y].placeTile(tiles);
-			
+			frame.cleanString(onlyNeededLetters);
+			this.display();
 		}
-		frame.cleanString(onlyNeededLetters);
+		
 		
 	}
 	
-	public void placeWordVertically(Frame frame, int firstPosition_x,int firstPosition_y, String word, Player player)
+	public void placeWordHorizontally(Frame frame, int firstPosition_x,int firstPosition_y, String word, Player player)
 	{ //in main: board.placeWordVertically(frame.someGetterFunction()) //best get all Tiles needed, get one Tile ok
 		ArrayList <Tile> tilesFromFrame= new ArrayList<Tile>();
 		
@@ -94,8 +95,10 @@ boolean isFirstRound;
 				if (board[firstPosition_x+i][firstPosition_y].isEmpty())	
 					board[firstPosition_x+i][firstPosition_y].placeTile(tiles);
 			}
+			frame.cleanString(onlyNeededLetters);
+			this.display();
 		}
-		frame.cleanString(onlyNeededLetters);
+		
 		
 	}
 	
@@ -227,7 +230,7 @@ boolean isFirstRound;
 		return false;}
 		
 		else
-		squareWalker = this.squareWalkerHorizontal(firstPosition_y, firstPosition_x-1,Word.length()+2);
+		squareWalker = this.squareWalkerVertical(firstPosition_x-1, firstPosition_y,Word.length()+2);
 		
 		 if(!this.noConflicts(Word, squareWalker))
 		 {System.out.println("Your word clashes with letters on the board.");
@@ -243,8 +246,8 @@ boolean isFirstRound;
 		 
 		else
 		{
-		   squareWalkerRight = this.squareWalkerHorizontal(firstPosition_y+1,firstPosition_x, Word.length());		
-		   squareWalkerLeft = this.squareWalkerHorizontal(firstPosition_y-1,firstPosition_x, Word.length());
+		   squareWalkerRight = this.squareWalkerVertical(firstPosition_x,firstPosition_y+1, Word.length());		
+		   squareWalkerLeft = this.squareWalkerVertical(firstPosition_x,firstPosition_y-1, Word.length());
 		}
 		
 		 if(!this.connectsToTiles(squareWalker, squareWalkerRight, squareWalkerLeft))
