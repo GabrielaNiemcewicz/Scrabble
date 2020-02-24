@@ -67,7 +67,7 @@ public class TestingMain {
 					System.out.println("The place Is NOT valid Horizontally.");		
 			}
 			
-			if(HV.equalsIgnoreCase("V") || HV.equalsIgnoreCase("v") || HV.equalsIgnoreCase("Vertically") || HV.equalsIgnoreCase("vertically"))
+			else if(HV.equalsIgnoreCase("V") || HV.equalsIgnoreCase("v") || HV.equalsIgnoreCase("Vertically") || HV.equalsIgnoreCase("vertically"))
 			{
 				if(Bo.isValidVertically(x, y, f, word, p) == true) // check if the word is valid to be placed Vertically.
 				{ 

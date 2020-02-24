@@ -28,23 +28,12 @@ Pattern(Square[][] board){ //initializer
 	this.setScrabble(board);
 	 
 }
-	
-
-
-
-public void reset() { 
-	for (int i=0; i<this.SIZE; i++)
-		for (int j=0; j<this.SIZE; j++)
-			this.assign_type_normal();
-}
-
 
 public Square [][] drawScrabble() { //invoke this method to draw a valid Scrabble board at once
 this.draw_all_V(this.middle());
 this.draw_X_as_VV();
 this.draw_scattered_2L();
 this.draw_scattered_3W();
-this.fill_background();
 return scrabble;
 }
 
@@ -115,14 +104,6 @@ private void draw_scattered_2L () {
 }
 
 
-private void fill_background () {
-	for (Square [] rows:scrabble)
-		for (Square square:rows)
-			if(square.getWordMultiplier() != null)
-				scrabble[i][j].setType(assign_type_normal()); 
-}
-
-
 private Type assign_type_V(int absolut) {
 	//absolut for small V-pattern: 21012 and 3 more mirrors
 	//absolut for X-pattern: 654321123456 and 1 mirror //no 0, because double assigning conflict at 0
@@ -147,47 +128,9 @@ private Type assign_type_scattered_3W(int position_x, int position_y)
 private Type assign_type_scattered_2L () 	
 { return Type.DOUBLE_LETTER; }
 
-
-private Type assign_type_normal ()
-{ return Type.NORMAL; }
-
-
-
 public void setScrabble(Square [][] board) {
 	this.scrabble = board;
 }
-
-
-private static enum Type {
-	NORMAL(1, 1, "  "),
-	DOUBLE_WORD(1, 2, "2W"),
-	TRIPLE_WORD(1, 3, "3W"),
-	DOUBLE_LETTER(2, 1, "2L"),
-	TRIPPLE_LETTER(3, 1, "3L");
-	
-	private final int WordMultiplier;
-	private final int LetterMultiplier;
-	private final String identifier;
-	
-	Type(int LetterMultiplier, int WordMultiplier, String identifier){
-		this.LetterMultiplier = LetterMultiplier;
-		this.WordMultiplier = WordMultiplier;
-		this.identifier = identifier;
-	}
-	
-	public int getWordMultiplier() {
-		return WordMultiplier;
-	}
-	
-	public int getLetterMultiplier() {
-		return LetterMultiplier;
-	}
-	
-	public String toString() {
-		return identifier;
-	}
-}
-
 
 
 }

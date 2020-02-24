@@ -2,7 +2,7 @@ import java.util.*;
 
 public class Board {
 
-private Square[][] board= new Square [15][15];
+private Square[][] board = new Square [15][15];
 private int SIZE = 15;
 
 boolean isFirstRound;
@@ -18,15 +18,6 @@ boolean isFirstRound;
 		
 		
 		public void display() {  
-			/*for(Square[] rows: board) {
-				System.out.print("          -------------------------------------------------------------\n          ");
-				for(Square squares: rows) {
-					System.out.print("| " + squares);
-				}
-				System.out.println("|");
-			}
-			System.out.print("          -------------------------------------------------------------\n          ");*/
-			
 			for(int i=0; i<this.SIZE;i++) {
 				System.out.printf("            -------------------------------------------------------------\n        %-4d", i);
 				for(int j=0; j<this.SIZE; j++) {
@@ -70,8 +61,8 @@ boolean isFirstRound;
 		tilesFromFrame.addAll(frame.getTilesByWord(onlyNeededLetters));
 		if(isValidVertically(firstPosition_x, firstPosition_y, frame, onlyNeededLetters, player)) {
 			for (Tile tiles:tilesFromFrame) 
-				if (board[firstPosition_x+i][firstPosition_y].isEmpty())	
-					board[firstPosition_x+i][firstPosition_y].placeTile(tiles);
+				if (board[firstPosition_x++][firstPosition_y].isEmpty())	
+					board[firstPosition_x++][firstPosition_y].placeTile(tiles);
 			frame.cleanString(onlyNeededLetters);
 			this.display();
 		}
@@ -92,8 +83,8 @@ boolean isFirstRound;
 		tilesFromFrame = frame.getTilesByWord(onlyNeededLetters);
 		if(isValidVertically(firstPosition_x, firstPosition_y, frame, onlyNeededLetters, player)) {
 			for (Tile tiles:tilesFromFrame) {
-				if (board[firstPosition_x+i][firstPosition_y].isEmpty())	
-					board[firstPosition_x+i][firstPosition_y].placeTile(tiles);
+				if (board[firstPosition_x][firstPosition_y++].isEmpty())	
+					board[firstPosition_x][firstPosition_y++].placeTile(tiles);
 			}
 			frame.cleanString(onlyNeededLetters);
 			this.display();
@@ -232,7 +223,7 @@ boolean isFirstRound;
 		
 		else
 		{squareWalker = this.squareWalkerVertical(firstPosition_x-1, firstPosition_y,word.length()+2);
-		validationTestsScope.addAll(squareWalker)}
+		validationTestsScope.addAll(squareWalker);}
 		 if(!this.noConflicts(word, squareWalker))
 		 {System.out.println("Your word clashes with letters on the board.");
 		  return false;}
@@ -324,9 +315,9 @@ return false;
 		if(this.isFirstRound)
 			return true;	
 		
-		for (Square square:validationTestsScope)  //squareWalker includes 2 squares that don't belong in the word
-			if(!square.isEmpty)
-				if (square.getCharacter() != word.charAt(i-1))
+		for (int i=1; i<validationTestsScope.size()-1; i++)  //squareWalker includes 2 squares that don't belong in the word
+			if(!validationTestsScope.get(i).isEmpty())
+				if (validationTestsScope.get(i).getCharacter() != word.charAt(i-1))
 					return false; 	
 		
 		return true;  }

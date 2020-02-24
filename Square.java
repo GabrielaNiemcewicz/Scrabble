@@ -5,7 +5,7 @@ public class Square {
 	private Type type;
 	
 	Square(){
-		setType(Type.normal);
+		setType(Type.NORMAL);
 	}
 	
 	public void setType(Type type) {
@@ -28,11 +28,11 @@ public class Square {
 			return tile.getLetter(); 
 	}
 	
-	public int getWordScoreMultiplier() {
+	public int getWordMultiplier() {
 		return type.getWordMultiplier();
 	}
 	
-	public int getLetterScoreMultiplier() {
+	public int getLetterMultiplier() {
 		return type.getLetterMultiplier();
 	}
 	
@@ -46,5 +46,4 @@ public class Square {
 		else
 			return "" + tile.toString();
 	}
-
 }
