@@ -60,11 +60,10 @@ boolean isFirstRound;
 		
 		tilesFromFrame.addAll(frame.getTilesByWord(onlyNeededLetters));
 		if(isValidVertically(firstPosition_x, firstPosition_y, frame, onlyNeededLetters, player)) {
-			for (Tile tiles:tilesFromFrame) 
-				if (board[firstPosition_x++][firstPosition_y].isEmpty())	
-					board[firstPosition_x++][firstPosition_y].placeTile(tiles);
+			for (int i=0; i<word.length(); i++) 
+				if (board[firstPosition_x+i][firstPosition_y].isEmpty())	
+					board[firstPosition_x+i][firstPosition_y].placeTile(tilesFromFrame.get(i));
 			frame.cleanString(onlyNeededLetters);
-			this.display();
 		}
 		
 		
@@ -73,21 +72,18 @@ boolean isFirstRound;
 	public void placeWordHorizontally(Frame frame, int firstPosition_x,int firstPosition_y, String word, Player player)
 	{ //in main: board.placeWordVertically(frame.someGetterFunction()) //best get all Tiles needed, get one Tile ok
 		ArrayList <Tile> tilesFromFrame= new ArrayList<Tile>();
-		
 		String onlyNeededLetters = "";
 		
 		for (int i=0; i<word.length(); i++)
 			if (board[firstPosition_x][firstPosition_y+i].isEmpty())
 				onlyNeededLetters+= word.charAt(i);
 		
-		tilesFromFrame = frame.getTilesByWord(onlyNeededLetters);
-		if(isValidVertically(firstPosition_x, firstPosition_y, frame, onlyNeededLetters, player)) {
-			for (Tile tiles:tilesFromFrame) {
-				if (board[firstPosition_x][firstPosition_y++].isEmpty())	
-					board[firstPosition_x][firstPosition_y++].placeTile(tiles);
-			}
+		tilesFromFrame.addAll(frame.getTilesByWord(onlyNeededLetters));
+		if(isValidHorizontally(firstPosition_x, firstPosition_y, frame, onlyNeededLetters, player)) {
+			for (int i=0; i<onlyNeededLetters.length(); i++)
+				if (board[firstPosition_x][firstPosition_y+i].isEmpty())	
+					board[firstPosition_x][firstPosition_y+i].placeTile(tilesFromFrame.get(i));
 			frame.cleanString(onlyNeededLetters);
-			this.display();
 		}
 		
 		
@@ -113,11 +109,12 @@ boolean isFirstRound;
 	private ArrayList<Square> squareWalkerHorizontal (int firstPosition_x, int firstPosition_y, int temporaryWordSize)
 	{
 		ArrayList <Square> squareWalker = new ArrayList<Square>();
-				
+		Square temp = new Square();
 		for (int i=0; i<temporaryWordSize; i++)
-			if(firstPosition_y+i>-1 &&firstPosition_y+i<15)
-				squareWalker.add(this.board[firstPosition_x][firstPosition_y+i]);
-		
+			if(firstPosition_y+i>-1 &&firstPosition_y+i<15)	
+				{temp = this.board[firstPosition_x][firstPosition_y+1];
+				squareWalker.add(temp);
+				}
 		return squareWalker;
 		
 	}
@@ -125,10 +122,12 @@ boolean isFirstRound;
 	private ArrayList<Square> squareWalkerVertical (int firstPosition_x, int firstPosition_y, int temporaryWordSize)
 	{
 		ArrayList <Square> squareWalker = new ArrayList<Square>();
+		Square temp = new Square();
 		for (int i=0; i<temporaryWordSize; i++)
-			if(firstPosition_y+i>-1 &&firstPosition_y+i<15)		
-				squareWalker.add(this.board[firstPosition_x+i][firstPosition_y]);
-		
+			if(firstPosition_x+i>-1 &&firstPosition_x+i<15)	
+				{temp = this.board[firstPosition_x+i][firstPosition_y];
+				squareWalker.add(temp);
+				}
 		return squareWalker;
 		
 	}
@@ -277,11 +276,11 @@ boolean isFirstRound;
 	public boolean isInFrame(ArrayList<Square> validationTestsScope,Frame frame, String word)
 	{
 	String word_copy = "";	
-	
+	char temp = ' ';
 	for (int i=0; i<word.length(); i++)
 		if(validationTestsScope.get(i).isEmpty())
-			{
-			word_copy +=word.charAt(i);}
+			{ temp = word.charAt(i);
+			word_copy += temp;}
 	return frame.isStringIn(word_copy);
 	
 	}
@@ -314,11 +313,12 @@ return false;
 	public boolean noConflicts(String word, ArrayList<Square> validationTestsScope)	{
 		if(this.isFirstRound)
 			return true;	
-		
-		for (int i=1; i<validationTestsScope.size()-1; i++)  //squareWalker includes 2 squares that don't belong in the word
-			if(!validationTestsScope.get(i).isEmpty())
-				if (validationTestsScope.get(i).getCharacter() != word.charAt(i-1))
-					return false; 	
+		char temporary = ' ';
+		for (int i=0; i<validationTestsScope.size()-2; i++)  //squareWalker includes 2 squares that don't belong in the word
+			if(validationTestsScope.get(i).isEmpty()==false)
+				{temporary = validationTestsScope.get(i).getCharacter();
+				if (temporary == word.charAt(i))
+					return false;} 	
 		
 		return true;  }
 	
@@ -343,20 +343,9 @@ return false;
 	{
 		if(firstPositionFixed!=7)
 			return false;
-		else if (firstPositionMobile<=7 || temporaryWord.length()+firstPositionMobile>=7)
-			return false;
+		else if (firstPositionMobile<=7 && temporaryWord.length()+firstPositionMobile>=7)
+			return true;
 	return true;
 	}
 	
-	public static void main(String[] args) {
-		Pool p = new Pool();
-		Player p1 = new Player("adam");
-		Board b = new Board();
-		
-		b.display();
-		ArrayList<Tile> t = new ArrayList<Tile>();
-		p1.getFrame().addTile(new Tile('a'));
-		p1.getFrame().displayAsFrame();
-		p1.getFrame().getTilesByWord("a");
-	}
 }

@@ -60,6 +60,7 @@ public class BoardTest {
   
 		Bo.display();
 		
+
 //*********************	PLAYER 1 ******************************//		
 		Player p1 = new Player("Mary");
 		System.out.println("\n"+p1);

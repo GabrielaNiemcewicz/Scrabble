@@ -42,7 +42,7 @@ public class Square {
 	
 	public String toString() {
 		if(isEmpty())
-		return type.toString();
+			return type.toString();
 		else
 			return "" + tile.toString();
 	}
