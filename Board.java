@@ -69,12 +69,12 @@ boolean isFirstRound = true;
 			if (board[firstPosition_x+i][firstPosition_y].isEmpty())
 				onlyNeededLetters+= word.charAt(i);
 		
-		tilesFromFrame = frame.getTilesByWord(onlyNeededLetters);
+		tilesFromFrame.addAll(frame.getTilesByWord(onlyNeededLetters));
 		if(isValidVertically(firstPosition_x, firstPosition_y, frame, onlyNeededLetters, player)) {
-			for (Tile tiles:tilesFromFrame) {
+			for (Tile tiles:tilesFromFrame) 
 				if (board[firstPosition_x+i][firstPosition_y].isEmpty())	
 					board[firstPosition_x+i][firstPosition_y].placeTile(tiles);
-			}
+			
 		}
 		frame.cleanString(onlyNeededLetters);
 		
@@ -327,6 +327,7 @@ return false;
 			return true;	
 		
 		for (int i=1; i<word.length(); i++)  //squareWalker includes 2 squares that don't belong in the word
+			if(!squareWalker[i].isEmpty)
 			if (squareWalker[i].getCharacter() != word.charAt(i-1))
 				return false; 	
 		
@@ -353,8 +354,8 @@ return false;
 		if(firstPositionFixed!=7)
 			return false;
 		else if (firstPositionMobile<=7 || temporaryWord.length()+firstPositionMobile>=7)
-			return true;
-	return false;
+			return false;
+	return true;
 	}
 	
 	public static void main(String[] args) {
