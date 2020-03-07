@@ -1,3 +1,5 @@
+*.class
+
 /Tile.class
 /Player.class
 /Pool.class
