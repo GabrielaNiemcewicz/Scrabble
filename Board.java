@@ -1,4 +1,6 @@
-import java.util.*; 
+package Jabba;
+
+import java.util.*;
 
 public class Board {
 

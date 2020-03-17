@@ -1,3 +1,4 @@
+package Jabba;
 
 public class Square {
 

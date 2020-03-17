@@ -1,3 +1,4 @@
+package Jabba;
 
 enum Type {
 		NORMAL(1, 1, "  "),
