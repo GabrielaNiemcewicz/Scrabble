@@ -22,22 +22,16 @@ public class Main extends Application{
 
         for(int i=0; i<15; i++)
             for(int j=0; j<15; j++){
-                board.board[i][j].setTranslateX(j*40+5);
-                board.board[i][j].setTranslateY(i*40);
-                root.getChildren().add(board.board[i][j]);
+                board.getBoard()[i][j].setTranslateX(j*40+5);
+                board.getBoard()[i][j].setTranslateY(i*40);
+                root.getChildren().add(board.getBoard()[i][j]);
             }
 
         for(int i=1; i<=7; i++){
-            p.getFrame().frame.get(i-1).setTranslateX((i*42) + 600);
-            p.getFrame().frame.get(i-1).setTranslateY(10);
-            root.getChildren().add(p.getFrame().frame.get(i-1));
+            p.getFrame().getAllTiles().get(i-1).setTranslateX((i*42) + 600);
+            p.getFrame().getAllTiles().get(i-1).setTranslateY(10);
+            root.getChildren().add(p.getFrame().getAllTiles().get(i-1));
         }
-
-        TextField textf = new TextField("Enter Word");
-        textf.setTranslateX(700);
-        textf.setTranslateY(100);
-        root.getChildren().add(textf);
-
         return root;
     }
 
