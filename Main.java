@@ -10,6 +10,7 @@ import javafx.stage.Stage;
 
 public class Main extends Application{
     boolean turn = true;
+    boolean won = false;
     Pool pool = new Pool();
     Player p = new Player("Adam");
     Board board = new Board();
@@ -45,10 +46,32 @@ public class Main extends Application{
     }
     Label inputLabel = new Label("Write your word");
     TextField textField = new TextField ();
-    textField.setPromptText("Chosen word or command. For help, HELP");
+    textField.setPromptText("Choose word or command. For help, HELP");
     HBox userInput = new HBox();
-    userInput.getChildren().addAll(textField, textField);
+    userInput.getChildren().addAll(inputLabel, textField);
     userInput.setSpacing(8);
+
+    String userWord = textField.getText();
+
+    if (userWord.equals("QUIT")||userWord.equals("quit"))
+        won = true;
+    if (userWord.equals("PASS")||userWord.equals("pass"))
+        turn = false;
+    if (userWord.equals("HELP")||userWord.equals("help"))
+        //display help
+        
+
+    Button enterUInput = new Button("ENTER");
+    button.setOnAction(action -> {
+        System.out.println("We'll put here Board method to confirm word and placeWord: "+word);
+    }); //that's how we pass user Input in button
+
+
+
+
+
+
+    textField.getText();
 
 
     public static void main(String[] args) {
