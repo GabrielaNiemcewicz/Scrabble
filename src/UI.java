@@ -7,7 +7,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.shape.Circle;
 import javafx.stage.Stage;
 
-public class Main extends Application{
+public class UI extends Application{
     boolean turn = true;
     Pool pool = new Pool();
     Player p = new Player("Adam");
