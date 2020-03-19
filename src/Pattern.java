@@ -1,4 +1,3 @@
-package Jabba;
 
 
 //to draw valid Scrabble Board, use  use .drawScrabble. 

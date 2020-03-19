@@ -1,4 +1,3 @@
-package Jabba;
 
 import javafx.application.Application;
 import javafx.scene.Parent;
@@ -37,8 +36,6 @@ public class Main extends Application{
 
     @Override
     public void start(Stage primaryStage) throws Exception{
-        Circle c = new Circle();
-        //CheckBox ch = new CheckBox();
         stage.setTitle("Scrabble");
         stage.setScene(new Scene(createContent()));
         stage.show();

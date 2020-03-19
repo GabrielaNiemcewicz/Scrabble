@@ -1,4 +1,3 @@
-package Jabba;
 
 import java.util.*;
 
