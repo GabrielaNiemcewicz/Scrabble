@@ -39,6 +39,8 @@ public class Square extends StackPane {
 			this.tile = tile;
 	}
 
+	public Tile getTile(){return tile;}
+
 	public void removeTile(){
 		this.tile = null;
 	}

@@ -25,7 +25,9 @@ public class Frame {
 		return frame.size() == MAX_TILES?true:false;
 	}
 
-
+	public void removeTile(Tile tile) {
+		frame.remove(tile);
+	}
 
 //check if Tile(s) are in the Frame	
 	public boolean isStringIn(String letters) {
@@ -140,21 +142,9 @@ public class Frame {
 				copy_of_temporary_word.add(pickedTile);}	
 		return copy_of_temporary_word;}
 	
-	
-	
-	
-	
-	
+
 	//display on screen
 	public void displayAsFrame(){
-			/*System.out.print(" || ");
-			
-		for (int i=0; i<frame.size();i++){ 
-			frame.get(i).display(); 
-			System.out.print(" | ");
-		   }
-			System.out.print(" || ");*/
-		
 		for(int i=0; i<frame.size()*2; i++) {
 			if(i==frame.size())
 				System.out.println();

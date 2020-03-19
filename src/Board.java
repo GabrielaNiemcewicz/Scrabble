@@ -2,11 +2,18 @@
 import java.util.*;
 
 public class Board {
-
-private Square[][] board = new Square [15][15];
-private int SIZE = 15;
-
-boolean isFirstRound;
+	private int BOARD_SIZE = 15;
+	public static final int BOARD_CENTRE = 7;
+	private Square[][] board = new Square [15][15];
+	boolean isFirstRound;
+	public static final int WORD_INCORRECT_FIRST_PLAY = 0;
+	public static final int WORD_OUT_OF_BOUNDS = 1;
+	public static final int WORD_LETTER_NOT_IN_FRAME = 2;
+	public static final int WORD_LETTER_CLASH = 3;
+	public static final int WORD_NO_LETTER_PLACED = 4;
+	public static final int WORD_NO_CONNECTION = 5;
+	private int checkCode;
+	private int numPlays;
 
 
 
@@ -23,9 +30,9 @@ boolean isFirstRound;
 
 
 		public void display() {
-			for(int i=0; i<this.SIZE;i++) {
+			for(int i=0; i<this.BOARD_SIZE;i++) {
 				System.out.printf("            -------------------------------------------------------------\n        %-4d", i);
-				for(int j=0; j<this.SIZE; j++) {
+				for(int j=0; j<this.BOARD_SIZE; j++) {
 					System.out.print("| " + board[i][j]);
 				}
 				System.out.println("|");
@@ -34,297 +41,105 @@ boolean isFirstRound;
 			System.out.println("              0   1   2   3   4   5   6   7   8   9   10  11  12  13  14");
 		}
 
-
-		//on square.placeTile(Tile), refresh so that updated display square.display() shows
-
-//do we use refresh each square, or refresh 
-
-
-	public void refresh() {
-
-		System.out.println("Use me in display on ending each successful word placement");
-
-	}
-
-
 	public void reset() {
 		for (Square [] rows:board)
 			for (Square squares:rows)
 				squares.removeTile();
 	}
 
-	public void placeWordVertically(Frame frame, int firstPosition_x,int firstPosition_y, String word, Player player)
-	{ //in main: board.placeWordVertically(frame.someGetterFunction()) //best get all Tiles needed, get one Tile ok
-		ArrayList <Tile> tilesFromFrame= new ArrayList<Tile>();
-		String onlyNeededLetters = "";
 
-		for (int i=0; i<word.length(); i++)
-			if (board[firstPosition_x+i][firstPosition_y].isEmpty())
-				onlyNeededLetters+= word.charAt(i);
-
-		tilesFromFrame.addAll(frame.getTilesByWord(onlyNeededLetters));
-		if(isValidVertically(firstPosition_x, firstPosition_y, frame, onlyNeededLetters, player)) {
-			for (int i=0; i<word.length(); i++)
-				if (board[firstPosition_x+i][firstPosition_y].isEmpty())
-					board[firstPosition_x+i][firstPosition_y].placeTile(tilesFromFrame.get(i));
-			frame.cleanString(onlyNeededLetters);
+	public boolean isLegal(Frame frame, Word word) {
+		boolean isLegal = true;
+		//check for invalid first play
+		if (numPlays == 0 &&
+				((word.isHorizontal() && (word.getRow()!=BOARD_CENTRE || word.getFirstColumn()>BOARD_CENTRE ||
+						word.getLastColumn()<BOARD_CENTRE)) ||
+						(word.isVertical() && (word.getColumn()!=BOARD_CENTRE || word.getFirstRow()>BOARD_CENTRE ||
+								word.getLastRow()<BOARD_CENTRE)))) {
+			isLegal = false;
+			checkCode = WORD_INCORRECT_FIRST_PLAY;
 		}
-
-
-	}
-
-	public void placeWordHorizontally(Frame frame, int firstPosition_x,int firstPosition_y, String word, Player player)
-	{ //in main: board.placeWordVertically(frame.someGetterFunction()) //best get all Tiles needed, get one Tile ok
-		ArrayList <Tile> tilesFromFrame= new ArrayList<Tile>();
-		String onlyNeededLetters = "";
-
-		for (int i=0; i<word.length(); i++)
-			if (board[firstPosition_x][firstPosition_y+i].isEmpty())
-				onlyNeededLetters+= word.charAt(i);
-
-		tilesFromFrame.addAll(frame.getTilesByWord(onlyNeededLetters));
-		if(isValidHorizontally(firstPosition_x, firstPosition_y, frame, onlyNeededLetters, player)) {
-			for (int i=0; i<onlyNeededLetters.length(); i++)
-				if (board[firstPosition_x][firstPosition_y+i].isEmpty())
-					board[firstPosition_x][firstPosition_y+i].placeTile(tilesFromFrame.get(i));
-			frame.cleanString(onlyNeededLetters);
+		// check for word out of bounds
+		if (isLegal && ((word.isHorizontal() && word.getLastColumn()>= BOARD_SIZE) ||
+				(word.isVertical() && word.getLastRow()>= BOARD_SIZE))) {
+			isLegal = false;
+			checkCode = WORD_OUT_OF_BOUNDS;
 		}
-
-
-	}
-
-
-	//do we need this?
-	public boolean isPutHorizontally(char h) {
-	if (h=='h')
-		return true;
-	else
-		return false;
-
-	}
-
-
-//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~	
-
-
-
-
-
-	private ArrayList<Square> squareWalkerHorizontal (int firstPosition_x, int firstPosition_y, int temporaryWordSize)
-	{
-		ArrayList <Square> squareWalker = new ArrayList<Square>();
-		Square temp = new Square();
-		for (int i=0; i<temporaryWordSize; i++)
-			if(firstPosition_y+i>-1 &&firstPosition_y+i<15)
-				{temp = this.board[firstPosition_x][firstPosition_y+1];
-				squareWalker.add(temp);
+		// check that letters in the word do not clash with those on the board
+		String lettersPlaced = "";
+		if (isLegal) {
+			int r = word.getFirstRow();
+			int c = word.getFirstColumn();
+			for (int i = 0; i < word.getLength() && isLegal; i++) {
+				if (!board[r][c].isEmpty() && board[r][c].getTile().getLetter() != word.getLetter(i)) {
+					isLegal = false;
+					checkCode = WORD_LETTER_CLASH;
+				} else if (board[r][c].isEmpty()) {
+					lettersPlaced = lettersPlaced + word.getLetter(i);
 				}
-		return squareWalker;
-
-	}
-
-	private ArrayList<Square> squareWalkerVertical (int firstPosition_x, int firstPosition_y, int temporaryWordSize)
-	{
-		ArrayList <Square> squareWalker = new ArrayList<Square>();
-		Square temp = new Square();
-		for (int i=0; i<temporaryWordSize; i++)
-			if(firstPosition_x+i>-1 &&firstPosition_x+i<15)
-				{temp = this.board[firstPosition_x+i][firstPosition_y];
-				squareWalker.add(temp);
+				if (word.isHorizontal()) {
+					c++;
+				} else {
+					r++;
 				}
-		return squareWalker;
-
-	}
-
-
-
-
-
-	//all sets of tests together
-	public boolean isValidHorizontally(int firstPosition_x, int firstPosition_y, Frame frame, String word, Player player) {
-	//if first test not passed, immediately return false, output what happened, else (continue testing)
-	//if all tests return true, then isValid returns true.
-
-
-		ArrayList<Square> validationTestsScope = new ArrayList();
-		ArrayList <Square> squareWalker;
-		ArrayList<Square> squareWalkerUp;
-		ArrayList<Square> squareWalkerDown;
-
-
-
-	if(this.isFirstWord())
-		if(!this.inTheMiddle(firstPosition_x,  firstPosition_y, word)) //x is fixed, y is mobile
-		{System.out.println("First word needs to connect to Square in the middle, 8th, 8th");
-		return false;}
-
-	if (!this.isFirstPositionValid(firstPosition_x, firstPosition_y))
-		{System.out.println("You can't start your word here- square index out of Board");
-		return false;}
-
-	else if (!this.isWithinBounds(firstPosition_y, word)) //y is mobile
-		{System.out.println("You can't place your word here-last square is out of Board");
-		return false;
+			}
 		}
-	else
-		{
-		squareWalker = this.squareWalkerHorizontal(firstPosition_x, firstPosition_y-1, word.length()+2);
-		validationTestsScope.addAll(squareWalker);
-
+		// check that more than one letter is placed
+		if (isLegal && lettersPlaced.length() == 0) {
+			isLegal = false;
+			checkCode = WORD_NO_LETTER_PLACED;
 		}
-	 if(!this.noConflicts(word, validationTestsScope))
-			{System.out.println("Your word clashes with letters on the board.");
-			return false;}
-
-
-	else if(!this.usesFrameTiles(validationTestsScope, word)) {
-			System.out.println("You used no Tile from Frame. All letters making word are already on Board. ");
-			return false;}
-
-	else if(!this.isInFrame(validationTestsScope, frame, word))
-	{System.out.println("You don't have enough Tiles of required type to produce this word there");
-		return false;}
-		else
-		{
-			squareWalkerUp = this.squareWalkerHorizontal(firstPosition_x+1,firstPosition_y, word.length());
-			squareWalkerDown = this.squareWalkerHorizontal(firstPosition_x-1,firstPosition_y, word.length());
-			validationTestsScope.addAll(squareWalkerUp);
-			validationTestsScope.addAll(squareWalkerUp);
+		// check that the letters placed are in the frame
+		if (isLegal && !frame.isStringIn(lettersPlaced)) {
+			isLegal = false;
+			checkCode = WORD_LETTER_NOT_IN_FRAME;
 		}
-
-		 if(!this.connectsToTiles(validationTestsScope))
-		{System.out.println("Your word neither uses Tiles on Board nor connects to them paralelly");
-		return false;}
-
-
-		 System.out.println("Bravo," + player.getName()+ "! You were able to create word: "+word+"...What a luck.");
-		for (int i=0;i<(5-word.length())*3; i++) System.out.print("*CLAP*\t");
-		System.out.println();
-		 return true; //if all tests passed as true
-	}
-
-
-	//all sets of tests together
-	public boolean isValidVertically(int firstPosition_x, int firstPosition_y, Frame frame, String word, Player player) {
-		ArrayList<Square> validationTestsScope = new ArrayList();
-		ArrayList <Square> squareWalker; //= this.squareWalkerHorizontal(firstPosition_x, firstPosition_y-1, word.length()+2); //contains word and 1 square before and after word finishes
-		ArrayList<Square> squareWalkerLeft; //= this.squareWalkerHorizontal(firstPosition_x+1,firstPosition_y, word.length());
-		ArrayList<Square> squareWalkerRight;
-
-		if(this.isFirstWord())
-		   if(!this.inTheMiddle(firstPosition_y,  firstPosition_x, word))
-		   {System.out.println("First word needs to connect to Square in the middle, 8th, 8th");
-			return false;}
-
-		if(!this.isFirstPositionValid(firstPosition_y, firstPosition_x))
-		{System.out.println("You can't start your word here- square index out of Board");
-		return false;}
-
-		else if(!this.isWithinBounds(firstPosition_x, word)) //x is mobile
-		{System.out.println("You can't place your word here-last square is out of Board");
-		return false;}
-
-		else
-		{squareWalker = this.squareWalkerVertical(firstPosition_x-1, firstPosition_y,word.length()+2);
-		validationTestsScope.addAll(squareWalker);}
-		 if(!this.noConflicts(word, squareWalker))
-		 {System.out.println("Your word clashes with letters on the board.");
-		  return false;}
-
-		else if(!this.usesFrameTiles(squareWalker, word)) {
-			System.out.println("You used no Tile from Frame. All letters making word are already on Board. ");
-				return false;}
-
-		else if(!this.isInFrame(squareWalker, frame, word))
-		{System.out.println("You don't have enough Tiles of required type to produce this word there");
-			return false;}
-
-		else
-		{
-		   squareWalkerRight = this.squareWalkerVertical(firstPosition_x,firstPosition_y+1, word.length());
-		   squareWalkerLeft = this.squareWalkerVertical(firstPosition_x,firstPosition_y-1, word.length());
-		   validationTestsScope.addAll(squareWalkerRight);
-		   validationTestsScope.addAll(squareWalkerLeft);
-
+		// check that the letters placed connect with the letters on the board
+		if (isLegal && numPlays!=0) {
+			int boxTop = Math.max(word.getFirstRow()-1,0);
+			int boxBottom = Math.min(word.getLastRow()+1, BOARD_SIZE-1);
+			int boxLeft = Math.max(word.getFirstColumn()-1,0);
+			int boxRight = Math.min(word.getLastColumn()+1, BOARD_SIZE-1);
+			boolean foundConnection = false;
+			for (int r=boxTop; r<=boxBottom && !foundConnection; r++) {
+				for (int c=boxLeft; c<=boxRight && !foundConnection; c++) {
+					if (!board[r][c].isEmpty()) {
+						foundConnection = true;
+					}
+				}
+			}
+			if (!foundConnection) {
+				isLegal = false;
+				checkCode = WORD_NO_CONNECTION;
+			}
 		}
-
-		 if(!this.connectsToTiles(validationTestsScope))
-			{System.out.println("Your word neither uses Tiles on Board nor connects to them paralelly");
-			return false;}
-
-		 System.out.println("OH LA LA!," + player.getName()+ "! You were able to create word: "+word+"...Daamn You're GOOD!.");
-			for (int i=0;i<(6-word.length())*2; i++) System.out.print("*CLAP*\t");
-			 return true; //if all tests passed as true
+		return isLegal;
 	}
 
+	// getCheckCode precondition: isLegal is false
+	public int getCheckCode() {
+		return checkCode;
+	};
 
-
-
-
-
-	public boolean isFirstPositionValid(int firstPosition_x, int firstPosition_y) {
-		if(firstPosition_x> -1 && firstPosition_x<15 && firstPosition_y> -1 && firstPosition_y<15)
-			return true;
-		else
-			return false;
+	// place precondition: isLegal is true
+	public void place(Frame frame, Word word) {
+		int r = word.getFirstRow();
+		int c = word.getFirstColumn();
+		for (int i=0; i<word.getLength(); i++) {
+			if (board[r][c].isEmpty()) {
+				char letter = word.getLetter(i);
+				Tile tile = frame.getTilesByWord(word.getLetters()).get(i);
+				board[r][c].placeTile(tile);
+				frame.removeTile(tile);
+			}
+			if (word.isHorizontal()) {
+				c++;
+			} else {
+				r++;
+			}
+		}
+		numPlays++;
 	}
-
-
-	public boolean usesFrameTiles(ArrayList<Square> validationTestsScope,  String word) {
-		for (int i = 1; i<word.length()+1; i++) // first Square doesn't belong to a word
-			if (validationTestsScope.get(i).isEmpty())
-				return true;
-
-		return false;}
-	//EXTREMELY IMPORTANT- DO THIS TEST AFTER CHECKING FOR CLASHES WITH EXISTING TILES
-	public boolean isInFrame(ArrayList<Square> validationTestsScope,Frame frame, String word)
-	{
-	String word_copy = "";
-	char temp = ' ';
-	for (int i=0; i<word.length(); i++)
-		if(validationTestsScope.get(i).isEmpty())
-			{ temp = word.charAt(i);
-			word_copy += temp;}
-	return frame.isStringIn(word_copy);
-
-	}
-
-
-public boolean connectsToTiles(ArrayList<Square> validationTestsScope)
-{ //make a list of square walkers and loop through that list
-if(this.isFirstWord())
-	return true;
-
-for (Square squares: validationTestsScope)
-	if (!squares.isEmpty())
-		return true;
-
-
-return false;
-}
-
-
-	public boolean isWithinBounds  (int firstPositionMobile, String temporaryWord)
-	{
-		if (firstPositionMobile+temporaryWord.length()>15) return false;
-		else return true;
-	}
-
-
-
-
-
-	public boolean noConflicts(String word, ArrayList<Square> validationTestsScope)	{
-		if(this.isFirstRound)
-			return true;
-		char temporary = ' ';
-		for (int i=0; i<validationTestsScope.size()-2; i++)  //squareWalker includes 2 squares that don't belong in the word
-			if(validationTestsScope.get(i).isEmpty()==false)
-				{temporary = validationTestsScope.get(i).getCharacter();
-				if (temporary == word.charAt(i))
-					return false;}
-
-		return true;  }
 
 
 	public void set_IsFirstRoundToFalse ()
@@ -333,8 +148,8 @@ return false;
 
 	public boolean isFirstWord() {
 		if (this.isFirstRound==true)
-			for (int i=0; i<this.SIZE; i++)
-				for (int j=0; j<this.SIZE; j++)
+			for (int i=0; i<this.BOARD_SIZE; i++)
+				for (int j=0; j<this.BOARD_SIZE; j++)
 					if (!this.board[i][j].isEmpty())
 						this.set_IsFirstRoundToFalse();
 		return this.isFirstRound;

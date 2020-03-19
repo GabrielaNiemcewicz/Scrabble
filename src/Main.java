@@ -34,7 +34,6 @@ public class Main extends Application{
         return root;
     }
 
-    @Override
     public void start(Stage primaryStage) throws Exception{
         stage.setTitle("Scrabble");
         stage.setScene(new Scene(createContent()));
