@@ -8,7 +8,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.shape.Circle;
 import javafx.stage.Stage;
 
-public class Main extends Application{
+public class UI extends Application{
     boolean turn = true;
     boolean won = false;
     Pool pool = new Pool();
@@ -68,7 +68,7 @@ public class Main extends Application{
             "<word> " + "write your word on keyboard"
 
 
-            
+
 
     //end creating help file
 
@@ -82,6 +82,12 @@ public class Main extends Application{
         if (userWord.equals("EXCHANGE")||userWord.equals("exchange"))
         //frame.exchange needs getting created
 
+
+
+
+
+
+
     Button enterUInput = new Button("ENTER");
     button.setOnAction(action -> {
         System.out.println("We'll put here Board method to confirm word and placeWord: "+word);
@@ -92,7 +98,57 @@ public class Main extends Application{
 
 
 
-    textField.getText();
+
+    boolean ifCommandValidPlacer(string usersWord) {
+        boolean isHorizontally;
+        int first_position_x;
+        int first_position_y;
+
+        while(Character.isWhitespace(usersWord.charAt(0)))
+            usersWord = usersWord.substring(1); //delete unneeded whitespaces
+
+        if(!Character.isDigit(usersWord.charAt(0))) //row number
+        {   System.out.println("Row index is first digit and a number between 0-14");
+            return false; }
+         first_position_x =  Integer.parseInt(String.valueOf(usersWord.charAt(0)));
+
+        while(Character.isWhitespace(usersWord.charAt(1)) || usersWord.charAt(1) == ',' || usersWord.charAt(1) == ';' )
+            usersWord = usersWord.substring(0,0) + usersWord.substring(2); //delete unneeded whitespaces or coma
+
+
+        if(!Character.isDigit(usersWord.charAt(1))) //column number
+        {   System.out.println("Column index is second digit after row and a number between 0-14");
+            return false; }
+        first_position_y =  Integer.parseInt(String.valueOf(usersWord.charAt(1)));
+
+        while(Character.isWhitespace(usersWord.charAt(2)) || usersWord.charAt(2) == ',' || usersWord.charAt(2) == ';' )
+            usersWord = usersWord.substring(0,1) + usersWord.substring(3); //delete unneeded whitespaces or coma
+
+
+        if(usersWord.charAt(2)=='h' || usersWord.charAt(2)=='H')//accross A or horizontal H
+            isHorizontally = true;
+        if(usersWord.charAt(2)=='a'|| usersWord.charAt(2)=='A')
+            isHorizontally = false;
+        else
+        {   System.out.println("After row and index, separate choice of placement direction: A for across and H for horizontal");
+            return false; }
+
+
+
+
+        usersWord = usersWord.substring(3);//get rid of information that is checked already
+
+        while(Character.isWhitespace(usersWord.charAt(0)) || usersWord.charAt(0) == ',' || usersWord.charAt(0) == ';' )
+            usersWord = usersWord.substring(1); //delete unneeded whitespaces or coma
+
+
+       //not needed for(char letter : usersWord)
+         //not needed   if(letter < 'a' || (letter > 'z' && letter < 'A') || letter <= 'Z')
+       if(Board.isValid(usersWord)) //needed, might be buggy syntax - waiting how placeWord is implemented after update
+            Board.placeWord(usersWord, first_position_x, first_position_y, isHorizontally);
+    }
+
+
 
 
     public static void main(String[] args) {
