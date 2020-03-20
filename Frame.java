@@ -173,11 +173,22 @@ public class Frame {
 
 
 	public void exchange (int numRequested, Pool pool){
-		if(numRequested>pool.size())
-			this.returnTilesToPool(numRequested);
-			pool.drawTiles(numRequested);
+		if(pool.size()>6)
+			this.returnTilesToPool(numRequested, String lettersExchanged);
+			this.refill(pool);
+		else
+			System.out.println("There's only" + pool.size() + "tiles in the pool. You can exchange only if there're at least 7.")
 	}
 
+
+	private ArrayList<Tile> returnTilesToPool (int numRequested, String lettersExchanged){
+
+		if (this.isStringIn(lettersExchanged))
+		//pool.returnTiles(lettersExchanged);
+
+		cleanString(lettersExchanged);
+
+	}
 
 
 }
