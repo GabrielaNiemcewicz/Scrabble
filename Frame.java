@@ -181,14 +181,23 @@ public class Frame {
 	}
 
 
-	private ArrayList<Tile> returnTilesToPool (int numRequested, String lettersExchanged){
+	private ArrayList<Tile> returnTilesToPool (int numRequested, String lettersExchanged) {
+		Tile tileExchanged;
+		ArrayList<Tile> tilesReturned = new ArrayList();
 
-		if (this.isStringIn(lettersExchanged))
-		//pool.returnTiles(lettersExchanged);
+		if (this.isStringIn(lettersExchanged)) {
+			if (numRequested==7)
+			tilesReturned.addAll(this.getAllTiles());
+			else
+			for (int i=0; i<numRequested; i++) {
+				tileExchanged = this.accessByLetter(lettersExchanged.charAt(i));
+				tilesReturned.add(tileExchanged); }
 
-		cleanString(lettersExchanged);
+			pool.returnTiles(lettersExchanged);
+
+			this.cleanString(lettersExchanged);
+
+		}
 
 	}
-
-
 }
