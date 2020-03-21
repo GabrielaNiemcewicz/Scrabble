@@ -66,8 +66,13 @@ public class UI extends Application{
             "<across/down>  char  " +  "A for across, H for horizontal/n"+
             " You can put valid words up to bottom (h) or left to right (a) only/n"+
             "<word> " + "write your word on keyboard"
-
-
+    AnchorPane rootHelp = new AnchorPane();
+    BorderPane borderHelp = new BorderPane();
+    Text title = new Text("Help menu- commands");
+    Text helpText = new Text(helpMessage);
+    borderHelp.setTop(title);
+    borderHelp.setCenter(helpText);
+    
 
 
     //end creating help file
@@ -80,7 +85,7 @@ public class UI extends Application{
     if (userWord.equals("HELP")||userWord.equals("help"))
         //display help;
         if (userWord.equals("EXCHANGE")||userWord.equals("exchange"))
-        //frame.exchange needs getting created
+        frame.exchange;
 
 
 
