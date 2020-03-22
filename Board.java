@@ -370,16 +370,28 @@ return false;
 			for (int i = 0; i < word.length(); i++)
 				score *= board[firstPositionX+i][firstPositionY].getWordMultiplier(); //multiply by word multipliers if there are any, otherwise by 1
 		}
-
+	return score;
 
 	}
 
-	public void increasePlayerScore (int firstPositionX, int firstPositionY, boolean isHotizontal, string wordPlayer player) {
-	score = this.returnScore(int firstPositionX, int firstPositionY, boolean isHotizontal, string word)
-	player.increaseScore(score); }
+
+
+	public void increasePlayerScore (int firstPositionX, int firstPositionY, boolean isHotizontal, string word,Player player) {
+	int score = this.returnScore(int firstPositionX, int firstPositionY, boolean isHotizontal, string word)
+	player.increaseScore(score);
+}
 
 	public void challengeWord (int firstPositionX, int firstPositionY, boolean isHotizontal, int wordLength, Player player2) {
+	int score = this.returnScore(int firstPositionX, int firstPositionY, boolean isHotizontal, string word);
+	//player2.substractScore(score); //waiting for teammate  to implement it
+		if (isHorizontal == false) { //vertical
+			for (int i = 0; i < word.length(); i++)
+				score += board[firstPositionX][firstPositionY + i].removeTile(); //remove placement
 
+		else    /*if (isHorizontal == true)*/  //horizontal
+			for (int i = 0; i < word.length(); i++)
+				score += board[firstPositionX + i][firstPositionY].getPlacementScore(); //pick up each letter from word
+		}
 
 	}
 
