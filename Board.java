@@ -379,6 +379,7 @@ return false;
 	public void increasePlayerScore (int firstPositionX, int firstPositionY, boolean isHotizontal, string word,Player player) {
 	int score = this.returnScore(int firstPositionX, int firstPositionY, boolean isHotizontal, string word)
 	player.increaseScore(score);
+	System.out.println("Great word choice,"+player.getName()+"! Your worth is "+score);
 }
 
 	public void challengeWord (int firstPositionX, int firstPositionY, boolean isHotizontal, int wordLength, Player player2) {
@@ -390,7 +391,7 @@ return false;
 
 		else    /*if (isHorizontal == true)*/  //horizontal
 			for (int i = 0; i < word.length(); i++)
-				score += board[firstPositionX + i][firstPositionY].getPlacementScore(); //pick up each letter from word
+				score += board[firstPositionX + i][firstPositionY].removeTile(); //pick up each letter from word
 		}
 
 	}
