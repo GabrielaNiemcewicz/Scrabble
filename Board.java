@@ -382,9 +382,12 @@ return false;
 	System.out.println("Great word choice,"+player.getName()+"! Your worth is "+score);
 }
 
+
 	public void challengeWord (int firstPositionX, int firstPositionY, boolean isHotizontal, int wordLength, Player player2) {
+	//substracting score of bad word in other player than is used in the round
 	int score = this.returnScore(int firstPositionX, int firstPositionY, boolean isHotizontal, string word);
-	//player2.substractScore(score); //waiting for teammate  to implement it
+	player2.substractScore(score);
+	//clearing board from bad word
 		if (isHorizontal == false) { //vertical
 			for (int i = 0; i < word.length(); i++)
 				score += board[firstPositionX][firstPositionY + i].removeTile(); //remove placement
