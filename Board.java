@@ -360,6 +360,8 @@ return false;
 		int score = 0;
 
 		for (int i=0; i<word.length(); i++)
-			board[firstPositionFixed][firstPositionMobile+i].getPlacementScore();
-
+			score += board[firstPositionFixed][firstPositionMobile+i].getPlacementScore();
+		for (int i=0;i<word.length();i++)
+			score *=  board[firstPositionFixed][firstPositionMobile+i].getWordMultiplier();
+		return score;
 	}
