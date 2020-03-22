@@ -355,7 +355,7 @@ return false;
 
 }
 
-	public void returnScore (int firstPositionX, int firstPositionY, boolean isHotizontal, string word, Player player)
+	private int returnScore (int firstPositionX, int firstPositionY, boolean isHotizontal, string word)
 	{
 		int score = 0;
 		if (isHorizontal == false) { //vertical placement
@@ -371,5 +371,16 @@ return false;
 				score *= board[firstPositionX+i][firstPositionY].getWordMultiplier(); //multiply by word multipliers if there are any, otherwise by 1
 		}
 
-		player.increaseScore(score);
+
 	}
+
+	public void increasePlayerScore (int firstPositionX, int firstPositionY, boolean isHotizontal, string wordPlayer player) {
+	score = this.returnScore(int firstPositionX, int firstPositionY, boolean isHotizontal, string word)
+	player.increaseScore(score); }
+
+	public void challengeWord (int firstPositionX, int firstPositionY, boolean isHotizontal, int wordLength, Player player2) {
+
+
+	}
+
+}
