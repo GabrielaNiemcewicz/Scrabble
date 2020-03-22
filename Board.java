@@ -354,3 +354,12 @@ return false;
 	}
 
 }
+
+	public int returnScore (int firstPositionFixed, int firstPositionMobile, boolean isHotizontal, string word)
+	{
+		int score = 0;
+
+		for (int i=0; i<word.length(); i++)
+			board[firstPositionFixed][firstPositionMobile+i].getPlacementScore();
+
+	}
