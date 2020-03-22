@@ -355,13 +355,21 @@ return false;
 
 }
 
-	public int returnScore (int firstPositionFixed, int firstPositionMobile, boolean isHotizontal, string word)
+	public void returnScore (int firstPositionX, int firstPositionY, boolean isHotizontal, string word, Player player)
 	{
 		int score = 0;
+		if (isHorizontal == false) { //vertical placement
+			for (int i = 0; i < word.length(); i++)
+				score += board[firstPositionX][firstPositionY + i].getPlacementScore(); //add each multiplication letter score with tile score for word score
+			for (int i = 0; i < word.length(); i++)
+				score *= board[firstPositionX][firstPositionY + i].getWordMultiplier(); //multiply by word multipliers if there are any, otherwise by 1
+		}
+	else 	/*if (isHorizontal == true)*/ { //horizontal placement
+			for (int i = 0; i < word.length(); i++)
+				score += board[firstPositionX+i][firstPositionY].getPlacementScore(); //add each multiplication letter score with tile score for word score
+			for (int i = 0; i < word.length(); i++)
+				score *= board[firstPositionX+i][firstPositionY].getWordMultiplier(); //multiply by word multipliers if there are any, otherwise by 1
+		}
 
-		for (int i=0; i<word.length(); i++)
-			score += board[firstPositionFixed][firstPositionMobile+i].getPlacementScore();
-		for (int i=0;i<word.length();i++)
-			score *=  board[firstPositionFixed][firstPositionMobile+i].getWordMultiplier();
-		return score;
+		player.increaseScore(score);
 	}
