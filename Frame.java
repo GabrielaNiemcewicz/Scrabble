@@ -194,7 +194,6 @@ public class Frame {
 				tilesReturned.add(tileExchanged); }
 
 			pool.returnTiles(lettersExchanged);
-
 			this.cleanString(lettersExchanged);
 
 		}
