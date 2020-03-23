@@ -377,7 +377,7 @@ return false;
 
 
 	public void increasePlayerScore (int firstPositionX, int firstPositionY, boolean isHotizontal, string word,Player player) {
-	int score = this.returnScore(int firstPositionX, int firstPositionY, boolean isHotizontal, string word)
+	int score = this.returnScore( firstPositionX, firstPositionY, isHotizontal,  word)
 	player.increaseScore(score);
 	System.out.println("Great word choice,"+player.getName()+"! Your worth is "+score);
 }
@@ -385,16 +385,16 @@ return false;
 
 	public void challengeWord (int firstPositionX, int firstPositionY, boolean isHotizontal, int wordLength, Player player2) {
 	//substracting score of bad word in other player than is used in the round
-	int score = this.returnScore(int firstPositionX, int firstPositionY, boolean isHotizontal, string word);
+	int score = this.returnScore(firstPositionX, firstPositionY, isHotizontal, word);
 	player2.substractScore(score);
 	//clearing board from bad word
 		if (isHorizontal == false) { //vertical
 			for (int i = 0; i < word.length(); i++)
-				score += board[firstPositionX][firstPositionY + i].removeTile(); //remove placement
+				board[firstPositionX][firstPositionY + i].removeTile(); //remove placement
 
 		else    /*if (isHorizontal == true)*/  //horizontal
 			for (int i = 0; i < word.length(); i++)
-				score += board[firstPositionX + i][firstPositionY].removeTile(); //pick up each letter from word
+				board[firstPositionX + i][firstPositionY].removeTile(); //pick up each letter from word
 		}
 
 	}
