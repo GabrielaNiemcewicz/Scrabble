@@ -193,7 +193,12 @@ public class Frame {
 				tileExchanged = this.accessByLetter(lettersExchanged.charAt(i));
 				tilesReturned.add(tileExchanged); }
 
+<<<<<<< HEAD
 			pool.returnTiles(lettersExchanged);
+=======
+			pool.returnTiles(tilesReturned);
+
+>>>>>>> 81faad1bb6a5d1ee2114cc7a93b3902066599b0a
 			this.cleanString(lettersExchanged);
 
 		}
