@@ -15,7 +15,7 @@ public class Scrabble extends Application implements EventHandler<ActionEvent> {
 
     Stage window;
     Button play, help;
-    TextField p1, p2;
+    TextField playerName1, playerName2;
     Label player1, player2;
     @Override
     public void start(Stage stage) throws Exception {
@@ -23,12 +23,12 @@ public class Scrabble extends Application implements EventHandler<ActionEvent> {
         // Player's names:
         player1 = new Label("Player 1: Name: ");
         //Player's input
-        p1 = new TextField();
+        playerName1 = new TextField();
 
         // Player's names:
         player2 = new Label("Player 2: Name: ");
         //Player's input
-        p2 = new TextField();
+        playerName2 = new TextField();
         //button
         play = new Button();
         play.setText("Lets Play");
@@ -46,12 +46,12 @@ public class Scrabble extends Application implements EventHandler<ActionEvent> {
     @Override
     public void handle(ActionEvent actionEvent) {
         if(actionEvent.getSource() == play) {
-            Player one = new Player(p1.getText());
-            Player two = new Player(p2.getText());
+            Player one = new Player(playerName1.getText());
+            Player two = new Player(playerName2.getText());
             UI.launch();
         }
         else if(actionEvent.getSource() == help){
-            System.out.println("HELP");
+            System.out.println("HELP"); //extra functionality- a text, typed command 'help' required in specification
         }
 
     }

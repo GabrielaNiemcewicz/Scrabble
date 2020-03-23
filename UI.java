@@ -28,18 +28,18 @@ public class UI extends Application{
                 root.getChildren().add(board.getBoard()[i][j]);
             }
 
-        for(int i=1; i<=7; i++){
-            p.getFrame().getAllTiles().get(i-1).setTranslateX((i*42) + 600);
-            p.getFrame().getAllTiles().get(i-1).setTranslateY(10);
-            root.getChildren().add(p.getFrame().getAllTiles().get(i-1));
+        for(int i=0; i<7; i++){
+            p.getFrame().getAllTiles().get(i).setTranslateX(((i+1)*42) + 600);
+            p.getFrame().getAllTiles().get(i).setTranslateY(10);
+            root.getChildren().add(p.getFrame().getAllTiles().get(i));
         }
         return root;
     }
 
     @Override
     public void start(Stage primaryStage) throws Exception{
-        Circle c = new Circle();
-        //CheckBox ch = new CheckBox();
+        Circle circle = new Circle();
+        //CheckBox checkbox = new CheckBox();
         stage.setTitle("Scrabble");
         stage.setScene(new Scene(createContent()));
         stage.show();
