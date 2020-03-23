@@ -1,3 +1,4 @@
+package Jabba;
 
 import javafx.geometry.Pos;
 import javafx.scene.control.TextField;
@@ -39,8 +40,6 @@ public class Square extends StackPane {
 			this.tile = tile;
 	}
 
-	public Tile getTile(){return tile;}
-
 	public void removeTile(){
 		this.tile = null;
 	}
@@ -70,4 +69,10 @@ public class Square extends StackPane {
 		else
 			return "" + tile.toString();
 	}
+
+	public int getPlacementScore() {
+		int placementScore = type.getLetterMultiplier()*tile.getValue();
+		return placementScore;
+	}
+
 }

@@ -1,3 +1,4 @@
+package Jabba;
 
 import javafx.geometry.Pos;
 import javafx.scene.layout.StackPane;

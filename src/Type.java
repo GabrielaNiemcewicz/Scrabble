@@ -1,3 +1,4 @@
+package Jabba;
 
 import javafx.scene.paint.Color;
 

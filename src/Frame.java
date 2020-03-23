@@ -5,22 +5,22 @@ public class Frame {
 
 	private static final int MAX_TILES = 7;
 	private ArrayList<Tile> frame;
-	
-//initialization
+
+	//initialization
 	Frame() {
 		frame = new ArrayList<Tile>();
 	}
 
 
-//size-related
+	//size-related
 	public int size() {
 		return(frame.size());
 	}
-	
+
 	public boolean isEmpty() {
 		return(frame.size()==0?true:false);
 	}
-	
+
 	public boolean isFull() {
 		return frame.size() == MAX_TILES?true:false;
 	}
@@ -29,7 +29,7 @@ public class Frame {
 		frame.remove(tile);
 	}
 
-//check if Tile(s) are in the Frame	
+	//check if Tile(s) are in the Frame
 	public boolean isStringIn(String letters) {
 		letters = letters.toUpperCase();
 		boolean found = true;
@@ -51,66 +51,66 @@ public class Frame {
 		}
 		return found;
 	}
-	
+
 	public boolean isStringIn(char letter) {
 		boolean found;
 		if (this.size() < 1) {
 			found = false;
 		}
 		else {
-			
-			 {
+
+			{
 				Tile tileSought = new Tile(letter);
 				if (frame.contains(tileSought))
 				{	found = true;	}
-				else 
+				else
 				{	found = false; }
 			}
 		}
 		return found;
 	}
-	
-	
 
-//accessors
+
+
+	//accessors
 	public ArrayList<Tile> getAllTiles() {
 		return frame;
 	}
 
 	public Tile accessByIndex (int i) throws Exception
-		{ 
+	{
 		if (i<frame.size()&&i>-1)
-		return frame.get(i);
-		else 
-		throw new Exception("Outside of scope of this frame");
-		 }
+			return frame.get(i);
+		else
+			throw new Exception("Outside of scope of this frame");
+	}
 
 
-			//allows access to single letter in the frame
+	//allows access to single letter in the frame
 	public Tile accessByLetter (char checkedCharacter) {
-			if (this.isStringIn(checkedCharacter)) 
+		if (this.isStringIn(checkedCharacter))
 			return frame.get(atWhichIndex(checkedCharacter));	//frame.get(accessTileByIndex(atWhichIndex(checkedCharacter)));
-			else return null; 
-		}
+		else return null;
+	}
 
 
-		public int atWhichIndex (char checkedLetter) {
-			int whichIndex = -1;
-			if (!frame.isEmpty())
-				if (this.isStringIn(checkedLetter)){
-			   for (int i=0; i<frame.size(); i++) {
-			       		if (frame.get(i).getLetter() == checkedLetter) 
-			       			{whichIndex = i; return whichIndex;}
-			       } //if not in, in previous version, return -1
+	public int atWhichIndex (char checkedLetter) {
+		int whichIndex = -1;
+		if (!frame.isEmpty())
+			if (this.isStringIn(checkedLetter)){
+				for (int i=0; i<frame.size(); i++) {
+					if (frame.get(i).getLetter() == checkedLetter)
+					{whichIndex = i; return whichIndex;}
+				} //if not in, in previous version, return -1
 			}
-			
-			if(whichIndex == -1)
-				throw new IllegalArgumentException("Didnt convert to uppercase");
-				return whichIndex;
-			//return checkedLetter;
-		}
 
-//setters
+		if(whichIndex == -1)
+			throw new IllegalArgumentException("Didnt convert to uppercase");
+		return whichIndex;
+		//return checkedLetter;
+	}
+
+	//setters
 	public void refill(Pool pool) {
 		int numTilesToDraw = MAX_TILES - this.size();
 		ArrayList<Tile> draw = pool.drawTiles(numTilesToDraw);
@@ -118,15 +118,15 @@ public class Frame {
 	}
 
 
-// helps/aids for getters
+	// helps/aids for getters
 	void cleanString(String letters) {
-             if(this.isStringIn(letters))
-		for (int i=0; (i<letters.length()); i++) {
-			frame.remove(new Tile(letters.charAt(i)));
-		}
-             
+		if(this.isStringIn(letters))
+			for (int i=0; (i<letters.length()); i++) {
+				frame.remove(new Tile(letters.charAt(i)));
+			}
+
 	}
-  	
+
 
 
 	//getters
@@ -135,13 +135,13 @@ public class Frame {
 		ArrayList<Tile> copy_of_temporary_word = new ArrayList<Tile>(); //temporary_word = word user places on board. Copy has removed letters that are already on board.
 		Tile pickedTile;
 		char pickedLetter;
-		if(this.isStringIn(letters))		
+		if(this.isStringIn(letters))
 			for (int i=0; i<letters.length(); i++)
-				{pickedLetter = letters.charAt(i);
+			{pickedLetter = letters.charAt(i);
 				pickedTile = this.accessByLetter(pickedLetter);
-				copy_of_temporary_word.add(pickedTile);}	
+				copy_of_temporary_word.add(pickedTile);}
 		return copy_of_temporary_word;}
-	
+
 
 	//display on screen
 	public void displayAsFrame(){
@@ -153,23 +153,51 @@ public class Frame {
 			else
 				System.out.print("|" + frame.get(i%frame.size()).getValue() + "| ");
 		}
-		}
-
-	
-	public String displayAsString(){
- {			String word = new String();
-				for (int i=0; i<frame.size(); i++)
-					{word = word + (frame.get(i).getLetter());}
-	return word;}
 	}
-	
+
+
+	public String displayAsString(){
+		{			String word = new String();
+			for (int i=0; i<frame.size(); i++)
+			{word = word + (frame.get(i).getLetter());}
+			return word;}
+	}
+
 	public void addTile(Tile tile) {
 		frame.add(tile);
 	}
-		
-//cleaning
-		public void reset()
-		{ frame.clear();	}
 
+	//cleaning
+	public void reset()
+	{ frame.clear();	}
+
+
+	public void exchange (int numRequested, Pool pool){
+		if(pool.size()>6)
+			this.returnTilesToPool(numRequested, String lettersExchanged);
+			this.refill(pool);
+		else
+			System.out.println("There's only" + pool.size() + "tiles in the pool. You can exchange only if there're at least 7.")
+	}
+
+
+	private ArrayList<Tile> returnTilesToPool (int numRequested, String lettersExchanged) {
+		Tile tileExchanged;
+		ArrayList<Tile> tilesReturned = new ArrayList();
+
+		if (this.isStringIn(lettersExchanged)) {
+			if (numRequested==7)
+			tilesReturned.addAll(this.getAllTiles());
+			else
+			for (int i=0; i<numRequested; i++) {
+				tileExchanged = this.accessByLetter(lettersExchanged.charAt(i));
+				tilesReturned.add(tileExchanged); }
+
+			pool.returnTiles(lettersExchanged);
+
+			this.cleanString(lettersExchanged);
+
+		}
+
+	}
 }
-	

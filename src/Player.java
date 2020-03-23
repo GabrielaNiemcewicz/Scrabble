@@ -1,3 +1,4 @@
+package Jabba;
 
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -57,7 +58,18 @@ public class Player{
 		else 
 			throw new IllegalArgumentException();
 	}
-	
+
+
+
+	public void	substractScore(int score) {
+		if(score >= 0)          /*This if statement checks first for a positive score
+		 * if its true then the Score is challenged. */
+			Score -= score;
+		else
+			throw new IllegalArgumentException();
+	}
+
+
 	public void reset(String name) { /*reset method is responsible for reseting the 
 	 								  * players names and the scores and the frame from the frame class.*/
 		Scanner in = new Scanner(System.in);
