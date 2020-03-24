@@ -22,7 +22,7 @@ public class UI extends Application{
     boolean turn = true;
     boolean won = false;
     Pool pool = new Pool();
-    Player p = new Player("Adam");
+    Player player = new Player("Adam");
     Board board = new Board();
     Word word;
     Stage stage = new Stage();
@@ -30,7 +30,7 @@ public class UI extends Application{
     private Parent createContent(){
         Pane root = new Pane();
         root.setPrefSize(1000, 605);
-        p.getFrame().refill(pool);
+        player.getFrame().refill(pool);
 
         createBoard(root);
         FX_frame(root);
@@ -50,8 +50,8 @@ public class UI extends Application{
 
     public void FX_frame(Pane root){
         for(int i=0; i<7; i++){
-            p.getFrame().getAllTiles().get(i).setTranslateX(((i+1)*42) + 600);
-            p.getFrame().getAllTiles().get(i).setTranslateY(20);
+            player.getFrame().getAllTiles().get(i).setTranslateX(((i+1)*42) + 600);
+            player.getFrame().getAllTiles().get(i).setTranslateY(20);
             root.getChildren().add(p.getFrame().getAllTiles().get(i));
         }
     }
@@ -169,7 +169,7 @@ public class UI extends Application{
 
         word = new Word(row, column, isHorizontal, Word);
         if(board.isLegal(p.getFrame(), word))
-            board.place(p.getFrame(), word);
+            board.place(player.getFrame(), word);
 
         System.out.println(board.getBoard()[7][7]);
     }
@@ -184,55 +184,7 @@ public class UI extends Application{
 
 
 
-    public boolean ifCommandValidPlacer(String usersWord) {
-        boolean isHorizontally;
-        int first_position_x;
-        int first_position_y;
 
-        while(Character.isWhitespace(usersWord.charAt(0)))
-            usersWord = usersWord.substring(1); //delete unneeded whitespaces
-
-        if(!Character.isDigit(usersWord.charAt(0))) //row number
-        {   System.out.println("Row index is first digit and a number between 0-14");
-            return false; }
-         first_position_x =  Integer.parseInt(String.valueOf(usersWord.charAt(0)));
-
-        while(Character.isWhitespace(usersWord.charAt(1)) || usersWord.charAt(1) == ',' || usersWord.charAt(1) == ';' )
-            usersWord = usersWord.substring(0,0) + usersWord.substring(2); //delete unneeded whitespaces or coma
-
-
-        if(!Character.isDigit(usersWord.charAt(1))) //column number
-        {   System.out.println("Column index is second digit after row and a number between 0-14");
-            return false; }
-        first_position_y =  Integer.parseInt(String.valueOf(usersWord.charAt(1)));
-
-        while(Character.isWhitespace(usersWord.charAt(2)) || usersWord.charAt(2) == ',' || usersWord.charAt(2) == ';' )
-            usersWord = usersWord.substring(0,1) + usersWord.substring(3); //delete unneeded whitespaces or coma
-
-
-        if(usersWord.charAt(2)=='h' || usersWord.charAt(2)=='H')//accross A or horizontal H
-            isHorizontally = true;
-        if(usersWord.charAt(2)=='a'|| usersWord.charAt(2)=='A')
-            isHorizontally = false;
-        else
-        {   System.out.println("After row and index, separate choice of placement direction: A for across and H for horizontal");
-            return false; }
-
-
-
-
-        usersWord = usersWord.substring(3);//get rid of information that is checked already
-
-        while(Character.isWhitespace(usersWord.charAt(0)) || usersWord.charAt(0) == ',' || usersWord.charAt(0) == ';' )
-            usersWord = usersWord.substring(1); //delete unneeded whitespaces or coma
-
-
-       //not needed for(char letter : usersWord)
-         //not needed   if(letter < 'a' || (letter > 'z' && letter < 'A') || letter <= 'Z')
-       //if(Board.isValid(usersWord)) //needed, might be buggy syntax - waiting how placeWord is implemented after update
-          //  Board.placeWord(usersWord, first_position_x, first_position_y, isHorizontally);
-        return false;
-    }
 
 
 
