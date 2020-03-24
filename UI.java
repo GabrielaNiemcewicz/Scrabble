@@ -24,6 +24,7 @@ public class UI extends Application{
     Pool pool = new Pool();
     Player p = new Player("Adam");
     Board board = new Board();
+    Word word;
     Stage stage = new Stage();
 
     private Parent createContent(){
@@ -80,8 +81,10 @@ public class UI extends Application{
                 helpPopUp();
             if(textField.getText().equalsIgnoreCase("QUIT"))
                 stage.close();
-            else if((Pattern.matches("\\d{1,2}\\s+\\d{1,2}\\s+[a-zA-Z]\\s+[a-zA-Z]+", textField.getText())))
+            else if((Pattern.matches("\\d{1,2}\\s+\\d{1,2}\\s+[a-zA-Z]\\s+[a-zA-Z]+", textField.getText()))) {
                 parseInput(textField.getText());
+                textField.clear();
+            }
         });
 
         //start creating help file
@@ -152,7 +155,23 @@ public class UI extends Application{
 
     public void parseInput(String userInput){
         Scanner scan = new Scanner(userInput);
+        boolean isHorizontal;
+        int row = scan.nextInt();
+        int column = scan.nextInt();
+        String direction = scan.next();
+        String Word = scan.next();
+        System.out.println("int x: " + row + " int y: "+ column + " direction: " + direction + " word: " + Word);
 
+        if(direction.equalsIgnoreCase("h"))
+            isHorizontal = true;
+        else
+            isHorizontal = false;
+
+        word = new Word(row, column, isHorizontal, Word);
+        if(board.isLegal(p.getFrame(), word))
+            board.place(p.getFrame(), word);
+
+        System.out.println(board.getBoard()[7][7]);
     }
 
     @Override

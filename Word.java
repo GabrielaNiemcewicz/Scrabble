@@ -9,7 +9,7 @@ public class Word {
 		this.row = row;
 		this.column = column;
 		this.isHorizontal = isHorizontal;
-		this.letters = letters;
+		this.letters = letters.toUpperCase();
 	}
 
 	// getRow pre-condition: isHorizontal is true

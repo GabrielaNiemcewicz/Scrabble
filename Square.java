@@ -38,6 +38,9 @@ public class Square extends StackPane {
 	public void placeTile(Tile tile){
 		if (this.isEmpty())	
 			this.tile = tile;
+		text.setText("" + tile.getLetter());
+		text.setFill(Color.BLACK);
+
 	}
 
 	public void removeTile(){

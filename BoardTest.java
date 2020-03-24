@@ -4,8 +4,8 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class BoardTest {
-	
-	/***** Initializing necessary Variables. *****/
+	/*
+	/***** Initializing necessary Variables. *****
 	public static Board Bo = new Board();       
 	public static String HV = null;
 	public static Pool pool = new Pool();
@@ -14,14 +14,14 @@ public class BoardTest {
 	
 	public void Testing(Player p, String word, Scanner in) {
 		
-/************** WHEN THE ENTERED WORD PASS THE TEST IT IS CONTINUED TO BE PLACED. **************/
-		//********* TEST - WHATHER ITS THE FIRST WORD OR NOT *************//	
+/************** WHEN THE ENTERED WORD PASS THE TEST IT IS CONTINUED TO BE PLACED. **************
+		//********* TEST - WHATHER ITS THE FIRST WORD OR NOT *************
 		   if(Bo.isFirstWord())
 			  System.out.println("Test For First Word: This is the first word on the board.");
 		   else
 			   System.out.println("Test For First Word: This is NOT the first word on the board.");
 
-		 //********* HORIZALTAL / VERTICAL *************//
+		 //********* HORIZALTAL / VERTICAL *************
 		 
 			System.out.println("*****************\nWould You like to Place it Horizontally Or Vertically: ");
 			HV = in.nextLine();
@@ -63,7 +63,7 @@ public class BoardTest {
 		Bo.display();
 		
 
-//*********************	PLAYER 1 ******************************//		
+//*********************	PLAYER 1 ******************************
 		Player p1 = new Player("Mary");
 		System.out.println("\n"+p1);
 	   
@@ -76,7 +76,7 @@ public class BoardTest {
 		BoardTest t1 = new BoardTest();
 		t1.Testing(p1, word1,in1);
 			
-//********************	PLAYER 2 ******************************//
+//********************	PLAYER 2 ******************************
 		
 		Player p2 = new Player("Joey");  
 		System.out.println("\n"+p2);
@@ -91,6 +91,7 @@ public class BoardTest {
 		t2.Testing(p2, word2,in2);
 		
 	}
+	*/
 }
 
 
