@@ -14,13 +14,13 @@ public class Board {
 	public static final int WORD_LETTER_CLASH = 3;
 	public static final int WORD_NO_LETTER_PLACED = 4;
 	public static final int WORD_NO_CONNECTION = 5;
-
-
+	public static final int BOARD_SIZE = 15;
+	public static final int BOARD_CENTRE = 7;
 
 	Board() {
 		squares = new Square[BOARD_SIZE][BOARD_SIZE];
-		Pattern pattern = new Pattern(board);
-		pattern.drawScrabble(board);
+		Pattern pattern = new Pattern(squares);
+		pattern.drawScrabble(squares);
 		numPlays = 0;
 	}
 
@@ -31,9 +31,9 @@ public class Board {
 
 
 		public void display() {
-			for(int i=0; i<this.SIZE;i++) {
+			for(int i=0; i<this.BOARD_SIZE;i++) {
 				System.out.printf("            -------------------------------------------------------------\n        %-4d", i);
-				for(int j=0; j<this.SIZE; j++) {
+				for(int j=0; j<this.BOARD_SIZE; j++) {
 					System.out.print("| " + squares[i][j]);
 				}
 				System.out.println("|");
@@ -58,7 +58,7 @@ public class Board {
 		int r = word.getFirstRow();
 		int c = word.getFirstColumn();
 		for (int i=0; i<word.getLength(); i++) {
-			if (!squares[r][c].isOccupied()) {
+			if (squares[r][c].isEmpty()) {
 				char letter = word.getLetter(i);
 				Tile tile = frame.accessByLetter(letter);
 				squares[r][c].placeTile(tile);
@@ -152,7 +152,7 @@ public int getCheckCode() {
 	}
 
 
-}
+
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -164,15 +164,15 @@ public int getCheckCode() {
 		int score = 0;
 		if (word.isVertical()) { //vertical placement
 			for (int i = 0; i < word.getLength(); i++)
-				score += board[firstPositionX][firstPositionY + i].getPlacementScore(); //add each multiplication letter score with tile score for word score
+				score += squares[firstPositionX][firstPositionY + i].getPlacementScore(); //add each multiplication letter score with tile score for word score
 			for (int i = 0; i < word.getLength(); i++)
-				score *= board[firstPositionX][firstPositionY + i].getWordMultiplier(); //multiply by word multipliers if there are any, otherwise by 1
+				score *= squares[firstPositionX][firstPositionY + i].getWordMultiplier(); //multiply by word multipliers if there are any, otherwise by 1
 		}
 	else 	/*if (word.isHorizontal())*/ { //horizontal placement
 			for (int i = 0; i < word.getLength(); i++)
-				score += board[firstPositionX+i][firstPositionY].getPlacementScore(); //add each multiplication letter score with tile score for word score
+				score += squares[firstPositionX+i][firstPositionY].getPlacementScore(); //add each multiplication letter score with tile score for word score
 			for (int i = 0; i < word.getLength(); i++)
-				score *= board[firstPositionX+i][firstPositionY].getWordMultiplier(); //multiply by word multipliers if there are any, otherwise by 1
+				score *= squares[firstPositionX+i][firstPositionY].getWordMultiplier(); //multiply by word multipliers if there are any, otherwise by 1
 		}
 	return score;
 
@@ -181,7 +181,7 @@ public int getCheckCode() {
 
 
 	public void increasePlayerScore (Word word,Player player) {
-	int score = this.returnScore(Word word) //RECHECK GABI
+	int score = this.returnScore(word); //RECHECK GABI
 	player.increaseScore(score);
 	System.out.println("Great word choice,"+player.getName()+"! Your worth is "+score);
 }
@@ -191,16 +191,16 @@ public int getCheckCode() {
 		int firstPositionX = word.getRow();
 		int firstPositionY = word.getColumn();
 		//substracting score of bad word in other player than is used in the round
-	int score = this.returnScore(Word word);
+	int score = this.returnScore(word);
 	player2.substractScore(score); //another player, not current player
 	//clearing board from bad word
 		if (word.isVertical()) { //vertical
 			for (int i = 0; i < word.getLength(); i++)
-				board[firstPositionX][firstPositionY + i].removeTile(); //remove placement
-
-		else    /*if (isHorizontal == true)*/  //horizontal
+				squares[firstPositionX][firstPositionY + i].removeTile(); //remove placement
+		}
+		else {  /*if (isHorizontal == true)*/  //horizontal
 			for (int i = 0; i < word.getLength(); i++)
-				board[firstPositionX + i][firstPositionY].removeTile(); //pick up each letter from word
+				squares[firstPositionX + i][firstPositionY].removeTile(); //pick up each letter from word
 		}
 
 	}
