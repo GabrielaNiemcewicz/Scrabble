@@ -18,6 +18,7 @@ public class Scrabble extends Application implements EventHandler<ActionEvent> {
     Button play, help;
     TextField playerName1, playerName2;
     Label player1, player2;
+
     @Override
     public void start(Stage stage) throws Exception {
         window = stage;
@@ -58,7 +59,7 @@ public class Scrabble extends Application implements EventHandler<ActionEvent> {
         if(actionEvent.getSource() == play) {
             Player one = new Player(playerName1.getText());
             Player two = new Player(playerName2.getText());
-          //  UI.launch();
+            UI ui = new UI();
         }
         else if(actionEvent.getSource() == help){
             System.out.println("HELP"); //extra functionality- a text, typed command 'help' required in specification

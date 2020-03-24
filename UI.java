@@ -78,6 +78,8 @@ public class UI extends Application{
             System.out.println(textField.getText());
             if(textField.getText().equalsIgnoreCase("HELP"))
                 helpPopUp();
+            if(textField.getText().equalsIgnoreCase("QUIT"))
+                stage.close();
             else if((Pattern.matches("\\d{1,2}\\s+\\d{1,2}\\s+[a-zA-Z]\\s+[a-zA-Z]+", textField.getText())))
                 parseInput(textField.getText());
         });
