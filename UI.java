@@ -1,6 +1,8 @@
 package Jabba;
 
 import javafx.application.Application;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -9,6 +11,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.*;
 import javafx.scene.shape.Circle;
 import javafx.scene.text.Text;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 public class UI extends Application{
@@ -46,17 +49,6 @@ public class UI extends Application{
             p.getFrame().getAllTiles().get(i).setTranslateY(20);
             root.getChildren().add(p.getFrame().getAllTiles().get(i));
         }
-    }
-
-    public void readTextfield(String input){
-
-    }
-
-    @Override
-    public void start(Stage primaryStage) throws Exception{
-        stage.setTitle("Scrabble");
-        stage.setScene(new Scene(createContent()));
-        stage.show();
     }
 
     public void FX_input(Pane root){
@@ -113,15 +105,55 @@ public class UI extends Application{
         if (userWord.equals("PASS")||userWord.equals("pass"))
             turn = false;
         //if (userWord.equals("HELP")||userWord.equals("help"))
-            //display help;
+        //display help;
         //if (userWord.equals("EXCHANGE")||userWord.equals("exchange"))
-          //  p.getFrame().exchange(2);
+        //  p.getFrame().exchange(2);
 
         Button enterUInput = new Button("ENTER");
         enterUInput.setOnAction(e -> {
             System.out.println("We'll put here Board method to confirm word and placeWord: ");
         }); //that's how we pass user Input in button
     }
+
+    public void readTextfield(String input){
+        if (input.equalsIgnoreCase("HELP")){
+            helpPopUp();
+        }
+    }
+
+    public void helpPopUp(){
+        Stage popupwindow=new Stage();
+
+        popupwindow.initModality(Modality.APPLICATION_MODAL);
+        popupwindow.setTitle("Help");
+
+
+        Label label1= new Label("To avail of needed functionalities in Scrabble, you have to carefully rewrite:\n" +
+                "QUIT  -" + "  to stop playing, exit, terminate the game\n" +
+                "PASS  -" +"  to resign from your round and let your opponent pick word\n"+
+                "HELP  -" +"  to display this menu\n" +
+                "EXCHANGE  -" +"  to swap current tiles with random ones in the pool\n" +
+                "\n" +
+                "To input word, specify, in this order, after whitespaces: <grid ref> <across/down> <word>\n" +
+                "<grid reference>:  intint  " + "Two numbers (row and column index on Board where word starts) with nothing between them, eg. 13\n"
+                +"Valid positions: from 0 to 14\n" +
+                "<across/down>  char  " +  "A for across, H for horizontal\n"+
+                " You can put valid words up to bottom (h) or left to right (a) only\n"+
+                "<word> " + "write your word on keyboard");
+
+        label1.setPadding(new Insets(20, 20, 20, 20));
+        Scene scene1= new Scene(label1);
+        popupwindow.setScene(scene1);
+        popupwindow.showAndWait();
+    }
+    @Override
+    public void start(Stage primaryStage) throws Exception{
+        stage.setTitle("Scrabble");
+        stage.setScene(new Scene(createContent()));
+        stage.show();
+    }
+
+
 
 
     public boolean ifCommandValidPlacer(String usersWord) {
