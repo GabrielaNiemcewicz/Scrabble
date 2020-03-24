@@ -6,10 +6,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.Pane;
+import javafx.scene.layout.*;
 import javafx.scene.shape.Circle;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
@@ -27,39 +24,64 @@ public class UI extends Application{
         root.setPrefSize(1000, 605);
         p.getFrame().refill(pool);
 
+        createBoard(root);
+        FX_frame(root);
+        FX_input(root);
+
+        return root;
+    }
+
+    public void createBoard(Pane root){
         for(int i=0; i<15; i++)
             for(int j=0; j<15; j++){
                 board.getBoard()[i][j].setTranslateX(j*40+5);
                 board.getBoard()[i][j].setTranslateY(i*40);
                 root.getChildren().add(board.getBoard()[i][j]);
             }
+    }
 
+    public void FX_frame(Pane root){
         for(int i=0; i<7; i++){
             p.getFrame().getAllTiles().get(i).setTranslateX(((i+1)*42) + 600);
-            p.getFrame().getAllTiles().get(i).setTranslateY(10);
+            p.getFrame().getAllTiles().get(i).setTranslateY(20);
             root.getChildren().add(p.getFrame().getAllTiles().get(i));
         }
-        return root;
+    }
+
+    public void readTextfield(String input){
+
     }
 
     @Override
     public void start(Stage primaryStage) throws Exception{
-        Circle circle = new Circle();
-        //CheckBox checkbox = new CheckBox();
         stage.setTitle("Scrabble");
         stage.setScene(new Scene(createContent()));
         stage.show();
     }
 
-    public void input(){
+    public void FX_input(Pane root){
+
+        GridPane grid = new GridPane();
         Label inputLabel = new Label("Write your word");
         TextField textField = new TextField ();
         textField.setPromptText("Choose word or command. For help, HELP");
-        HBox userInput = new HBox();
-        userInput.getChildren().addAll(inputLabel, textField);
-        userInput.setSpacing(8);
+        grid.add(inputLabel, 0, 0);
+        grid.add(textField, 1, 0);
+        Button Input = new Button("ENTER");
+        grid.add(Input, 1, 1);
+        grid.setHgap(15);
+        grid.setVgap(20);
+
+        grid.setTranslateX(650);
+        grid.setTranslateY(100);
+        root.getChildren().add(grid);
 
         String userWord = textField.getText();
+
+        Input.setOnAction(e -> {
+            System.out.println(textField.getText());
+            readTextfield(textField.getText());
+        });
 
         //start creating help file
         String helpMessage = "To avail of needed functionalities in Scrabble, you have to carefully rewrite:" +
