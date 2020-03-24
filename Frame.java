@@ -1,3 +1,4 @@
+package Jabba;
 
 import java.util.ArrayList;
 
@@ -172,16 +173,17 @@ public class Frame {
 	{ frame.clear();	}
 
 
-	public void exchange (int numRequested, Pool pool){
-		if(pool.size()>6)
-			this.returnTilesToPool(numRequested, String lettersExchanged);
+	public void exchange (int numRequested, Pool pool, String lettersExchanged){
+		if(pool.size()>6) {
+			//this.returnTilesToPool(numRequested, lettersExchanged, pool);
 			this.refill(pool);
+		}
 		else
-			System.out.println("There's only" + pool.size() + "tiles in the pool. You can exchange only if there're at least 7.")
+			System.out.println("There's only" + pool.size() + "tiles in the pool. You can exchange only if there're at least 7.");
 	}
 
 
-	private ArrayList<Tile> returnTilesToPool (int numRequested, String lettersExchanged) {
+	/*private ArrayList<Tile> returnTilesToPool (int numRequested, String lettersExchanged, Pool pool) {
 		Tile tileExchanged;
 		ArrayList<Tile> tilesReturned = new ArrayList();
 
@@ -193,15 +195,13 @@ public class Frame {
 				tileExchanged = this.accessByLetter(lettersExchanged.charAt(i));
 				tilesReturned.add(tileExchanged); }
 
-<<<<<<< HEAD
 			pool.returnTiles(lettersExchanged);
-=======
+
 			pool.returnTiles(tilesReturned);
 
->>>>>>> 81faad1bb6a5d1ee2114cc7a93b3902066599b0a
 			this.cleanString(lettersExchanged);
 
 		}
 
-	}
+	}*/
 }

@@ -3,9 +3,15 @@ package Jabba;
 import javafx.application.Application;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.shape.Circle;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 public class UI extends Application{
@@ -44,67 +50,59 @@ public class UI extends Application{
         stage.setScene(new Scene(createContent()));
         stage.show();
     }
-    Label inputLabel = new Label("Write your word");
-    TextField textField = new TextField ();
-    textField.setPromptText("Choose word or command. For help, HELP");
-    HBox userInput = new HBox();
-    userInput.getChildren().addAll(inputLabel, textField);
-    userInput.setSpacing(8);
 
-    String userWord = textField.getText();
+    public void input(){
+        Label inputLabel = new Label("Write your word");
+        TextField textField = new TextField ();
+        textField.setPromptText("Choose word or command. For help, HELP");
+        HBox userInput = new HBox();
+        userInput.getChildren().addAll(inputLabel, textField);
+        userInput.setSpacing(8);
 
-    //start creating help file
-    String helpMessage = "To avail of needed functionalities in Scrabble, you have to carefully rewrite:" +
-            "QUIT  -" + "  to stop playing, exit, terminate the game/n" +
-            "PASS  -" +"  to resign from your round and let your opponent pick word/n"+
-            "HELP  -" +"  to display this menu/n" +
-            "EXCHANGE  -" +"  to swap current tiles with random ones in the pool/n" +
-            "/n" +
-            "To input word, specify, in this order, after whitespaces: <grid ref> <across/down> <word>/n" +
-            "<grid reference>:  intint  " + "Two numbers (row and column index on Board where word starts) with nothing between them, eg. 13/n"
-                    +"Valid positions: from 0 to 14/n" +
-            "<across/down>  char  " +  "A for across, H for horizontal/n"+
-            " You can put valid words up to bottom (h) or left to right (a) only/n"+
-            "<word> " + "write your word on keyboard"
-    AnchorPane rootHelp = new AnchorPane();
-    BorderPane borderHelp = new BorderPane();
-    Text title = new Text("Help menu- commands");
-    Text helpText = new Text(helpMessage);
-    borderHelp.setTop(title);
-    borderHelp.setCenter(helpText);
-    
+        String userWord = textField.getText();
 
-
-    //end creating help file
-
-   //possibly trim spaces at the beginning or end, and ignore many spaces between commands
-    if (userWord.equals("QUIT")||userWord.equals("quit"))
-        won = true;
-    if (userWord.equals("PASS")||userWord.equals("pass"))
-        turn = false;
-    if (userWord.equals("HELP")||userWord.equals("help"))
-        //display help;
-        if (userWord.equals("EXCHANGE")||userWord.equals("exchange"))
-        frame.exchange;
+        //start creating help file
+        String helpMessage = "To avail of needed functionalities in Scrabble, you have to carefully rewrite:" +
+                "QUIT  -" + "  to stop playing, exit, terminate the game/n" +
+                "PASS  -" +"  to resign from your round and let your opponent pick word/n"+
+                "HELP  -" +"  to display this menu/n" +
+                "EXCHANGE  -" +"  to swap current tiles with random ones in the pool/n" +
+                "/n" +
+                "To input word, specify, in this order, after whitespaces: <grid ref> <across/down> <word>/n" +
+                "<grid reference>:  intint  " + "Two numbers (row and column index on Board where word starts) with nothing between them, eg. 13/n"
+                +"Valid positions: from 0 to 14/n" +
+                "<across/down>  char  " +  "A for across, H for horizontal/n"+
+                " You can put valid words up to bottom (h) or left to right (a) only/n"+
+                "<word> " + "write your word on keyboard";
+        AnchorPane rootHelp = new AnchorPane();
+        BorderPane borderHelp = new BorderPane();
+        Text title = new Text("Help menu- commands");
+        Text helpText = new Text(helpMessage);
+        borderHelp.setTop(title);
+        borderHelp.setCenter(helpText);
 
 
 
+        //end creating help file
+
+        //possibly trim spaces at the beginning or end, and ignore many spaces between commands
+        if (userWord.equals("QUIT")||userWord.equals("quit"))
+            won = true;
+        if (userWord.equals("PASS")||userWord.equals("pass"))
+            turn = false;
+        //if (userWord.equals("HELP")||userWord.equals("help"))
+            //display help;
+        //if (userWord.equals("EXCHANGE")||userWord.equals("exchange"))
+          //  p.getFrame().exchange(2);
+
+        Button enterUInput = new Button("ENTER");
+        enterUInput.setOnAction(e -> {
+            System.out.println("We'll put here Board method to confirm word and placeWord: ");
+        }); //that's how we pass user Input in button
+    }
 
 
-
-
-    Button enterUInput = new Button("ENTER");
-    button.setOnAction(action -> {
-        System.out.println("We'll put here Board method to confirm word and placeWord: "+word);
-    }); //that's how we pass user Input in button
-
-
-
-
-
-
-
-    boolean ifCommandValidPlacer(string usersWord) {
+    public boolean ifCommandValidPlacer(String usersWord) {
         boolean isHorizontally;
         int first_position_x;
         int first_position_y;
@@ -149,8 +147,9 @@ public class UI extends Application{
 
        //not needed for(char letter : usersWord)
          //not needed   if(letter < 'a' || (letter > 'z' && letter < 'A') || letter <= 'Z')
-       if(Board.isValid(usersWord)) //needed, might be buggy syntax - waiting how placeWord is implemented after update
-            Board.placeWord(usersWord, first_position_x, first_position_y, isHorizontally);
+       //if(Board.isValid(usersWord)) //needed, might be buggy syntax - waiting how placeWord is implemented after update
+          //  Board.placeWord(usersWord, first_position_x, first_position_y, isHorizontally);
+        return false;
     }
 
 
