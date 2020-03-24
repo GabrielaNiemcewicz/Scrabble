@@ -188,7 +188,9 @@ public int getCheckCode() {
 
 
 	public void challengeWord (Word word, Player player2) {
-	//substracting score of bad word in other player than is used in the round
+		int firstPositionX = word.getRow();
+		int firstPositionY = word.getColumn();
+		//substracting score of bad word in other player than is used in the round
 	int score = this.returnScore(Word word);
 	player2.substractScore(score); //another player, not current player
 	//clearing board from bad word
