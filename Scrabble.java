@@ -1,15 +1,16 @@
 package Jabba;
+
 import javafx.application.Application;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
+import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
-import javafx.scene.layout.GridPane;
-import javafx.geometry.*;
-import javafx.event.EventHandler;
-import javafx.event.ActionEvent;
 
 public class Scrabble extends Application implements EventHandler<ActionEvent> {
 
