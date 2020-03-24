@@ -2,17 +2,21 @@ package Jabba;
 
 import javafx.application.Application;
 import javafx.geometry.Insets;
-import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import javafx.scene.layout.*;
-import javafx.scene.shape.Circle;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+
+import java.util.Scanner;
+import java.util.regex.Pattern;
 
 public class UI extends Application{
     boolean turn = true;
@@ -72,7 +76,10 @@ public class UI extends Application{
 
         Input.setOnAction(e -> {
             System.out.println(textField.getText());
-            readTextfield(textField.getText());
+            if(textField.getText().equalsIgnoreCase("HELP"))
+                helpPopUp();
+            else if((Pattern.matches("\\d{1,2}\\s+\\d{1,2}\\s+[a-zA-Z]\\s+[a-zA-Z]+", textField.getText())))
+                parseInput(textField.getText());
         });
 
         //start creating help file
@@ -115,17 +122,11 @@ public class UI extends Application{
         }); //that's how we pass user Input in button
     }
 
-    public void readTextfield(String input){
-        if (input.equalsIgnoreCase("HELP")){
-            helpPopUp();
-        }
-    }
-
     public void helpPopUp(){
-        Stage popupwindow=new Stage();
+        Stage popUpWindow=new Stage();
 
-        popupwindow.initModality(Modality.APPLICATION_MODAL);
-        popupwindow.setTitle("Help");
+        popUpWindow.initModality(Modality.APPLICATION_MODAL);
+        popUpWindow.setTitle("HELP");
 
 
         Label label1= new Label("To avail of needed functionalities in Scrabble, you have to carefully rewrite:\n" +
@@ -143,9 +144,15 @@ public class UI extends Application{
 
         label1.setPadding(new Insets(20, 20, 20, 20));
         Scene scene1= new Scene(label1);
-        popupwindow.setScene(scene1);
-        popupwindow.showAndWait();
+        popUpWindow.setScene(scene1);
+        popUpWindow.showAndWait();
     }
+
+    public void parseInput(String userInput){
+        Scanner scan = new Scanner(userInput);
+
+    }
+
     @Override
     public void start(Stage primaryStage) throws Exception{
         stage.setTitle("Scrabble");
