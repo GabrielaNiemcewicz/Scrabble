@@ -7,8 +7,8 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import javafx.scene.layout.*;
-import javafx.scene.text.Text;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Pane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
@@ -20,18 +20,56 @@ public class UI extends Application{
     boolean turn = true;
     boolean won = false;
     Pool pool = new Pool();
-    private Player player = new Player("Adam");
-    private Player player2 = new Player("Gabi");
-
-    Player [] players = {player,player2};
+    Player player;
     Board board = new Board();
     Word word;
+    Scrabble scrabble;
     Stage stage = new Stage();
+
+    private Parent createPlayers(){
+        Pane root = new Pane();
+        root.setPrefSize(1000, 605);
+        Button play, help;
+        TextField playerName1, playerName2;
+        Label p1, p2;
+        GridPane grid = new GridPane();
+        grid.setPadding(new Insets(10, 10, 10, 10));
+        grid.setHgap(10);
+        grid.setVgap(8);
+
+        // Player's names:
+        p1 = new Label("Player 1: Name: ");
+        GridPane.setConstraints(p1, 1, 5);
+        //Player's input
+        playerName1 = new TextField();
+        GridPane.setConstraints(playerName1, 1, 6);
+        // Player's names:
+        p2 = new Label("Player 2: Name: ");
+        GridPane.setConstraints(p2, 3, 5);
+        //Player's input
+        playerName2 = new TextField();
+        GridPane.setConstraints(playerName2, 3, 6);
+        //button
+        play = new Button("Lets Play");
+        GridPane.setConstraints(play, 2, 9 );
+        play.setOnAction(p -> {
+            scrabble = new Scrabble(pool, playerName1.getText(), playerName2.getText());
+            player = scrabble.getPlayer(pool);
+            stage.setScene(new Scene(createContent()));
+        });
+        help = new Button("Help");
+        GridPane.setConstraints(help, 1, 9 );
+        //help.setOnAction(this);
+        grid.getChildren().addAll(p1, playerName1, p2, playerName2, play, help);
+
+        root.getChildren().add(grid);
+
+        return root;
+    }
 
     private Parent createContent(){
         Pane root = new Pane();
         root.setPrefSize(1000, 605);
-        player.getFrame().refill(pool);
 
         createBoard(root);
         FX_frame(root);
@@ -49,16 +87,15 @@ public class UI extends Application{
             }
     }
 
-    public void FX_frame(Pane root, Player [] players){
-        for(int j=0;j<2;j++) //loop through players array- for each of 2 players, display frame
+    public void FX_frame(Pane root){
             for(int i=0; i<7; i++){
-                players[j].getFrame().getAllTiles().get(i).setTranslateX(((i+1)*42) + 600);
-                players[j].getFrame().getAllTiles().get(i).setTranslateY(20+j*420);
-                root.getChildren().add(players.getFrame().getAllTiles().get(i));
+                player.getFrame().getAllTiles().get(i).setTranslateX(((i+1)*42) + 600);
+                player.getFrame().getAllTiles().get(i).setTranslateY(20);
+                root.getChildren().add(player.getFrame().getAllTiles().get(i));
             }
     }
 
-    public void score_counters(Player [] players) {
+   /* public void score_counters(Player [] players) {
         //on event of succesful word placement, refresh
         int[] currentScores = new int[2];
         VBox[] scoreDisplays = new VBox(5)[2]; //spacing is 5
@@ -107,7 +144,7 @@ public class UI extends Application{
             passedRoundsCount++;
 
         return players[rounds%2]; //if even number of round, first player chooses. Else, second player.
-    }
+    }*/
 
     public void FX_input(Pane root){
 
@@ -134,7 +171,7 @@ public class UI extends Application{
             if (textField.getText().equalsIgnoreCase("PASS")) {
                 turn = false;
                 passedRoundsCount++;
-                this.promptPlayer(players, board);
+                //this.promptPlayer(players, board);
             }
             if(textField.getText().equalsIgnoreCase("HELP"))
                 helpPopUp();
@@ -211,16 +248,15 @@ public class UI extends Application{
     @Override
     public void start(Stage primaryStage) throws Exception{
         stage.setTitle("Scrabble");
-        stage.setScene(new Scene(createContent()));
+
+        stage.setScene(new Scene(createPlayers()));
         stage.show();
+
+
+
     }
 
 
-
-
-
-
-    
     public static void main(String[] args) {
         launch(args);
     }

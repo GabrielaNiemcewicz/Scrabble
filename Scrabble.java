@@ -12,14 +12,36 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 
-public class Scrabble extends Application implements EventHandler<ActionEvent> {
+public class Scrabble extends Application{
 
     Stage window;
     Button play, help;
     TextField playerName1, playerName2;
-    Label player1, player2;
-    static Player one = new Player("nagham");
-    //two;
+    Label p1, p2;
+    Player player1, player2;
+    int turns = 0;
+
+    Scrabble(Pool pool, String name1, String name2){
+        player1 = new Player(name1);
+        player1.getFrame().refill(pool);
+
+        player2 = new Player(name2);
+        player2.getFrame().refill(pool);
+    }
+
+    public Player getPlayer(Pool pool){
+        Player player;
+        if(turns%2 == 0)
+            player = player1;
+        else
+            player = player2;
+
+        turns++;
+        player.getFrame().refill(pool);
+        return player;
+    }
+
+
 
     @Override
     public void start(Stage stage) throws Exception {
@@ -32,46 +54,46 @@ public class Scrabble extends Application implements EventHandler<ActionEvent> {
         grid.setVgap(8);
 
         // Player's names:
-        player1 = new Label("Player 1: Name: ");
-        GridPane.setConstraints(player1, 1, 5);
+        p1 = new Label("Player 1: Name: ");
+        GridPane.setConstraints(p1, 1, 5);
         //Player's input
         playerName1 = new TextField();
         GridPane.setConstraints(playerName1, 1, 6);
         // Player's names:
-        player2 = new Label("Player 2: Name: ");
-        GridPane.setConstraints(player2, 3, 5);
+        p2 = new Label("Player 2: Name: ");
+        GridPane.setConstraints(p2, 3, 5);
         //Player's input
         playerName2 = new TextField();
         GridPane.setConstraints(playerName2, 3, 6);
         //button
         play = new Button("Lets Play");
         GridPane.setConstraints(play, 2, 9 );
-        play.setOnAction(this);
+        //play.setOnAction(this);
         help = new Button("Help");
         GridPane.setConstraints(help, 1, 9 );
-        help.setOnAction(this);
-        grid.getChildren().addAll(player1, playerName1, player2, playerName2, play, help);
+        //help.setOnAction(this);
+        grid.getChildren().addAll(p1, playerName1, p2, playerName2, play, help);
         Scene scene = new Scene(grid, 500, 200);
         window.setScene(scene);
         window.show();
     }
 
-    @Override
+    /*@Override
     public void handle(ActionEvent actionEvent) {
         if(actionEvent.getSource() == play) {
-            one = new Player(playerName1.getText());
-            //two = new Player(playerName2.getText());
+            Player one = new Player(playerName1.getText());
+            Player two = new Player(playerName2.getText());
             UI ui = new UI();
-           /* Player players = new Player[]{one,two};
+            Player players = new Player[]{one,two};
             int whoFirst = ui.random_first_Rounds(players);
             players[0+whoFirst] = one;
-            players[1-whoFirst] = two; */
+            players[1-whoFirst] = two;
         }
         else if(actionEvent.getSource() == help){
             System.out.println("HELP"); //extra functionality- a text, typed command 'help' required in specification
         }
 
-    }
+    }*/
 
     public static void main(String[] args) {
         launch(args);
