@@ -9,13 +9,18 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.scene.paint.*;
 
 import java.util.Scanner;
 import java.util.regex.Pattern;
+import javafx.scene.image.ImageView;
+
+import static java.awt.Font.SANS_SERIF;
 
 public class UI extends Application{
     int passedRoundsCount = 0;
@@ -66,7 +71,6 @@ public class UI extends Application{
         GridPane.setConstraints(help, 1, 9 );
         //help.setOnAction(this);
         grid.getChildren().addAll(p1, playerName1, p2, playerName2, play, help);
-
         root.getChildren().add(grid);
 
         return root;
@@ -147,20 +151,31 @@ public class UI extends Application{
     }*/
 
     public void FX_input(Pane root){
-
+        // Displaying Player's names:
         GridPane grid = new GridPane();
+        Label p1 = new Label("Player 1: "+player.getName());
+        p1.setFont(javafx.scene.text.Font.font(SANS_SERIF));
+        HBox displayPlayer = new HBox(p1);
+        grid.add(displayPlayer, 0, 0);
+
         Label inputLabel = new Label("Write your word");
+        inputLabel.setFont(javafx.scene.text.Font.font(SANS_SERIF));
+        grid.add(inputLabel, 0, 1);
+
         TextField textField = new TextField ();
+        textField.setFont(javafx.scene.text.Font.font(SANS_SERIF));
         textField.setPromptText("Choose word or command. For help, HELP");
-        grid.add(inputLabel, 0, 0);
-        grid.add(textField, 1, 0);
+        grid.add(textField, 1, 1);
+
         Button Input = new Button("ENTER");
-        grid.add(Input, 1, 1);
+        grid.add(Input, 2, 1);
+
         grid.setHgap(15);
         grid.setVgap(20);
         grid.setTranslateX(650);
         grid.setTranslateY(100);
-        root.getChildren().add(grid);
+
+        root.getChildren().addAll(grid);
 
 
         Input.setOnAction(e -> {
