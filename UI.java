@@ -58,14 +58,16 @@ public class UI extends Application{
         }
     }
 
-    public void score_counters(Player [] players){
+    public void score_counters(Player [] players) {
         //on event of succesful word placement, refresh
-        int currentScore = players[0].getScore();
-        VBox scoreDisplay = new VBox(5); //spacing is 5
-        scoreDisplay.getChildren().addAll(new Text("TOTAL"), new Text(currentScore),  new Text("SCORE"));
-        scoreDisplay.setTranslateX(100+0*800);
-        scoreDisplay.setTranslateY(30);
-        root.getChildren().add(scoreDisplay);
+        int[] currentScores = new int[2];
+        VBox[] scoreDisplays = new VBox(5)[2]; //spacing is 5
+
+        currentScores[0] = players[0].getScore();
+        scoreDisplays[0].getChildren().addAll(new Text(players[0].getName()), new Text(currentScores[0]),  new Text("TOTAL SCORE"));
+        scoreDisplays[0].setTranslateX(100+0*800);
+        scoreDisplay[0].setTranslateY(30);
+        root.getChildren().add(scoreDisplay[0]);
 
 
 
