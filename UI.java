@@ -27,6 +27,7 @@ public class UI extends Application{
     Word word;
     Scrabble scrabble;
     Pane root = new Pane();
+    GridPane FXgrid = new GridPane();
     Stage stage = new Stage();
 
     public Parent createPlayers(){
@@ -75,6 +76,7 @@ public class UI extends Application{
         root.setPrefSize(1000, 605);
 
         createBoard(root);
+        root.getChildren().add(FXgrid);
         FX_frame(root);
         FX_input(root);
 
@@ -91,21 +93,20 @@ public class UI extends Application{
     }
 
     public void FX_frame(Pane root){
-        GridPane grid = new GridPane();
+        FXgrid.getChildren().removeAll();
 
-        grid.setTranslateX(640);
-        grid.setTranslateY(20);
-        grid.setHgap(3);
+        FXgrid.setTranslateX(640);
+        FXgrid.setTranslateY(20);
+        FXgrid.setHgap(3);
+        System.out.println(scrabble.turns);
 
-        if(scrabble.turns >1)
-            root.getChildren().remove(grid);
 
-        else {
+
             for (int i = 0; i < player.getFrame().size(); i++) {
-                grid.add(player.getFrame().getAllTiles().get(i), i, 0);
+                FXgrid.add(player.getFrame().getAllTiles().get(i), i, 0);
             }
-            root.getChildren().add(grid);
-        }
+
+
     }
 
    /* public void score_counters(Player [] players) {
