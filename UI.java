@@ -96,10 +96,16 @@ public class UI extends Application{
 
         Input.setOnAction(e -> {
             System.out.println(textField.getText());
+
+            //if(Pattern.matches("\\EXCHANGE\\s+[a-zA-Z]"),textField.getText())
+            //  p.getFrame().exchange(pool, userWord.substring(9); //exchange between p0/p1 and pool, specified tiles, eg exchange wxpt
+            if (texfield.getText().equalsIgnoreCase("PASS"))
+                turn = false;
             if(textField.getText().equalsIgnoreCase("HELP"))
                 helpPopUp();
             if(textField.getText().equalsIgnoreCase("QUIT"))
                 stage.close();
+
             else if((Pattern.matches("\\d{1,2}\\s+\\d{1,2}\\s+[a-zA-Z]\\s+[a-zA-Z]+", textField.getText()))) {
                 parseInput(textField.getText());
                 textField.clear();
@@ -107,14 +113,9 @@ public class UI extends Application{
         });
 
 
-        if (userWord.equals("QUIT")||userWord.equals("quit"))
-            won = true;
-        if (userWord.equals("PASS")||userWord.equals("pass"))
-            turn = false;
-        //if (userWord.equals("HELP")||userWord.equals("help"))
-        //display help;
-        //if (userWord.equals("EXCHANGE")||userWord.equals("exchange"))
-        //  p.getFrame().exchange(2);
+
+
+
 
         Button enterUInput = new Button("ENTER");
         enterUInput.setOnAction(e -> {
