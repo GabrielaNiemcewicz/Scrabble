@@ -5,23 +5,17 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.image.Image;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
-import java.awt.*;
 import java.util.Scanner;
 import java.util.regex.Pattern;
-
-import static java.awt.Font.SANS_SERIF;
 
 public class UI extends Application{
     int passedRoundsCount = 0;
@@ -35,7 +29,6 @@ public class UI extends Application{
     Pane root = new Pane();
     GridPane FXgrid = new GridPane();
     Stage stage = new Stage();
-    GridPane grid = new GridPane();
 
     public Parent createPlayers(){
         StackPane root = new StackPane();
@@ -45,23 +38,18 @@ public class UI extends Application{
         TextField playerName1, playerName2;
         Label p1, p2;
         GridPane grid = new GridPane();
-
-        Image image = new Image("file:image.jpg");
-        ImageView iv = new ImageView();
-        iv.setImage(image);
-
         grid.setPadding(new Insets(10, 10, 10, 10));
         grid.setHgap(10);
         grid.setVgap(8);
 
         // Player's names:
-        p1 = new Label("Player Name 1: ");
+        p1 = new Label("Player 1: Name: ");
         GridPane.setConstraints(p1, 1, 5);
         //Player's input
         playerName1 = new TextField();
         GridPane.setConstraints(playerName1, 1, 6);
         // Player's names:
-        p2 = new Label("Player Name 2: ");
+        p2 = new Label("Player 2: Name: ");
         GridPane.setConstraints(p2, 3, 5);
         //Player's input
         playerName2 = new TextField();
@@ -76,12 +64,10 @@ public class UI extends Application{
         });
         help = new Button("Help");
         GridPane.setConstraints(help, 1, 9 );
-        help.setOnAction(e -> {
-            helpPopUp();
-        });
+        //help.setOnAction(this);
         grid.getChildren().addAll(p1, playerName1, p2, playerName2, play, help);
-        root.getChildren().addAll(grid, iv);
 
+        root.getChildren().add(grid);
 
         return root;
     }
@@ -93,6 +79,7 @@ public class UI extends Application{
         root.getChildren().add(FXgrid);
         FX_frame(root);
         FX_input(root);
+
         return root;
     }
 
@@ -107,6 +94,7 @@ public class UI extends Application{
 
     public void FX_frame(Pane root /*,Player player*/ ){
         FXgrid.getChildren().removeAll();
+
         FXgrid.setTranslateX(640);
         FXgrid.setTranslateY(20);
         FXgrid.setHgap(3);
@@ -114,8 +102,8 @@ public class UI extends Application{
 
 
 
-
-          //  FXgrid.addAll(player.getFrame().getAllTiles());
+        for (int i=0; i<player.getFrame().size(); i++)
+            FXgrid.getChildren.add(player.getFrame().accessByIndex(i));
 
 
 
@@ -161,30 +149,20 @@ public class UI extends Application{
     }*/
 
     public void FX_input(Pane root){
-        // Displaying Player's names:
-        Label p1 = new Label("Player 1: "+player.getName());
-        p1.setFont(javafx.scene.text.Font.font(SANS_SERIF));
-        HBox displayPlayer = new HBox(p1);
-        grid.add(displayPlayer, 0, 0);
 
+        GridPane grid = new GridPane();
         Label inputLabel = new Label("Write your word");
-        inputLabel.setFont(javafx.scene.text.Font.font(SANS_SERIF));
-        grid.add(inputLabel, 0, 1);
-
         TextField textField = new TextField ();
-        textField.setFont(javafx.scene.text.Font.font(SANS_SERIF));
         textField.setPromptText("Choose word or command. For help, HELP");
-        grid.add(textField, 1, 1);
-
+        grid.add(inputLabel, 0, 0);
+        grid.add(textField, 1, 0);
         Button Input = new Button("ENTER");
-        grid.add(Input, 2, 1);
-
+        grid.add(Input, 1, 1);
         grid.setHgap(15);
         grid.setVgap(20);
         grid.setTranslateX(650);
         grid.setTranslateY(100);
-
-        root.getChildren().addAll(grid);
+        root.getChildren().add(grid);
 
 
         Input.setOnAction(e -> {
@@ -274,6 +252,7 @@ public class UI extends Application{
     @Override
     public void start(Stage primaryStage) throws Exception{
         stage.setTitle("Scrabble");
+
         stage.setScene(new Scene(createPlayers()));
         stage.show();
 
