@@ -175,7 +175,7 @@ public class Frame {
 
 	public void exchange (Pool pool, String lettersExchanged){
 		if(pool.size()>6) {
-			//this.returnTilesToPool(lettersExchanged, pool);
+			this.returnTilesToPool(lettersExchanged, pool);
 			this.refill(pool);
 		}
 		else
@@ -183,7 +183,7 @@ public class Frame {
 	}
 
 
-	/*private ArrayList<Tile> returnTilesToPool ( String lettersExchanged, Pool pool) {
+	private ArrayList<Tile> returnTilesToPool ( String lettersExchanged, Pool pool) {
 		Tile tileExchanged;
 		ArrayList<Tile> tilesReturned = new ArrayList();
 		int numRequested = lettersExchanged.length();
@@ -191,10 +191,8 @@ public class Frame {
 			if (numRequested==7)
 			tilesReturned.addAll(this.getAllTiles());
 			else
-			for (int i=0; i<numRequested; i++) {
-				tileExchanged = this.accessByLetter(lettersExchanged.charAt(i));
-				tilesReturned.add(tileExchanged); }
-			pool.returnTiles(lettersExchanged);
+				tilesReturned.addAll(this.getTilesByWord(lettersExchanged));
+
 			pool.returnTiles(tilesReturned);
 			this.cleanString(lettersExchanged);
 		}

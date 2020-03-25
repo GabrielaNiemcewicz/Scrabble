@@ -181,7 +181,7 @@ public class Board {
 
 
 	public void increasePlayerScore (Word word,Player player) {
-		int score = this.returnScore(word); //RECHECK GABI
+		int score = this.returnScore(word);
 		player.increaseScore(score);
 		System.out.println("Great word choice,"+player.getName()+"! Your worth is "+score);
 	}
@@ -194,15 +194,15 @@ public class Board {
 		int score = this.returnScore(word);
 		player2.substractScore(score); //another player, not current player
 		//clearing board from bad word
-		if (word.isVertical()) { //vertical
+	/*	if (word.isVertical()) {
 			for (int i = 0; i < word.getLength(); i++)
 				squares[firstPositionX][firstPositionY + i].removeTile(); //remove placement
 		}
-		else {  /*if (isHorizontal == true)*/  //horizontal
+		else {
 			for (int i = 0; i < word.getLength(); i++)
 				squares[firstPositionX + i][firstPositionY].removeTile(); //pick up each letter from word
 		}
-
+*/
 	}
 
 }
