@@ -7,10 +7,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.Pane;
+import javafx.scene.layout.*;
 import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -26,7 +23,7 @@ public class UI extends Application{
     private Player player = new Player("Adam");
     private Player player2 = new Player("Gabi");
 
-    Player [] players = new Player []   {Adam, Gabi};
+    Player [] players = {player,player2};
     Board board = new Board();
     Word word;
     Stage stage = new Stage();
@@ -53,11 +50,11 @@ public class UI extends Application{
     }
 
     public void FX_frame(Pane root, Player [] players){
-        for(int j=0;j<2:j++) //loop through players array- for each of 2 players, display frame
+        for(int j=0;j<2;j++) //loop through players array- for each of 2 players, display frame
         for(int i=0; i<7; i++){
             players[j].getFrame().getAllTiles().get(i).setTranslateX(((i+1)*42) + 600);
-            player[j].getFrame().getAllTiles().get(i).setTranslateY(20+j*420);
-            root.getChildren().add(p.getFrame().getAllTiles().get(i));
+            players[j].getFrame().getAllTiles().get(i).setTranslateY(20+j*420);
+            root.getChildren().add(players.getFrame().getAllTiles().get(i));
         }
     }
 
@@ -124,43 +121,31 @@ public class UI extends Application{
         grid.add(Input, 1, 1);
         grid.setHgap(15);
         grid.setVgap(20);
-
         grid.setTranslateX(650);
         grid.setTranslateY(100);
         root.getChildren().add(grid);
 
-        String userWord = textField.getText();
 
         Input.setOnAction(e -> {
             System.out.println(textField.getText());
 
             //if(Pattern.matches("\\EXCHANGE\\s+[a-zA-Z]"),textField.getText())
             //  p.getFrame().exchange(pool, userWord.substring(9); // for example, 'exchange wxpt'
-            if (texfield.getText().equalsIgnoreCase("PASS")) {
+            if (textField.getText().equalsIgnoreCase("PASS")) {
                 turn = false;
                 passedRoundsCount++;
-                this.promptPlayer(players, board)
+                this.promptPlayer(players, board);
             }
             if(textField.getText().equalsIgnoreCase("HELP"))
                 helpPopUp();
             if(textField.getText().equalsIgnoreCase("QUIT"))
                 stage.close();
-
             else if((Pattern.matches("\\d{1,2}\\s+\\d{1,2}\\s+[a-zA-Z]\\s+[a-zA-Z]+", textField.getText()))) {
                 parseInput(textField.getText());
                 textField.clear();
             }
         });
 
-
-
-
-
-
-        Button enterUInput = new Button("ENTER");
-        enterUInput.setOnAction(e -> {
-            System.out.println("We'll put here Board method to confirm word and placeWord: ");
-        }); //that's how we pass user Input in button
     }
 
     public void helpPopUp(){
@@ -179,7 +164,7 @@ public class UI extends Application{
                 "To input word, specify, in this order, after whitespaces: <grid ref> <across/down> <word>\n" +
                 "<grid reference>:  intint  " + "Two numbers (row and column index on Board where word starts) with nothing between them, eg. 13\n"
                 +"Valid positions: from 0 to 14\n" +
-                "<across/down>  char  " +  "A for across, H for horizontal\n"+
+                "<across/down>  char  " +  "V for vertical, H for horizontal\n"+
                 " You can put valid words up to bottom (h) or left to right (a) only\n"+
                 "<word> " + "write your word on keyboard");
 
@@ -216,10 +201,11 @@ public class UI extends Application{
             isHorizontal = false;
 
         word = new Word(row, column, isHorizontal, Word);
-        if(board.isLegal(p.getFrame(), word)&& turn==true)
+        if(board.isLegal(player.getFrame(), word)&& turn==true)
             board.place(player.getFrame(), word);
 
-        System.out.println(board.getBoard()[7][7]);
+        player.getFrame().refill(pool);
+        player.getFrame().displayAsFrame();
     }
 
     @Override
