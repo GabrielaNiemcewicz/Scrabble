@@ -8,10 +8,13 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.scene.paint.*;
@@ -34,6 +37,8 @@ public class UI extends Application{
     Pane root = new Pane();
     GridPane FXgrid = new GridPane();
     Stage stage = new Stage();
+    // create a font
+    Font font = Font.font("Verdana", FontWeight.EXTRA_BOLD, 13);
 
     public Parent createPlayers(){
         StackPane root = new StackPane();
@@ -47,14 +52,20 @@ public class UI extends Application{
         grid.setHgap(10);
         grid.setVgap(8);
 
+        Image image = new Image("file:image.jpg");
+        ImageView iv = new ImageView();
+        iv.setImage(image);
+
         // Player's names:
-        p1 = new Label("Player 1: Name: ");
+        p1 = new Label("Player Name 1: ");
+        p1.setFont(font);
         GridPane.setConstraints(p1, 1, 5);
         //Player's input
         playerName1 = new TextField();
         GridPane.setConstraints(playerName1, 1, 6);
         // Player's names:
-        p2 = new Label("Player 2: Name: ");
+        p2 = new Label("Player Name 2: ");
+        p2.setFont(font);
         GridPane.setConstraints(p2, 3, 5);
         //Player's input
         playerName2 = new TextField();
@@ -70,7 +81,7 @@ public class UI extends Application{
         help = new Button("Help");
         GridPane.setConstraints(help, 1, 9 );
         //help.setOnAction(this);
-        grid.getChildren().addAll(p1, playerName1, p2, playerName2, play, help);
+        grid.getChildren().addAll(p1, playerName1, p2, playerName2, play, help,iv);
         root.getChildren().add(grid);
 
         return root;
@@ -154,11 +165,12 @@ public class UI extends Application{
         // Displaying Player's names:
         GridPane grid = new GridPane();
         Label p1 = new Label("Player 1: "+player.getName());
-        p1.setFont(javafx.scene.text.Font.font(SANS_SERIF));
+        p1.setFont(font);
         HBox displayPlayer = new HBox(p1);
         grid.add(displayPlayer, 0, 0);
 
         Label inputLabel = new Label("Write your word");
+        inputLabel.setFont(font);
         inputLabel.setFont(javafx.scene.text.Font.font(SANS_SERIF));
         grid.add(inputLabel, 0, 1);
 
