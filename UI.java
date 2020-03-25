@@ -77,7 +77,7 @@ public class UI extends Application{
 
     }
 
-    private int random_first_Rounds(Player [] players){ //golden scrabble rules- lower ascii of Tile in Frame determines who starts game
+    public [] int random_first_Rounds(Player [] players){ //golden scrabble rules- lower ascii of Tile in Frame determines who starts game
         char [] minLetter = new char [2]{'Z','Z'};
 
         for(int i=0; i<2;i++)
