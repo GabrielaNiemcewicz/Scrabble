@@ -76,26 +76,38 @@ public class UI extends Application{
 
     }
 
-    private int random_first_Rounds(Player [] players){ //golden scrabble rules- lower ascii of Tile in Frame
+    private int random_first_Rounds(Player [] players){ //golden scrabble rules- lower ascii of Tile in Frame determines who starts game
         char [] minLetter = new char [2]{'Z','Z'};
-        String playerLetters = players[0].getFrame().displayAsString();
-        
+
+        for(int i=0; i<2;i++)
+        {    String playerLetters = players[i].getFrame().displayAsString();
             for (char letter:playerLetters)
         {
             if (letter=="_")
-                return 0;
+                return i;
             else if (letter<playerLetters)
-                min[0] = (int) letter;
+                min[i] =  letter;
             else continue;
-        }
+        }}
+        if(minLetter[0]<minLetter[1])
+            return 0;
+        else
+            return 1;
+
+
+
 
     }
 
 
-    public Player prompt_Player(Player [] players, Board board){
+    public Player promptP(Player [] players, Board board){
         int rounds = board.getNumPlays() +passedRoundsCount;
+        if (rounds ==0 &&  this.random_first_Rounds()==1)
+        { rounds++;     passedRoundsCount; }
+
         if (turn==false)
             passedRoundsCount++;
+        
         return players[rounds%2]; //if even number of round, first player chooses. Else, second player.
     }
 
