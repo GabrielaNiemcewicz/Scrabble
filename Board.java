@@ -54,12 +54,12 @@ public class Board {
 
 
 
-	public void place(Frame frame, Word word) {
+	public void place(Frame frame, Word word, Player player) {
 		int r = word.getRow();
 		int c = word.getColumn();
 		for (int i=0; i<word.getLength(); i++) {
 			if (squares[r][c].isEmpty()) {
-				//word.bingoIncremator(); //if all 7 tiles from frame are put on empty squares to create a word, bingo, 50 bonus points
+				word.bingoIncrementor(); //if all 7 tiles from frame are put on empty squares to create a word, bingo, 50 bonus points
 				char letter = word.getLetter(i);
 				Tile tile = frame.accessByLetter(letter);
 				squares[r][c].placeTile(tile);
@@ -71,6 +71,9 @@ public class Board {
 				r++;
 			}
 		}
+		this.increasePlayerScore(word,player);
+
+
 		numPlays++;
 	}
 
@@ -175,6 +178,8 @@ public class Board {
 			for (int i = 0; i < word.getLength(); i++)
 				score *= squares[firstPositionX+i][firstPositionY].getWordMultiplier(); //multiply by word multipliers if there are any, otherwise by 1
 		}
+		if (word.bingoChecker == true)
+			score+=50;
 		return score;
 
 	}
