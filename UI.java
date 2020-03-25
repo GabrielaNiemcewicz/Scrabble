@@ -62,13 +62,14 @@ public class UI extends Application{
         //on event of succesful word placement, refresh
         int[] currentScores = new int[2];
         VBox[] scoreDisplays = new VBox(5)[2]; //spacing is 5
-
-        currentScores[0] = players[0].getScore();
-        scoreDisplays[0].getChildren().addAll(new Text(players[0].getName()), new Text(currentScores[0]),  new Text("TOTAL SCORE"));
-        scoreDisplays[0].setTranslateX(100+0*800);
-        scoreDisplay[0].setTranslateY(30);
-        root.getChildren().add(scoreDisplay[0]);
-
+        //each PlayerName and score added to 2 Score counters-one up, one down. Please correct display after me for aesthetics
+        for(int i=0; i<2;i++) {
+            currentScores[i] = players[i].getScore();
+            scoreDisplays[i].getChildren().addAll(new Text(players[i].getName()), new Text(currentScores[i]), new Text("TOTAL SCORE"));
+            scoreDisplays[i].setTranslateX(100 + i * 800);
+            scoreDisplay[i].setTranslateY(30);
+            root.getChildren().add(scoreDisplay[i]);
+        }
 
 
     }
