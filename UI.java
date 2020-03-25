@@ -67,8 +67,8 @@ public class UI extends Application{
             currentScores[i] = players[i].getScore();
             scoreDisplays[i].getChildren().addAll(new Text(players[i].getName()), new Text(currentScores[i]), new Text("TOTAL SCORE"));
             scoreDisplays[i].setTranslateX(100 + i * 800);
-            scoreDisplay[i].setTranslateY(30);
-            root.getChildren().add(scoreDisplay[i]);
+            scoreDisplays[i].setTranslateY(30);
+            root.getChildren().add(scoreDisplays[i]);
         }
 
 

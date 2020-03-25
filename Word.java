@@ -24,7 +24,7 @@ public class Word {
 		return column;
 	}
 
-	public bool getIsBingo() {
+	public boolean getIsBingo() {
 		return isBingo;
 	}
 
@@ -66,12 +66,12 @@ public class Word {
 		return !isHorizontal;
 	}
 
-	public void bingoChecker (){
+	public boolean bingoChecker (){
 //prerequisite- run in Board bingo incremator
 		if(this.getLength()<7)
-			this.tilesToBingo = false;
+			this.isBingo = false;
 
-			return this.isBingo
+			return this.isBingo;
 
 	}
 
