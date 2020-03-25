@@ -30,17 +30,17 @@ public class Board {
 
 
 
-		public void display() {
-			for(int i=0; i<this.BOARD_SIZE;i++) {
-				System.out.printf("            -------------------------------------------------------------\n        %-4d", i);
-				for(int j=0; j<this.BOARD_SIZE; j++) {
-					System.out.print("| " + squares[i][j]);
-				}
-				System.out.println("|");
+	public void display() {
+		for(int i=0; i<this.BOARD_SIZE;i++) {
+			System.out.printf("            -------------------------------------------------------------\n        %-4d", i);
+			for(int j=0; j<this.BOARD_SIZE; j++) {
+				System.out.print("| " + squares[i][j]);
 			}
-			System.out.println("            -------------------------------------------------------------");
-			System.out.println("              0   1   2   3   4   5   6   7   8   9   10  11  12  13  14");
+			System.out.println("|");
 		}
+		System.out.println("            -------------------------------------------------------------");
+		System.out.println("              0   1   2   3   4   5   6   7   8   9   10  11  12  13  14");
+	}
 
 
 
@@ -55,8 +55,8 @@ public class Board {
 
 
 	public void place(Frame frame, Word word) {
-		int r = word.getRow();
-		int c = word.getColumn();
+		int r = word.getFirstRow();
+		int c = word.getFirstColumn();
 		for (int i=0; i<word.getLength(); i++) {
 			if (squares[r][c].isEmpty()) {
 				char letter = word.getLetter(i);
@@ -73,13 +73,13 @@ public class Board {
 		numPlays++;
 	}
 
-//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+	//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 // getCheckCode precondition: isLegal is false
-public int getCheckCode() {
-	return checkCode;
-};
+	public int getCheckCode() {
+		return checkCode;
+	};
 
-//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~	
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 
 
@@ -168,32 +168,32 @@ public int getCheckCode() {
 			for (int i = 0; i < word.getLength(); i++)
 				score *= squares[firstPositionX][firstPositionY + i].getWordMultiplier(); //multiply by word multipliers if there are any, otherwise by 1
 		}
-	else 	/*if (word.isHorizontal())*/ { //horizontal placement
+		else 	/*if (word.isHorizontal())*/ { //horizontal placement
 			for (int i = 0; i < word.getLength(); i++)
 				score += squares[firstPositionX+i][firstPositionY].getPlacementScore(); //add each multiplication letter score with tile score for word score
 			for (int i = 0; i < word.getLength(); i++)
 				score *= squares[firstPositionX+i][firstPositionY].getWordMultiplier(); //multiply by word multipliers if there are any, otherwise by 1
 		}
-	return score;
+		return score;
 
 	}
 
 
 
 	public void increasePlayerScore (Word word,Player player) {
-	int score = this.returnScore(word); //RECHECK GABI
-	player.increaseScore(score);
-	System.out.println("Great word choice,"+player.getName()+"! Your worth is "+score);
-}
+		int score = this.returnScore(word); //RECHECK GABI
+		player.increaseScore(score);
+		System.out.println("Great word choice,"+player.getName()+"! Your worth is "+score);
+	}
 
 
 	public void challengeWord (Word word, Player player2) {
 		int firstPositionX = word.getRow();
 		int firstPositionY = word.getColumn();
 		//substracting score of bad word in other player than is used in the round
-	int score = this.returnScore(word);
-	player2.substractScore(score); //another player, not current player
-	//clearing board from bad word
+		int score = this.returnScore(word);
+		player2.substractScore(score); //another player, not current player
+		//clearing board from bad word
 		if (word.isVertical()) { //vertical
 			for (int i = 0; i < word.getLength(); i++)
 				squares[firstPositionX][firstPositionY + i].removeTile(); //remove placement
