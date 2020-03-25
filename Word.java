@@ -22,9 +22,7 @@ public class Word {
 		return column;
 	}
 
-	public int getFirstRow() {
-		return row;
-	}
+
 
 	public int getLastRow() {
 		if (isHorizontal) {
@@ -34,9 +32,7 @@ public class Word {
 		}
 	}
 
-	public int getFirstColumn() {
-		return column;
-	}
+
 
 	public int getLastColumn() {
 		if (!isHorizontal) {

@@ -87,6 +87,44 @@ public class UI extends Application{
             }
         });
 
+        //start creating help file
+        String helpMessage = "To avail of needed functionalities in Scrabble, you have to carefully rewrite:" +
+                "QUIT  -" + "  to stop playing, exit, terminate the game/n" +
+                "PASS  -" +"  to resign from your round and let your opponent pick word/n"+
+                "HELP  -" +"  to display this menu/n" +
+                "EXCHANGE  -" +"  to swap current tiles with random ones in the pool/n" +
+                "/n" +
+                "To input word, specify, in this order, after whitespaces: <grid ref> <across/down> <word>/n" +
+                "<grid reference>:  intint  " + "Two numbers (row and column index on Board where word starts) with nothing between them, eg. 13/n"
+                +"Valid positions: from 0 to 14/n" +
+                "<across/down>  char  " +  "A for across, H for horizontal/n"+
+                " You can put valid words up to bottom (h) or left to right (a) only/n"+
+                "<word> " + "write your word on keyboard";
+        AnchorPane rootHelp = new AnchorPane();
+        BorderPane borderHelp = new BorderPane();
+        Text title = new Text("Help menu- commands");
+        Text helpText = new Text(helpMessage);
+        borderHelp.setTop(title);
+        borderHelp.setCenter(helpText);
+
+
+
+        //end creating help file
+
+        //possibly trim spaces at the beginning or end, and ignore many spaces between commands
+        if (userWord.equals("QUIT")||userWord.equals("quit"))
+            won = true;
+        if (userWord.equals("PASS")||userWord.equals("pass"))
+            turn = false;
+        //if (userWord.equals("HELP")||userWord.equals("help"))
+        //display help;
+        //if (userWord.equals("EXCHANGE")||userWord.equals("exchange"))
+        //  p.getFrame().exchange(2);
+
+        Button enterUInput = new Button("ENTER");
+        enterUInput.setOnAction(e -> {
+            System.out.println("We'll put here Board method to confirm word and placeWord: ");
+        }); //that's how we pass user Input in button
     }
 
     public void helpPopUp(){
@@ -133,8 +171,7 @@ public class UI extends Application{
         if(board.isLegal(p.getFrame(), word))
             board.place(p.getFrame(), word);
 
-        p.getFrame().displayAsFrame();
-
+        System.out.println(board.getBoard()[7][7]);
     }
 
     @Override

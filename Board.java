@@ -55,8 +55,8 @@ public class Board {
 
 
 	public void place(Frame frame, Word word) {
-		int r = word.getFirstRow();
-		int c = word.getFirstColumn();
+		int r = word.getRow();
+		int c = word.getColumn();
 		for (int i=0; i<word.getLength(); i++) {
 			if (squares[r][c].isEmpty()) {
 				char letter = word.getLetter(i);
@@ -87,9 +87,9 @@ public int getCheckCode() {
 		boolean isLegal = true;
 		//check for invalid first play
 		if (numPlays == 0 &&
-				((word.isHorizontal() && (word.getRow()!=BOARD_CENTRE || word.getFirstColumn()>BOARD_CENTRE ||
+				((word.isHorizontal() && (word.getRow()!=BOARD_CENTRE || word.getColumn()>BOARD_CENTRE ||
 						word.getLastColumn()<BOARD_CENTRE)) ||
-						(word.isVertical() && (word.getColumn()!=BOARD_CENTRE || word.getFirstRow()>BOARD_CENTRE ||
+						(word.isVertical() && (word.getColumn()!=BOARD_CENTRE || word.getRow()>BOARD_CENTRE ||
 								word.getLastRow()<BOARD_CENTRE)))) {
 			isLegal = false;
 			checkCode = WORD_INCORRECT_FIRST_PLAY;
@@ -103,8 +103,8 @@ public int getCheckCode() {
 		// check that letters in the word do not clash with those on the board
 		String lettersPlaced = "";
 		if (isLegal) {
-			int r = word.getFirstRow();
-			int c = word.getFirstColumn();
+			int r = word.getRow();
+			int c = word.getColumn();
 			for (int i = 0; i < word.getLength() && isLegal; i++) {
 				if (!squares[r][c].isEmpty() && squares[r][c].getCharacter() != word.getLetter(i)) {
 					isLegal = false;
@@ -131,9 +131,9 @@ public int getCheckCode() {
 		}
 		// check that the letters placed connect with the letters on the board
 		if (isLegal && numPlays!=0) {
-			int boxTop = Math.max(word.getFirstRow()-1,0);
+			int boxTop = Math.max(word.getRow()-1,0);
 			int boxBottom = Math.min(word.getLastRow()+1, BOARD_SIZE-1);
-			int boxLeft = Math.max(word.getFirstColumn()-1,0);
+			int boxLeft = Math.max(word.getColumn()-1,0);
 			int boxRight = Math.min(word.getLastColumn()+1, BOARD_SIZE-1);
 			boolean foundConnection = false;
 			for (int r=boxTop; r<=boxBottom && !foundConnection; r++) {
