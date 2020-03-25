@@ -9,18 +9,13 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import javafx.scene.paint.*;
 
 import java.util.Scanner;
 import java.util.regex.Pattern;
-import javafx.scene.image.ImageView;
-
-import static java.awt.Font.SANS_SERIF;
 
 public class UI extends Application{
     int passedRoundsCount = 0;
@@ -28,11 +23,13 @@ public class UI extends Application{
     boolean won = false;
     Pool pool = new Pool();
     Player player;
+    Player player2;
     Board board = new Board();
     Word word;
     Scrabble scrabble;
     Pane root = new Pane();
     GridPane FXgrid = new GridPane();
+    GridPane FXgrid2 = new GridPane();
     Stage stage = new Stage();
 
     public Parent createPlayers(){
@@ -71,6 +68,7 @@ public class UI extends Application{
         GridPane.setConstraints(help, 1, 9 );
         //help.setOnAction(this);
         grid.getChildren().addAll(p1, playerName1, p2, playerName2, play, help);
+
         root.getChildren().add(grid);
 
         return root;
@@ -81,6 +79,7 @@ public class UI extends Application{
 
         createBoard(root);
         root.getChildren().add(FXgrid);
+        root.getChildren().add(FXgrid2);
         FX_frame(root);
         FX_input(root);
 
@@ -97,16 +96,22 @@ public class UI extends Application{
     }
 
     public void FX_frame(Pane root /*,Player player*/ ){
-        FXgrid.getChildren().removeAll();
+        //FXgrid.getChildren().removeAll();
 
         FXgrid.setTranslateX(640);
         FXgrid.setTranslateY(20);
         FXgrid.setHgap(3);
         System.out.println(scrabble.turns);
+       // FXgrid2.setTranslateX(640);
+       // FXgrid2.setTranslateY(20);
+       // FXgrid2.setHgap(3);
+        Frame tempFrame = player.getFrame();
+        Tile tempTile = tempFrame.accessByIndex();
+        int sizef = tempFrame.size();
+        for (int i=0; i<sizef; i++)
+        {  tempTile = tempFrame.accessByIndex(i);
+            FXgrid.getChildren.add(tempTile); }
 
-        for (int i = 0; i < player.getFrame().size(); i++) {
-            FXgrid.add(player.getFrame().getAllTiles().get(i), i, 0);
-        }
 
 
     }
@@ -151,31 +156,20 @@ public class UI extends Application{
     }*/
 
     public void FX_input(Pane root){
-        // Displaying Player's names:
+
         GridPane grid = new GridPane();
-        Label p1 = new Label("Player 1: "+player.getName());
-        p1.setFont(javafx.scene.text.Font.font(SANS_SERIF));
-        HBox displayPlayer = new HBox(p1);
-        grid.add(displayPlayer, 0, 0);
-
         Label inputLabel = new Label("Write your word");
-        inputLabel.setFont(javafx.scene.text.Font.font(SANS_SERIF));
-        grid.add(inputLabel, 0, 1);
-
         TextField textField = new TextField ();
-        textField.setFont(javafx.scene.text.Font.font(SANS_SERIF));
         textField.setPromptText("Choose word or command. For help, HELP");
-        grid.add(textField, 1, 1);
-
+        grid.add(inputLabel, 0, 0);
+        grid.add(textField, 1, 0);
         Button Input = new Button("ENTER");
-        grid.add(Input, 2, 1);
-
+        grid.add(Input, 1, 1);
         grid.setHgap(15);
         grid.setVgap(20);
         grid.setTranslateX(650);
         grid.setTranslateY(100);
-
-        root.getChildren().addAll(grid);
+        root.getChildren().add(grid);
 
 
         Input.setOnAction(e -> {
@@ -224,6 +218,17 @@ public class UI extends Application{
         Scene scene1= new Scene(label1);
         popUpWindow.setScene(scene1);
         popUpWindow.showAndWait();
+        //I thought BorderPane layout could be nice
+
+        //AnchorPane rootHelp = new AnchorPane();
+        //BorderPane borderHelp = new BorderPane();
+        //borderHelp.setTop(title);
+        //borderHelp.setCenter(helpText);
+
+
+
+
+
 
     }
 
