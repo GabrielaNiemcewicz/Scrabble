@@ -199,8 +199,8 @@ public class UI extends Application{
     public void readInput(String input, TextField textField){
         System.out.println(input);
 
-        //if(Pattern.matches("\\EXCHANGE\\s+[a-zA-Z]"),textField.getText())
-        //  p.getFrame().exchange(pool, userWord.substring(9); // for example, 'exchange wxpt'
+        if(Pattern.matches("\\^EXCHANGE\\s+\\[a-zA-Z]+"),input)
+        p.getFrame().exchange(pool, userWord.substring(9).trim()); // for example, 'exchange wxpt'
         if (input.equalsIgnoreCase("PASS")) {
             turn = false;
             passedRoundsCount++;
@@ -284,3 +284,5 @@ public class UI extends Application{
         launch(args);
     }
 }
+
+
