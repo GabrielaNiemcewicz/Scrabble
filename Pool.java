@@ -51,7 +51,7 @@ public class Pool {
 		for (int i=0; i<numGiven; i++) {
 			int index = (int) (Math.random()*pool.size());
 			Tile tile = pool.get(index);
-			draw.add(tile);
+			draw.add(new Tile('e'));
 			pool.remove(tile);
 		}
 		return draw;
