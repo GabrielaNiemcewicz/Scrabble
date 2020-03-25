@@ -4,9 +4,9 @@ public class Word {
 	private int row, column; // first letter position
 	private boolean isHorizontal;  // true = horizontal, false = vertical
 	private String letters;
-	private boolean isBingo;
+	private boolean isBingo = false;
 	private int tilesToBingo = 0;
-	
+
 	Word(int row, int column, boolean isHorizontal, String letters) {
 		this.row = row;
 		this.column = column;
@@ -49,15 +49,15 @@ public class Word {
 	public String getLetters() {
 		return letters;
 	}
-	
+
 	public char getLetter(int i) {
 		return letters.charAt(i);
 	}
-	
+
 	public int getLength() {
 		return letters.length();
 	}
-	
+
 	public boolean isHorizontal() {
 		return isHorizontal;
 	}
@@ -67,12 +67,12 @@ public class Word {
 	}
 
 	public boolean bingoChecker (){
-	//prerequisite- run in Board bingo incremator
-	//	size = this.get
+		//prerequisite- run in Board bingo incremator
+		//	size = this.get
 		if(this.getLength()<7)
 			this.isBingo = false;
 
-			return this.isBingo;
+		return this.isBingo;
 
 	}
 
