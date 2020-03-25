@@ -16,6 +16,18 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.scene.paint.*;
 
+import javafx.application.Application;
+import javafx.scene.Scene;
+import javafx.scene.control.*;
+import javafx.scene.layout.*;
+import javafx.stage.Stage;
+import javafx.scene.layout.*;
+import javafx.scene.paint.*;
+import javafx.scene.text.*;
+import javafx.geometry.*;
+import javafx.scene.layout.*;
+import javafx.scene.shape.*;
+
 import java.util.Scanner;
 import java.util.regex.Pattern;
 import javafx.scene.image.ImageView;
@@ -34,6 +46,8 @@ public class UI extends Application{
     Pane root = new Pane();
     GridPane FXgrid = new GridPane();
     Stage stage = new Stage();
+    // create a font
+    Font font = Font.font("Verdana", FontWeight.EXTRA_BOLD, 13);
 
     public Parent createPlayers(){
         StackPane root = new StackPane();
@@ -48,13 +62,15 @@ public class UI extends Application{
         grid.setVgap(8);
 
         // Player's names:
-        p1 = new Label("Player 1: Name: ");
+        p1 = new Label("Player Name 1: ");
+        p1.setFont(font);
         GridPane.setConstraints(p1, 1, 5);
         //Player's input
         playerName1 = new TextField();
         GridPane.setConstraints(playerName1, 1, 6);
         // Player's names:
-        p2 = new Label("Player 2: Name: ");
+        p2 = new Label("Player Name 2: ");
+        p2.setFont(font);
         GridPane.setConstraints(p2, 3, 5);
         //Player's input
         playerName2 = new TextField();
@@ -154,21 +170,22 @@ public class UI extends Application{
         // Displaying Player's names:
         GridPane grid = new GridPane();
         Label p1 = new Label("Player 1: "+player.getName());
-        p1.setFont(javafx.scene.text.Font.font(SANS_SERIF));
+        p1.setFont(font);
+
         HBox displayPlayer = new HBox(p1);
         grid.add(displayPlayer, 0, 0);
 
         Label inputLabel = new Label("Write your word");
-        inputLabel.setFont(javafx.scene.text.Font.font(SANS_SERIF));
+        inputLabel.setFont(font);
         grid.add(inputLabel, 0, 1);
 
         TextField textField = new TextField ();
-        textField.setFont(javafx.scene.text.Font.font(SANS_SERIF));
+        textField.setFont(font);
         textField.setPromptText("Choose word or command. For help, HELP");
         grid.add(textField, 1, 1);
 
         Button Input = new Button("ENTER");
-        grid.add(Input, 2, 1);
+        grid.add(Input, 1, 2);
 
         grid.setHgap(15);
         grid.setVgap(20);
