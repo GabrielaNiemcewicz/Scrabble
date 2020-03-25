@@ -25,6 +25,7 @@ public class UI extends Application{
     Pool pool = new Pool();
     private Player player = new Player("Adam");
     private Player player2 = new Player("Gabi");
+
     Player [] players = new Player []   {Adam, Gabi};
     Board board = new Board();
     Word word;
@@ -100,14 +101,14 @@ public class UI extends Application{
     }
 
 
-    public Player promptP(Player [] players, Board board){
+    public Player promptPlayer(Player [] players, Board board){
         int rounds = board.getNumPlays() +passedRoundsCount;
         if (rounds ==0 &&  this.random_first_Rounds()==1)
-        { rounds++;     passedRoundsCount; }
+        { rounds++;     passedRoundsCount++; }
 
         if (turn==false)
             passedRoundsCount++;
-        
+
         return players[rounds%2]; //if even number of round, first player chooses. Else, second player.
     }
 
@@ -134,9 +135,12 @@ public class UI extends Application{
             System.out.println(textField.getText());
 
             //if(Pattern.matches("\\EXCHANGE\\s+[a-zA-Z]"),textField.getText())
-            //  p.getFrame().exchange(pool, userWord.substring(9); //exchange between p0/p1 and pool, specified tiles, eg exchange wxpt
-            if (texfield.getText().equalsIgnoreCase("PASS"))
+            //  p.getFrame().exchange(pool, userWord.substring(9); // for example, 'exchange wxpt'
+            if (texfield.getText().equalsIgnoreCase("PASS")) {
                 turn = false;
+                passedRoundsCount++;
+                this.promptPlayer(players, board)
+            }
             if(textField.getText().equalsIgnoreCase("HELP"))
                 helpPopUp();
             if(textField.getText().equalsIgnoreCase("QUIT"))
@@ -212,7 +216,7 @@ public class UI extends Application{
             isHorizontal = false;
 
         word = new Word(row, column, isHorizontal, Word);
-        if(board.isLegal(p.getFrame(), word))
+        if(board.isLegal(p.getFrame(), word)&& turn==true)
             board.place(player.getFrame(), word);
 
         System.out.println(board.getBoard()[7][7]);
