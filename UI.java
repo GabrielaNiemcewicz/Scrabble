@@ -191,25 +191,34 @@ public class UI extends Application{
 
 
         Input.setOnAction(e -> {
-            System.out.println(textField.getText());
-
-            //if(Pattern.matches("\\EXCHANGE\\s+[a-zA-Z]"),textField.getText())
-            //  p.getFrame().exchange(pool, userWord.substring(9); // for example, 'exchange wxpt'
-            if (textField.getText().equalsIgnoreCase("PASS")) {
-                turn = false;
-                passedRoundsCount++;
-                //this.promptPlayer(players, board);
-            }
-            if(textField.getText().equalsIgnoreCase("HELP"))
-                helpPopUp();
-            if(textField.getText().equalsIgnoreCase("QUIT"))
-                stage.close();
-            else if((Pattern.matches("\\d{1,2}\\s+\\d{1,2}\\s+[a-zA-Z]\\s+[a-zA-Z]+", textField.getText()))) {
-                parseInput(textField.getText());
-                textField.clear();
-            }
+            readInput(textField.getText(), textField);
         });
+    }
 
+
+    public void readInput(String input, TextField textField){
+        System.out.println(input);
+
+        //if(Pattern.matches("\\EXCHANGE\\s+[a-zA-Z]"),textField.getText())
+        //  p.getFrame().exchange(pool, userWord.substring(9); // for example, 'exchange wxpt'
+        if (input.equalsIgnoreCase("PASS")) {
+            turn = false;
+            passedRoundsCount++;
+            //this.promptPlayer(players, board);
+        }
+        if(input.equalsIgnoreCase("HELP"))
+            helpPopUp();
+        if(input.equalsIgnoreCase("QUIT"))
+            stage.close();
+        if(input.equalsIgnoreCase("PASS"))
+        {
+            player = scrabble.getPlayer(pool);
+            FX_frame(root);
+        }
+        else if((Pattern.matches("\\d{1,2}\\s+\\d{1,2}\\s+[a-zA-Z]\\s+[a-zA-Z]+", input))) {
+            parseInput(input);
+            textField.clear();
+        }
     }
 
     public void helpPopUp(){
