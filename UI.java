@@ -61,15 +61,12 @@ public class UI extends Application{
     public void score_counters(Player [] players){
         //on event of succesful word placement, refresh
         int currentScore = players[0].getScore();
-        Text scoreText = new Text(currentScore);
-        Label nameScore = new Label("TOTAL "+players[0].getName()+" SCORE");
-        Rectangle rectangle = new Rectangle();
-        rectangle.setX(30);
-        rectangle.setY(30+0*800);
-        rectangle.setWidth(200);
-        r.setHeight(100);
-        r.setArcWidth(20);
-        r.setArcHeight(20);
+        VBox scoreDisplay = new VBox(5); //spacing is 5
+        scoreDisplay.getChildren().addAll(new Text("TOTAL"), new Text(currentScore),  new Text("SCORE"));
+        scoreDisplay.setTranslateX(100+0*800);
+        scoreDisplay.setTranslateY(30);
+        root.getChildren().add(scoreDisplay);
+
 
 
     }
