@@ -54,7 +54,8 @@ public class Board {
 
 
 
-	public void place(Frame frame, Word word, Player player) {
+	public void place(Word word, Player player) {
+		Frame frame = player.getFrame();
 		int r = word.getRow();
 		int c = word.getColumn();
 		for (int i=0; i<word.getLength(); i++) {
@@ -71,7 +72,7 @@ public class Board {
 				r++;
 			}
 		}
-		this.increasePlayerScore(word,player);
+		this.increasePlayerScore(word, player);
 
 
 		numPlays++;

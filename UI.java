@@ -253,7 +253,7 @@ public class UI extends Application{
 
         word = new Word(row, column, isHorizontal, Word);
         if(board.isLegal(player.getFrame(), word)) {
-            board.place(player.getFrame(), word);
+            board.place(word, player);
             player = scrabble.getPlayer(pool);
             FX_frame(root);
         }
