@@ -74,7 +74,8 @@ public class UI extends Application{
         play = new Button("Lets Play");
         GridPane.setConstraints(play, 2, 9 );
         play.setOnAction(p -> {
-            scrabble = new Scrabble(pool, playerName1.getText(), playerName2.getText());
+            scrabble = new Scrabble();
+            scrabble.createPlayers(pool, playerName1.getText(), playerName2.getText());
             player = scrabble.getPlayer(pool);
             stage.setScene(new Scene(createContent()));
         });
@@ -113,7 +114,6 @@ public class UI extends Application{
         FXgrid.setTranslateX(640);
         FXgrid.setTranslateY(20);
         FXgrid.setHgap(3);
-        System.out.println(scrabble.turns);
 
         for (int i = 0; i < player.getFrame().size(); i++) {
             FXgrid.add(player.getFrame().getAllTiles().get(i), i, 0);
@@ -255,7 +255,6 @@ public class UI extends Application{
         int column = scan.nextInt();
         String direction = scan.next();
         String Word = scan.next();
-        System.out.println("int x: " + row + " int y: "+ column + " direction: " + direction + " word: " + Word);
 
         if(direction.equalsIgnoreCase("h"))
             isHorizontal = true;
@@ -269,7 +268,6 @@ public class UI extends Application{
             FX_frame(root);
         }
 
-        player.getFrame().displayAsFrame();
     }
 
     @Override

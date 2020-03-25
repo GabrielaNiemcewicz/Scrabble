@@ -11,7 +11,7 @@ public class Scrabble extends Application{
     Player player1, player2;
     int turns = 0;
 
-    Scrabble(Pool pool, String name1, String name2){
+    public void createPlayers(Pool pool, String name1, String name2){
         player1 = new Player(name1);
         player1.getFrame().refill(pool);
 
