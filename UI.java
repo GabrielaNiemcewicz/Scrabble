@@ -76,6 +76,22 @@ public class UI extends Application{
 
     }
 
+    private int random_first_Rounds(Player [] players){ //golden scrabble rules- lower ascii of Tile in Frame
+        char [] minLetter = new char [2]{'Z','Z'};
+        String playerLetters = players[0].getFrame().displayAsString();
+        
+            for (char letter:playerLetters)
+        {
+            if (letter=="_")
+                return 0;
+            else if (letter<playerLetters)
+                min[0] = (int) letter;
+            else continue;
+        }
+
+    }
+
+
     public Player prompt_Player(Player [] players, Board board){
         int rounds = board.getNumPlays() +passedRoundsCount;
         if (turn==false)
