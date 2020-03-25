@@ -50,10 +50,11 @@ public class UI extends Application{
             }
     }
 
-    public void FX_frame(Pane root){
+    public void FX_frame(Pane root, Player [] players){
+        for(int j=0;j<2:j++) //loop through players array- for each of 2 players, display frame
         for(int i=0; i<7; i++){
-            player.getFrame().getAllTiles().get(i).setTranslateX(((i+1)*42) + 600);
-            player.getFrame().getAllTiles().get(i).setTranslateY(20);
+            players[j].getFrame().getAllTiles().get(i).setTranslateX(((i+1)*42) + 600);
+            player[j].getFrame().getAllTiles().get(i).setTranslateY(20+j*420);
             root.getChildren().add(p.getFrame().getAllTiles().get(i));
         }
     }
