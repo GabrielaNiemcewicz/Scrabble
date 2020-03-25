@@ -183,7 +183,7 @@ public class Frame {
 	}
 
 
-	private ArrayList<Tile> returnTilesToPool ( String lettersExchanged, Pool pool) {
+	private void returnTilesToPool (String lettersExchanged, Pool pool) {
 		ArrayList<Tile> tilesReturned = new ArrayList();
 		int numRequested = lettersExchanged.length();
 		if (this.isStringIn(lettersExchanged)) {
@@ -195,5 +195,5 @@ public class Frame {
 			pool.returnTiles(tilesReturned);
 			this.cleanString(lettersExchanged);
 		}
-	}*/
+	}
 }
