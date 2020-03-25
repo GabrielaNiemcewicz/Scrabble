@@ -108,7 +108,7 @@ public class UI extends Application{
     }
 
     public void FX_frame(Pane root /*,Player player*/ ){
-        FXgrid.getChildren().removeAll();
+        FXgrid.getChildren().removeAll(FXgrid.getChildren());
 
         FXgrid.setTranslateX(640);
         FXgrid.setTranslateY(20);
@@ -269,8 +269,6 @@ public class UI extends Application{
 
         stage.setScene(new Scene(createPlayers()));
         stage.show();
-
-
 
     }
 
