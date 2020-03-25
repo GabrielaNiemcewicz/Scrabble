@@ -18,6 +18,8 @@ public class Scrabble extends Application implements EventHandler<ActionEvent> {
     Button play, help;
     TextField playerName1, playerName2;
     Label player1, player2;
+    static Player one = new Player("nagham");
+    //two;
 
     @Override
     public void start(Stage stage) throws Exception {
@@ -57,8 +59,8 @@ public class Scrabble extends Application implements EventHandler<ActionEvent> {
     @Override
     public void handle(ActionEvent actionEvent) {
         if(actionEvent.getSource() == play) {
-            Player one = new Player(playerName1.getText());
-            Player two = new Player(playerName2.getText());
+            one = new Player(playerName1.getText());
+            //two = new Player(playerName2.getText());
             UI ui = new UI();
             Player players = new Player[]{one,two};
             int whoFirst = ui.random_first_Rounds(players);
