@@ -55,8 +55,8 @@ public class Board {
 
 
 	public void place(Frame frame, Word word) {
-		int r = word.getFirstRow();
-		int c = word.getFirstColumn();
+		int r = word.getRow();
+		int c = word.getColumn();
 		for (int i=0; i<word.getLength(); i++) {
 			if (squares[r][c].isEmpty()) {
 				word.bingoIncremator(); //if all 7 tiles from frame are put on empty squares to create a word, bingo, 50 bonus points
@@ -206,4 +206,4 @@ public class Board {
 */
 	}
 
-}}
+}

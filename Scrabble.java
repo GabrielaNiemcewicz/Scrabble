@@ -62,10 +62,10 @@ public class Scrabble extends Application implements EventHandler<ActionEvent> {
             one = new Player(playerName1.getText());
             //two = new Player(playerName2.getText());
             UI ui = new UI();
-            Player players = new Player[]{one,two};
+           /* Player players = new Player[]{one,two};
             int whoFirst = ui.random_first_Rounds(players);
             players[0+whoFirst] = one;
-            players[1-whoFirst] = two;
+            players[1-whoFirst] = two; */
         }
         else if(actionEvent.getSource() == help){
             System.out.println("HELP"); //extra functionality- a text, typed command 'help' required in specification
