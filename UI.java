@@ -2,6 +2,7 @@ package Jabba;
 
 import javafx.application.Application;
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -9,6 +10,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.StackPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
@@ -24,10 +26,12 @@ public class UI extends Application{
     Board board = new Board();
     Word word;
     Scrabble scrabble;
+    Pane root = new Pane();
     Stage stage = new Stage();
 
-    private Parent createPlayers(){
-        Pane root = new Pane();
+    public Parent createPlayers(){
+        StackPane root = new StackPane();
+        root.setAlignment(Pos.CENTER);
         root.setPrefSize(1000, 605);
         Button play, help;
         TextField playerName1, playerName2;
@@ -68,7 +72,6 @@ public class UI extends Application{
     }
 
     private Parent createContent(){
-        Pane root = new Pane();
         root.setPrefSize(1000, 605);
 
         createBoard(root);
@@ -88,11 +91,21 @@ public class UI extends Application{
     }
 
     public void FX_frame(Pane root){
-            for(int i=0; i<7; i++){
-                player.getFrame().getAllTiles().get(i).setTranslateX(((i+1)*42) + 600);
-                player.getFrame().getAllTiles().get(i).setTranslateY(20);
-                root.getChildren().add(player.getFrame().getAllTiles().get(i));
+        GridPane grid = new GridPane();
+
+        grid.setTranslateX(640);
+        grid.setTranslateY(20);
+        grid.setHgap(3);
+
+        if(scrabble.turns >1)
+            root.getChildren().remove(grid);
+
+        else {
+            for (int i = 0; i < player.getFrame().size(); i++) {
+                grid.add(player.getFrame().getAllTiles().get(i), i, 0);
             }
+            root.getChildren().add(grid);
+        }
     }
 
    /* public void score_counters(Player [] players) {
@@ -238,10 +251,12 @@ public class UI extends Application{
             isHorizontal = false;
 
         word = new Word(row, column, isHorizontal, Word);
-        if(board.isLegal(player.getFrame(), word)&& turn==true)
+        if(board.isLegal(player.getFrame(), word)) {
             board.place(player.getFrame(), word);
+            player = scrabble.getPlayer(pool);
+            FX_frame(root);
+        }
 
-        player.getFrame().refill(pool);
         player.getFrame().displayAsFrame();
     }
 
