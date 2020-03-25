@@ -179,7 +179,7 @@ public class Board {
 			for (int i = 0; i < word.getLength(); i++)
 				score *= squares[firstPositionX+i][firstPositionY].getWordMultiplier(); //multiply by word multipliers if there are any, otherwise by 1
 		}
-		if (word.bingoChecker == true)
+		if (word.bingoChecker() == true)
 			score+=50;
 		return score;
 
