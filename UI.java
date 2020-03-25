@@ -19,6 +19,7 @@ import java.util.Scanner;
 import java.util.regex.Pattern;
 
 public class UI extends Application{
+   int passedRoundsCount = 0;
     boolean turn = true;
     boolean won = false;
     Pool pool = new Pool();
@@ -73,6 +74,13 @@ public class UI extends Application{
         }
 
 
+    }
+
+    public Player prompt_Player(Player [] players, Board board){
+        int rounds = board.getNumPlays() +passedRoundsCount;
+        if (turn==false)
+            passedRoundsCount++;
+        return players[rounds%2]; //if even number of round, first player chooses. Else, second player.
     }
 
     public void FX_input(Pane root){
