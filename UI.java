@@ -92,7 +92,7 @@ public class UI extends Application{
             }
     }
 
-    public void FX_frame(Pane root){
+    public void FX_frame(Pane root /*,Player player*/ ){
         FXgrid.getChildren().removeAll();
 
         FXgrid.setTranslateX(640);
@@ -102,9 +102,9 @@ public class UI extends Application{
 
 
 
-            for (int i = 0; i < player.getFrame().size(); i++) {
-                FXgrid.add(player.getFrame().getAllTiles().get(i), i, 0);
-            }
+
+            FXgrid.addAll(player.getFrame().getAllTiles());
+
 
 
     }
@@ -121,13 +121,9 @@ public class UI extends Application{
             scoreDisplays[i].setTranslateY(30);
             root.getChildren().add(scoreDisplays[i]);
         }
-
-
     }
-
     public int random_first_Rounds(Player [] players){ //golden scrabble rules- lower ascii of Tile in Frame determines who starts game
         char [] minLetter = new char [2]{'Z','Z'};
-
         for(int i=0; i<2;i++)
         {    String playerLetters = players[i].getFrame().displayAsString();
             for (char letter:playerLetters)
@@ -142,21 +138,13 @@ public class UI extends Application{
             return 0;
         else
             return 1;
-
-
-
-
     }
-
-
     public Player promptPlayer(Player [] players, Board board){
         int rounds = board.getNumPlays() +passedRoundsCount;
         if (rounds ==0 &&  this.random_first_Rounds()==1)
         { rounds++;     passedRoundsCount++; }
-
         if (turn==false)
             passedRoundsCount++;
-
         return players[rounds%2]; //if even number of round, first player chooses. Else, second player.
     }*/
 
