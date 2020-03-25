@@ -16,7 +16,7 @@ import java.util.Scanner;
 import java.util.regex.Pattern;
 
 public class UI extends Application{
-   int passedRoundsCount = 0;
+    int passedRoundsCount = 0;
     boolean turn = true;
     boolean won = false;
     Pool pool = new Pool();
@@ -51,11 +51,11 @@ public class UI extends Application{
 
     public void FX_frame(Pane root, Player [] players){
         for(int j=0;j<2;j++) //loop through players array- for each of 2 players, display frame
-        for(int i=0; i<7; i++){
-            players[j].getFrame().getAllTiles().get(i).setTranslateX(((i+1)*42) + 600);
-            players[j].getFrame().getAllTiles().get(i).setTranslateY(20+j*420);
-            root.getChildren().add(players.getFrame().getAllTiles().get(i));
-        }
+            for(int i=0; i<7; i++){
+                players[j].getFrame().getAllTiles().get(i).setTranslateX(((i+1)*42) + 600);
+                players[j].getFrame().getAllTiles().get(i).setTranslateY(20+j*420);
+                root.getChildren().add(players.getFrame().getAllTiles().get(i));
+            }
     }
 
     public void score_counters(Player [] players) {
@@ -74,19 +74,19 @@ public class UI extends Application{
 
     }
 
-    public [] int random_first_Rounds(Player [] players){ //golden scrabble rules- lower ascii of Tile in Frame determines who starts game
+    public int random_first_Rounds(Player [] players){ //golden scrabble rules- lower ascii of Tile in Frame determines who starts game
         char [] minLetter = new char [2]{'Z','Z'};
 
         for(int i=0; i<2;i++)
         {    String playerLetters = players[i].getFrame().displayAsString();
             for (char letter:playerLetters)
-        {
-            if (letter=="_")
-                return i;
-            else if (letter<playerLetters)
-                min[i] =  letter;
-            else continue;
-        }}
+            {
+                if (letter=="_")
+                    return i;
+                else if (letter<playerLetters)
+                    min[i] =  letter;
+                else continue;
+            }}
         if(minLetter[0]<minLetter[1])
             return 0;
         else
