@@ -9,19 +9,14 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-
 import java.util.Scanner;
 import java.util.regex.Pattern;
-import javafx.scene.image.ImageView;
-
-import static java.awt.Font.SANS_SERIF;
 
 public class UI extends Application{
  //******** Instance Variables ************//
@@ -53,10 +48,6 @@ public class UI extends Application{
         grid.setAlignment(Pos.CENTER);  // This makes sure that it displays in the middle of the grid
         grid.setHgap(10);
         grid.setVgap(8);
-
-        // Image image = new Image("file:image.jpg");
-        // ImageView iv = new ImageView();
-        // iv.setImage(image);
 
         // Player's names:
         p1 = new Label("Player Name 1: ");
