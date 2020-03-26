@@ -252,15 +252,16 @@ public boolean readInput(String input, TextField textField){ //return if it's tr
         playerInfo.setText("Player: "+player.getName() + "\t\t\t\t Score: " + player.getScore());
         }
         else if((Pattern.matches("\\d{1,2}\\s+\\d{1,2}\\s+[a-zA-Z]\\s+[a-zA-Z]+", input))) {
-        parseInput(input);
-        textField.clear();
-        playerInfo.setText("Player: "+player.getName() + "\t\t\t\t Score: " + player.getScore());
-
+            parseInput(input);
+            textField.clear();
+            playerInfo.setText("Player: " + player.getName() + "\t\t\t\t Score: " + player.getScore());
+        }
         else //wrong input
             {validCommand= false;
             input.next();
             }
-        }
+        return validCommand;
+
         }
 
 public void helpPopUp(){
