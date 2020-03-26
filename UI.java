@@ -19,7 +19,7 @@ import javafx.stage.Stage;
 import java.util.Scanner;
 import java.util.regex.Pattern;
 
-public class UI extends Application{
+public class UI{
  //******** Instance Variables ************//
     int passedRoundsCount = 0;
     boolean turn = true;
@@ -32,9 +32,12 @@ public class UI extends Application{
     Pane root = new Pane();
     GridPane FXgrid = new GridPane();
     Label playerInfo = new Label();
-    Stage stage = new Stage();
     // create a font
     Font font = Font.font("Verdana", FontWeight.EXTRA_BOLD, 13);
+
+    UI(Scrabble scrabble){
+        this.scrabble = scrabble;
+    }
 
     //******* Parent Method To implement the Player's names ***********//
     public Parent createPlayers(){
@@ -70,10 +73,9 @@ public class UI extends Application{
         play = new Button("Lets Play");
         GridPane.setConstraints(play, 2, 9 );
         play.setOnAction(p -> {
-            scrabble = new Scrabble();
             scrabble.createPlayers(pool, playerName1.getText(), playerName2.getText());
             player = scrabble.getPlayer(pool);
-            stage.setScene(new Scene(createContent()));
+            scrabble.stage.setScene(new Scene(createContent()));
         });
 
         grid.getChildren().addAll(p1, playerName1, p2, playerName2, play);
@@ -199,7 +201,7 @@ public void FX_input(Pane root){
         choices.setFont(font);
         grid.add(choices, 0, 4);
         Button quit = new Button("QUIT GAME");
-        quit.setOnAction(e -> { stage.close(); });
+        quit.setOnAction(e -> { scrabble.stage.close(); });
         Button pass = new Button("PASS TURN");
         pass.setOnAction(e -> { player = scrabble.getPlayer(pool);
         FX_frame(root);
@@ -236,7 +238,7 @@ public void readInput(String input, TextField textField) { //return if it's true
     if (input.equalsIgnoreCase("HELP"))
         helpPopUp();
     if (input.equalsIgnoreCase("QUIT"))
-        stage.close();
+        scrabble.stage.close();
     if (input.equalsIgnoreCase("PASS")) {
         player = scrabble.getPlayer(pool);
         FX_frame(root);
@@ -297,18 +299,8 @@ public void readInput(String input, TextField textField) { //return if it's true
 
     }
 
-    @Override
-    public void start(Stage primaryStage) throws Exception{
-        stage.setTitle("Scrabble");
-
-        stage.setScene(new Scene(createPlayers()));
-        stage.show();
-
-    }
 
 
-    public static void main(String[] args) {
-        launch(args);
-    }
+
 }
 
