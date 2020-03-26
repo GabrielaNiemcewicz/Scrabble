@@ -15,7 +15,6 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-
 import java.util.Scanner;
 import java.util.regex.Pattern;
 
@@ -88,7 +87,7 @@ public class UI{
     private Parent createContent(){
 
         root.setPrefSize(1000, 605);
-
+        root.setStyle("-fx-background-color: #a8edcb;");
         createBoard(root);
         root.getChildren().add(FXgrid);
         FX_frame(root);  // Part 1: the Frame.
@@ -149,14 +148,12 @@ public class UI{
 
            /*    on event of successful word placement, showScore (Player player){
 
-                   text.setText(player.getScore());
+                   text.setText(player.getScore()); */
 
 
-                }*/
 
 
-/*
-    public int random_first_Rounds(Player [] players){ //golden scrabble rules- lower ascii of Tile in Frame determines who starts game
+   /* public int random_first_Rounds(Player [] players){ //golden scrabble rules- lower ascii of Tile in Frame determines who starts game
     char [] minLetter = new char [2]{'Z','Z'};
     for(int i=0; i<2;i++)
     {    String playerLetters = players[i].getFrame().displayAsString();
@@ -219,8 +216,6 @@ public void FX_input(Pane root){
         grid.setTranslateY(100);
 
         root.getChildren().addAll(grid);
-
-
         Input.setOnAction(e -> {
         readInput(textField.getText(), textField);
         });
@@ -303,4 +298,5 @@ public void readInput(String input, TextField textField) { //return if it's true
 
 
 }
+
 
