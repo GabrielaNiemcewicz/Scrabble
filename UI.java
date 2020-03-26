@@ -8,7 +8,6 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import javafx.scene.image.Image;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
@@ -25,6 +24,7 @@ import javafx.scene.image.ImageView;
 import static java.awt.Font.SANS_SERIF;
 
 public class UI extends Application{
+ //******** Instance Variables ************//
     int passedRoundsCount = 0;
     boolean turn = true;
     boolean won = false;
@@ -40,15 +40,17 @@ public class UI extends Application{
     // create a font
     Font font = Font.font("Verdana", FontWeight.EXTRA_BOLD, 13);
 
+    //******* Parent Method To implement the Player's names ***********//
     public Parent createPlayers(){
         StackPane root = new StackPane();
         root.setAlignment(Pos.CENTER);
         root.setPrefSize(1000, 605);
+        root.setStyle("-fx-background-color: lightblue;");
         Button play, help;
         TextField playerName1, playerName2;
         Label p1, p2;
         GridPane grid = new GridPane();
-        grid.setPadding(new Insets(10, 10, 10, 10));
+        grid.setAlignment(Pos.CENTER);  // This makes sure that it displays in the middle of the grid
         grid.setHgap(10);
         grid.setVgap(8);
 
@@ -60,17 +62,19 @@ public class UI extends Application{
         p1 = new Label("Player Name 1: ");
         p1.setFont(font);
         GridPane.setConstraints(p1, 1, 5);
-        //Player's input
-        playerName1 = new TextField();
-        GridPane.setConstraints(playerName1, 1, 6);
-        // Player's names:
+
         p2 = new Label("Player Name 2: ");
         p2.setFont(font);
         GridPane.setConstraints(p2, 3, 5);
-        //Player's input
+
+        //Player's input Textfields
+        playerName1 = new TextField();
+        GridPane.setConstraints(playerName1, 1, 6);
+
         playerName2 = new TextField();
         GridPane.setConstraints(playerName2, 3, 6);
-        //button
+
+        //button This Button is set on action to call another scene called createContent() i.e Scrabble Board and Game
         play = new Button("Lets Play");
         GridPane.setConstraints(play, 2, 9 );
         play.setOnAction(p -> {
@@ -79,22 +83,22 @@ public class UI extends Application{
             player = scrabble.getPlayer(pool);
             stage.setScene(new Scene(createContent()));
         });
-        help = new Button("Help");
-        GridPane.setConstraints(help, 1, 9 );
-        //help.setOnAction(this);
-        grid.getChildren().addAll(p1, playerName1, p2, playerName2, play, help);
+
+        grid.getChildren().addAll(p1, playerName1, p2, playerName2, play);
         root.getChildren().add(grid);
 
         return root;
     }
 
+    //******* Parent Method To implement the Scrabble Board ie Game **********//
     private Parent createContent(){
+
         root.setPrefSize(1000, 605);
 
         createBoard(root);
         root.getChildren().add(FXgrid);
-        FX_frame(root);
-        FX_input(root);
+        FX_frame(root);  // Part 1: the Frame.
+        FX_input(root);  // Part 2: Players Input.
         createPlayerInfo();
 
         return root;
@@ -221,50 +225,40 @@ public void FX_input(Pane root){
         grid.setTranslateY(100);
 
         root.getChildren().addAll(grid);
-
-        do {
         Input.setOnAction(e -> {
         readInput(textField.getText(), textField);
-        };
-        } while (!(readInput))
+        });
+        }
 
 
-public boolean readInput(String input, TextField textField){ //return if it's true that input is valid to process
-        boolean validCommand= true; //if matches any of conditions
+public void readInput(String input, TextField textField){
         System.out.println(input);
 
         if(Pattern.matches("\\^EXCHANGE\\s+\\[a-zA-Z]+", input))
-        {player.getFrame().exchange(pool, input.substring(9).trim());
-        validCommand=true;// for example, 'exchange wxpt'
+        player.getFrame().exchange(pool, input.substring(9).trim()); // for example, 'exchange wxpt'
         if (input.equalsIgnoreCase("PASS")) {
         turn = false;
         passedRoundsCount++;
         //this.promptPlayer(players, board);
         }
         if(input.equalsIgnoreCase("HELP"))
-        helpPopUp();
+            helpPopUp();
         if(input.equalsIgnoreCase("QUIT"))
-        stage.close();
+            stage.close();
         if(input.equalsIgnoreCase("PASS"))
         {
-        player = scrabble.getPlayer(pool);
-        FX_frame(root);
-        playerInfo.setText("Player: "+player.getName() + "\t\t\t\t Score: " + player.getScore());
+            player = scrabble.getPlayer(pool);
+            FX_frame(root);
+            playerInfo.setText("Player: "+player.getName() + "\t\t\t\t Score: " + player.getScore());
         }
         else if((Pattern.matches("\\d{1,2}\\s+\\d{1,2}\\s+[a-zA-Z]\\s+[a-zA-Z]+", input))) {
-            parseInput(input);
-            textField.clear();
-            playerInfo.setText("Player: " + player.getName() + "\t\t\t\t Score: " + player.getScore());
+        parseInput(input);
+        textField.clear();
+        playerInfo.setText("Player: "+player.getName() + "\t\t\t\t Score: " + player.getScore());
         }
-        else //wrong input
-            {validCommand= false;
-            input.next();
-            }
-        return validCommand;
-
         }
 
-public void helpPopUp(){
+    public void helpPopUp(){
         Stage popUpWindow=new Stage();
 
         popUpWindow.initModality(Modality.APPLICATION_MODAL);
@@ -272,26 +266,26 @@ public void helpPopUp(){
 
 
         Label label1= new Label("To avail of needed functionalities in Scrabble, you have to carefully rewrite:\n" +
-        "QUIT  -" + "  to stop playing, exit, terminate the game\n" +
-        "PASS  -" +"  to resign from your round and let your opponent pick word\n"+
-        "HELP  -" +"  to display this menu\n" +
-        "EXCHANGE  -" +"  to swap current tiles with random ones in the pool\n" +
-        "\n" +
-        "To input word, specify, in this order, after whitespaces: <grid ref> <across/down> <word>\n" +
-        "<grid reference>:  intint  " + "Two numbers (row and column index on Board where word starts) with nothing between them, eg. 13\n"
-        +"Valid positions: from 0 to 14\n" +
-        "<across/down>  char  " +  "V for vertical, H for horizontal\n"+
-        " You can put valid words up to bottom (h) or left to right (a) only\n"+
-        "<word> " + "write your word on keyboard");
+                "QUIT  -" + "  to stop playing, exit, terminate the game\n" +
+                "PASS  -" +"  to resign from your round and let your opponent pick word\n"+
+                "HELP  -" +"  to display this menu\n" +
+                "EXCHANGE  -" +"  to swap current tiles with random ones in the pool\n" +
+                "\n" +
+                "To input word, specify, in this order, after whitespaces: <grid ref> <across/down> <word>\n" +
+                "<grid reference>:  intint  " + "Two numbers (row and column index on Board where word starts) with nothing between them, eg. 13\n"
+                +"Valid positions: from 0 to 14\n" +
+                "<across/down>  char  " +  "V for vertical, H for horizontal\n"+
+                " You can put valid words up to bottom (h) or left to right (a) only\n"+
+                "<word> " + "write your word on keyboard");
 
         label1.setPadding(new Insets(20, 20, 20, 20));
         Scene scene1= new Scene(label1);
         popUpWindow.setScene(scene1);
         popUpWindow.showAndWait();
 
-        }
+    }
 
-public void parseInput(String userInput){
+    public void parseInput(String userInput){
         Scanner scan = new Scanner(userInput);
         boolean isHorizontal;
         int row = scan.nextInt();
@@ -300,31 +294,32 @@ public void parseInput(String userInput){
         String Word = scan.next();
 
         if(direction.equalsIgnoreCase("h"))
-        isHorizontal = true;
+            isHorizontal = true;
         else
-        isHorizontal = false;
+            isHorizontal = false;
 
         word = new Word(row, column, isHorizontal, Word);
         if(board.isLegal(player.getFrame(), word)) {
-        board.place(word, player);
-        player = scrabble.getPlayer(pool);
-        FX_frame(root);
+            board.place(word, player);
+            player = scrabble.getPlayer(pool);
+            FX_frame(root);
         }
 
-        }
+    }
 
-@Override
-public void start(Stage primaryStage) throws Exception{
+    @Override
+    public void start(Stage primaryStage) throws Exception{
         stage.setTitle("Scrabble");
 
         stage.setScene(new Scene(createPlayers()));
         stage.show();
 
-        }
+    }
 
 
-public static void main(String[] args) {
+    public static void main(String[] args) {
         launch(args);
-        }
-        }
+    }
+}
+
 
