@@ -221,17 +221,21 @@ public void FX_input(Pane root){
         grid.setTranslateY(100);
 
         root.getChildren().addAll(grid);
+
+        do {
         Input.setOnAction(e -> {
         readInput(textField.getText(), textField);
-        });
-        }
+        };
+        } while (!(readInput))
 
 
-public void readInput(String input, TextField textField){
+public boolean readInput(String input, TextField textField){ //return if it's true that input is valid to process
+        boolean validCommand= true; //if matches any of conditions
         System.out.println(input);
 
         if(Pattern.matches("\\^EXCHANGE\\s+\\[a-zA-Z]+", input))
-        player.getFrame().exchange(pool, input.substring(9).trim()); // for example, 'exchange wxpt'
+        {player.getFrame().exchange(pool, input.substring(9).trim());
+        validCommand=true;// for example, 'exchange wxpt'
         if (input.equalsIgnoreCase("PASS")) {
         turn = false;
         passedRoundsCount++;
@@ -251,6 +255,11 @@ public void readInput(String input, TextField textField){
         parseInput(input);
         textField.clear();
         playerInfo.setText("Player: "+player.getName() + "\t\t\t\t Score: " + player.getScore());
+
+        else //wrong input
+            {validCommand= false;
+            input.next();
+            }
         }
         }
 
