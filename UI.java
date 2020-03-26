@@ -17,9 +17,12 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+
 import java.util.Scanner;
 import java.util.regex.Pattern;
 import javafx.scene.image.ImageView;
+
+import static java.awt.Font.SANS_SERIF;
 
 public class UI extends Application{
     int passedRoundsCount = 0;
@@ -32,6 +35,7 @@ public class UI extends Application{
     Scrabble scrabble;
     Pane root = new Pane();
     GridPane FXgrid = new GridPane();
+    Label playerInfo = new Label();
     Stage stage = new Stage();
     // create a font
     Font font = Font.font("Verdana", FontWeight.EXTRA_BOLD, 13);
@@ -91,6 +95,7 @@ public class UI extends Application{
         root.getChildren().add(FXgrid);
         FX_frame(root);
         FX_input(root);
+        createPlayerInfo();
 
         return root;
     }
@@ -114,8 +119,15 @@ public class UI extends Application{
         for (int i = 0; i < player.getFrame().size(); i++) {
             FXgrid.add(player.getFrame().getAllTiles().get(i), i, 0);
         }
+    }
 
-
+    public void createPlayerInfo(){
+        playerInfo.setPadding(new Insets(10, 10, 10, 10));
+        playerInfo.setText("Player: "+player.getName() + "\t\t\t\t Score: " + player.getScore());
+        playerInfo.setFont(font);
+        playerInfo.setTranslateX(635);
+        playerInfo.setTranslateY(2);
+        root.getChildren().add(playerInfo);
     }
 
    /* public void score_counters(Player [] players) {
@@ -160,10 +172,6 @@ public class UI extends Application{
     public void FX_input(Pane root){
         // Displaying Player's names:
         GridPane grid = new GridPane();
-        Label p1 = new Label("Player: "+player.getName());
-        p1.setFont(font);
-        HBox displayPlayer = new HBox(p1);
-        grid.add(displayPlayer, 0, 1);
 
         Label inputLabel = new Label("Write your word");
         inputLabel.setFont(font);
@@ -207,8 +215,8 @@ public class UI extends Application{
     public void readInput(String input, TextField textField){
         System.out.println(input);
 
-        if(Pattern.matches("\\^EXCHANGE\\s+\\[a-zA-Z]+"),input)
-        p.getFrame().exchange(pool, userWord.substring(9).trim()); // for example, 'exchange wxpt'
+        if(Pattern.matches("\\^EXCHANGE\\s+\\[a-zA-Z]+", input))
+        player.getFrame().exchange(pool, input.substring(9).trim()); // for example, 'exchange wxpt'
         if (input.equalsIgnoreCase("PASS")) {
             turn = false;
             passedRoundsCount++;
@@ -222,10 +230,12 @@ public class UI extends Application{
         {
             player = scrabble.getPlayer(pool);
             FX_frame(root);
+            playerInfo.setText("Player: "+player.getName() + "\t\t\t\t Score: " + player.getScore());
         }
         else if((Pattern.matches("\\d{1,2}\\s+\\d{1,2}\\s+[a-zA-Z]\\s+[a-zA-Z]+", input))) {
             parseInput(input);
             textField.clear();
+            playerInfo.setText("Player: "+player.getName() + "\t\t\t\t Score: " + player.getScore());
         }
     }
 
