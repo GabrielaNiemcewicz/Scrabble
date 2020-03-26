@@ -15,6 +15,7 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+
 import java.util.Scanner;
 import java.util.regex.Pattern;
 
@@ -124,7 +125,7 @@ public class UI extends Application{
         playerInfo.setTranslateY(2);
         root.getChildren().add(playerInfo);
     }
-
+/*
     public void score_counters(Player player) {
         //on event of succesful word placement, refresh
          int currentScore=player.getScore();
@@ -133,7 +134,7 @@ public class UI extends Application{
 
 
 
-                    rscore.setFill(COLOR.GREY);
+                    rscore.setFill(Color.GREY);
                     rscore.setStroke(Color.GREEN);
                     text.setFont(Font.font("Castellar", FontWeight.BOLD, 18));
                     text.setFill(Color.GREEN);
@@ -146,13 +147,13 @@ public class UI extends Application{
 
            /*    on event of successful word placement, showScore (Player player){
 
-                   text.setText(player.getScore()); */
+                   text.setText(player.getScore());
 
 
-                }
+                }*/
 
 
-
+/*
     public int random_first_Rounds(Player [] players){ //golden scrabble rules- lower ascii of Tile in Frame determines who starts game
     char [] minLetter = new char [2]{'Z','Z'};
     for(int i=0; i<2;i++)
@@ -216,38 +217,36 @@ public void FX_input(Pane root){
         grid.setTranslateY(100);
 
         root.getChildren().addAll(grid);
+
+
         Input.setOnAction(e -> {
         readInput(textField.getText(), textField);
         });
-        }
+}
 
 
-public void readInput(String input, TextField textField){
-        System.out.println(input);
+public void readInput(String input, TextField textField) { //return if it's true that input is valid to process
+    boolean validCommand = true; //if matches any of conditions
+    System.out.println(input);
 
-        if(Pattern.matches("\\^EXCHANGE\\s+\\[a-zA-Z]+", input))
-        player.getFrame().exchange(pool, input.substring(9).trim()); // for example, 'exchange wxpt'
-        if (input.equalsIgnoreCase("PASS")) {
-        turn = false;
-        passedRoundsCount++;
-        //this.promptPlayer(players, board);
-        }
-        if(input.equalsIgnoreCase("HELP"))
-            helpPopUp();
-        if(input.equalsIgnoreCase("QUIT"))
-            stage.close();
-        if(input.equalsIgnoreCase("PASS"))
-        {
-            player = scrabble.getPlayer(pool);
-            FX_frame(root);
-            playerInfo.setText("Player: "+player.getName() + "\t\t\t\t Score: " + player.getScore());
-        }
-        else if((Pattern.matches("\\d{1,2}\\s+\\d{1,2}\\s+[a-zA-Z]\\s+[a-zA-Z]+", input))) {
+    if (Pattern.matches("\\^EXCHANGE\\s+\\[a-zA-Z]+", input)) {
+        player.getFrame().exchange(pool, input.substring(9).trim());
+        validCommand = true;// for example, 'exchange wxpt'
+    }
+    if (input.equalsIgnoreCase("HELP"))
+        helpPopUp();
+    if (input.equalsIgnoreCase("QUIT"))
+        stage.close();
+    if (input.equalsIgnoreCase("PASS")) {
+        player = scrabble.getPlayer(pool);
+        FX_frame(root);
+        playerInfo.setText("Player: " + player.getName() + "\t\t\t\t Score: " + player.getScore());
+    } else if ((Pattern.matches("\\d{1,2}\\s+\\d{1,2}\\s+[a-zA-Z]\\s+[a-zA-Z]+", input))) {
         parseInput(input);
         textField.clear();
-        playerInfo.setText("Player: "+player.getName() + "\t\t\t\t Score: " + player.getScore());
-        }
-        }
+        playerInfo.setText("Player: " + player.getName() + "\t\t\t\t Score: " + player.getScore());
+    }
+}
 
     public void helpPopUp(){
         Stage popUpWindow=new Stage();
@@ -257,17 +256,17 @@ public void readInput(String input, TextField textField){
 
 
         Label label1= new Label("To avail of needed functionalities in Scrabble, you have to carefully rewrite:\n" +
-                "QUIT  -" + "  to stop playing, exit, terminate the game\n" +
-                "PASS  -" +"  to resign from your round and let your opponent pick word\n"+
-                "HELP  -" +"  to display this menu\n" +
-                "EXCHANGE  -" +"  to swap current tiles with random ones in the pool\n" +
-                "\n" +
-                "To input word, specify, in this order, after whitespaces: <grid ref> <across/down> <word>\n" +
-                "<grid reference>:  intint  " + "Two numbers (row and column index on Board where word starts) with nothing between them, eg. 13\n"
-                +"Valid positions: from 0 to 14\n" +
-                "<across/down>  char  " +  "V for vertical, H for horizontal\n"+
-                " You can put valid words up to bottom (h) or left to right (a) only\n"+
-                "<word> " + "write your word on keyboard");
+        "QUIT  -" + "  to stop playing, exit, terminate the game\n" +
+        "PASS  -" +"  to resign from your round and let your opponent pick word\n"+
+        "HELP  -" +"  to display this menu\n" +
+        "EXCHANGE  -" +"  to swap current tiles with random ones in the pool\n" +
+        "\n" +
+        "To input word, specify, in this order, after whitespaces: <grid ref> <across/down> <word>\n" +
+        "<grid reference>:  intint  " + "Two numbers (row and column index on Board where word starts) with nothing between them, eg. 13\n"
+        +"Valid positions: from 0 to 14\n" +
+        "<across/down>  char  " +  "V for vertical, H for horizontal\n"+
+        " You can put valid words up to bottom (h) or left to right (a) only\n"+
+        "<word> " + "write your word on keyboard");
 
         label1.setPadding(new Insets(20, 20, 20, 20));
         Scene scene1= new Scene(label1);
@@ -312,5 +311,4 @@ public void readInput(String input, TextField textField){
         launch(args);
     }
 }
-
 
