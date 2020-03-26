@@ -52,9 +52,9 @@ public class UI extends Application{
         grid.setHgap(10);
         grid.setVgap(8);
 
-       // Image image = new Image("file:image.jpg");
-       // ImageView iv = new ImageView();
-       // iv.setImage(image);
+        // Image image = new Image("file:image.jpg");
+        // ImageView iv = new ImageView();
+        // iv.setImage(image);
 
         // Player's names:
         p1 = new Label("Player Name 1: ");
@@ -130,36 +130,51 @@ public class UI extends Application{
         root.getChildren().add(playerInfo);
     }
 
-   /* public void score_counters(Player [] players) {
+    public void score_counters(Player player) {
         //on event of succesful word placement, refresh
-        int[] currentScores = new int[2];
-        VBox[] scoreDisplays = new VBox(5)[2]; //spacing is 5
-        //each PlayerName and score added to 2 Score counters-one up, one down. Please correct display after me for aesthetics
-        for(int i=0; i<2;i++) {
-            currentScores[i] = players[i].getScore();
-            scoreDisplays[i].getChildren().addAll(new Text(players[i].getName()), new Text(currentScores[i]), new Text("TOTAL SCORE"));
-            scoreDisplays[i].setTranslateX(100 + i * 800);
-            scoreDisplays[i].setTranslateY(30);
-            root.getChildren().add(scoreDisplays[i]);
-        }
-    }
+         int currentScore=player.getScore();
+         Rectangle rscore = new Rectangle(35, 45);
+         Text text = new Text(currentScore);
+
+
+
+                    rscore.setFill(COLOR.GREY);
+                    rscore.setStroke(Color.GREEN);
+                    text.setFont(Font.font("Castellar", FontWeight.BOLD, 18));
+                    text.setFill(Color.GREEN);
+                    setAlignment(Pos.CENTER);
+
+            rscore.setTranslateX(100 + i * 800);
+            rscore.setTranslateY(30);
+            root.getChildren().add(rscore,text);
+
+
+           /*    on event of successful word placement, showScore (Player player){
+
+                   text.setText(player.getScore()); */
+
+
+                }
+
+
+
     public int random_first_Rounds(Player [] players){ //golden scrabble rules- lower ascii of Tile in Frame determines who starts game
-        char [] minLetter = new char [2]{'Z','Z'};
-        for(int i=0; i<2;i++)
-        {    String playerLetters = players[i].getFrame().displayAsString();
-            for (char letter:playerLetters)
-            {
-                if (letter=="_")
-                    return i;
-                else if (letter<playerLetters)
-                    min[i] =  letter;
-                else continue;
-            }}
-        if(minLetter[0]<minLetter[1])
-            return 0;
-        else
-            return 1;
-    }
+    char [] minLetter = new char [2]{'Z','Z'};
+    for(int i=0; i<2;i++)
+    {    String playerLetters = players[i].getFrame().displayAsString();
+        for (char letter:playerLetters)
+        {
+            if (letter=="_")
+                return i;
+            else if (letter<playerLetters)
+                min[i] =  letter;
+            else continue;
+        }}
+    if(minLetter[0]<minLetter[1])
+        return 0;
+    else
+        return 1;
+}
     public Player promptPlayer(Player [] players, Board board){
         int rounds = board.getNumPlays() +passedRoundsCount;
         if (rounds ==0 &&  this.random_first_Rounds()==1)
@@ -169,7 +184,7 @@ public class UI extends Application{
         return players[rounds%2]; //if even number of round, first player chooses. Else, second player.
     }*/
 
-    public void FX_input(Pane root){
+public void FX_input(Pane root){
         // Displaying Player's names:
         GridPane grid = new GridPane();
 
@@ -191,7 +206,7 @@ public class UI extends Application{
         quit.setOnAction(e -> { stage.close(); });
         Button pass = new Button("PASS TURN");
         pass.setOnAction(e -> { player = scrabble.getPlayer(pool);
-            FX_frame(root);
+        FX_frame(root);
         });
         Button help = new Button("HELP");
         help.setOnAction(e -> { helpPopUp(); });
@@ -207,39 +222,39 @@ public class UI extends Application{
 
         root.getChildren().addAll(grid);
         Input.setOnAction(e -> {
-            readInput(textField.getText(), textField);
+        readInput(textField.getText(), textField);
         });
-    }
+        }
 
 
-    public void readInput(String input, TextField textField){
+public void readInput(String input, TextField textField){
         System.out.println(input);
 
         if(Pattern.matches("\\^EXCHANGE\\s+\\[a-zA-Z]+", input))
         player.getFrame().exchange(pool, input.substring(9).trim()); // for example, 'exchange wxpt'
         if (input.equalsIgnoreCase("PASS")) {
-            turn = false;
-            passedRoundsCount++;
-            //this.promptPlayer(players, board);
+        turn = false;
+        passedRoundsCount++;
+        //this.promptPlayer(players, board);
         }
         if(input.equalsIgnoreCase("HELP"))
-            helpPopUp();
+        helpPopUp();
         if(input.equalsIgnoreCase("QUIT"))
-            stage.close();
+        stage.close();
         if(input.equalsIgnoreCase("PASS"))
         {
-            player = scrabble.getPlayer(pool);
-            FX_frame(root);
-            playerInfo.setText("Player: "+player.getName() + "\t\t\t\t Score: " + player.getScore());
+        player = scrabble.getPlayer(pool);
+        FX_frame(root);
+        playerInfo.setText("Player: "+player.getName() + "\t\t\t\t Score: " + player.getScore());
         }
         else if((Pattern.matches("\\d{1,2}\\s+\\d{1,2}\\s+[a-zA-Z]\\s+[a-zA-Z]+", input))) {
-            parseInput(input);
-            textField.clear();
-            playerInfo.setText("Player: "+player.getName() + "\t\t\t\t Score: " + player.getScore());
+        parseInput(input);
+        textField.clear();
+        playerInfo.setText("Player: "+player.getName() + "\t\t\t\t Score: " + player.getScore());
         }
-    }
+        }
 
-    public void helpPopUp(){
+public void helpPopUp(){
         Stage popUpWindow=new Stage();
 
         popUpWindow.initModality(Modality.APPLICATION_MODAL);
@@ -247,26 +262,26 @@ public class UI extends Application{
 
 
         Label label1= new Label("To avail of needed functionalities in Scrabble, you have to carefully rewrite:\n" +
-                "QUIT  -" + "  to stop playing, exit, terminate the game\n" +
-                "PASS  -" +"  to resign from your round and let your opponent pick word\n"+
-                "HELP  -" +"  to display this menu\n" +
-                "EXCHANGE  -" +"  to swap current tiles with random ones in the pool\n" +
-                "\n" +
-                "To input word, specify, in this order, after whitespaces: <grid ref> <across/down> <word>\n" +
-                "<grid reference>:  intint  " + "Two numbers (row and column index on Board where word starts) with nothing between them, eg. 13\n"
-                +"Valid positions: from 0 to 14\n" +
-                "<across/down>  char  " +  "V for vertical, H for horizontal\n"+
-                " You can put valid words up to bottom (h) or left to right (a) only\n"+
-                "<word> " + "write your word on keyboard");
+        "QUIT  -" + "  to stop playing, exit, terminate the game\n" +
+        "PASS  -" +"  to resign from your round and let your opponent pick word\n"+
+        "HELP  -" +"  to display this menu\n" +
+        "EXCHANGE  -" +"  to swap current tiles with random ones in the pool\n" +
+        "\n" +
+        "To input word, specify, in this order, after whitespaces: <grid ref> <across/down> <word>\n" +
+        "<grid reference>:  intint  " + "Two numbers (row and column index on Board where word starts) with nothing between them, eg. 13\n"
+        +"Valid positions: from 0 to 14\n" +
+        "<across/down>  char  " +  "V for vertical, H for horizontal\n"+
+        " You can put valid words up to bottom (h) or left to right (a) only\n"+
+        "<word> " + "write your word on keyboard");
 
         label1.setPadding(new Insets(20, 20, 20, 20));
         Scene scene1= new Scene(label1);
         popUpWindow.setScene(scene1);
         popUpWindow.showAndWait();
 
-    }
+        }
 
-    public void parseInput(String userInput){
+public void parseInput(String userInput){
         Scanner scan = new Scanner(userInput);
         boolean isHorizontal;
         int row = scan.nextInt();
@@ -275,32 +290,31 @@ public class UI extends Application{
         String Word = scan.next();
 
         if(direction.equalsIgnoreCase("h"))
-            isHorizontal = true;
+        isHorizontal = true;
         else
-            isHorizontal = false;
+        isHorizontal = false;
 
         word = new Word(row, column, isHorizontal, Word);
         if(board.isLegal(player.getFrame(), word)) {
-            board.place(word, player);
-            player = scrabble.getPlayer(pool);
-            FX_frame(root);
+        board.place(word, player);
+        player = scrabble.getPlayer(pool);
+        FX_frame(root);
         }
 
-    }
+        }
 
-    @Override
-    public void start(Stage primaryStage) throws Exception{
+@Override
+public void start(Stage primaryStage) throws Exception{
         stage.setTitle("Scrabble");
 
         stage.setScene(new Scene(createPlayers()));
         stage.show();
 
-    }
+        }
 
 
-    public static void main(String[] args) {
+public static void main(String[] args) {
         launch(args);
-    }
-}
-
+        }
+        }
 
